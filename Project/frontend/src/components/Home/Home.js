@@ -5,7 +5,7 @@ const Home = (props) => {
     return (
         <h1>
             Testing some code
-        </h1>
+        </h1>   
     );
 }
 export default Home;
