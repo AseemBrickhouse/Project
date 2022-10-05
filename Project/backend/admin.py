@@ -13,5 +13,14 @@ class UserAdmin(BaseUserAdmin):
     inlines = (AccountInline,)
 
 admin.site.register(Account)
+admin.site.register(Course)
+admin.site.register(CourseEnroll)
+admin.site.register(Meeting)
+admin.site.register(Message)
+admin.site.register(ChatRoom)
+admin.site.register(Material)
+admin.site.register(StudyGroup)
+admin.site.register(StudyEnroll)
+
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
