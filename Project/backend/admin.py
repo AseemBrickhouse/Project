@@ -21,6 +21,8 @@ admin.site.register(ChatRoom)
 admin.site.register(Material)
 admin.site.register(StudyGroup)
 admin.site.register(StudyEnroll)
+admin.site.register(Module)
+admin.site.register(Friends)
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)

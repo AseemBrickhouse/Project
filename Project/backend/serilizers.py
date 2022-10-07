@@ -1,4 +1,3 @@
-from dataclasses import field
 from rest_framework import serializers
 from .models import *
 
@@ -7,12 +6,25 @@ class AccountSerilizer(serializers.ModelSerializer):
         model = Account
         fields=(
             'user',
+            'creation_date',
             'key',
             'first_name',
             'last_name',
             'email',
             'phone_number',
             'role',
+            'bio',
+            # SEE MODELS COMMENT
+            # 'profile_pic',
+        )
+
+class FriendsSerilize(serializers.ModelSerializer):
+    class Meta:
+        model = Friends
+        fields = (
+            'user1',
+            'user2',
+            'creation_date'
         )
 
 class MeetingSerilizer(serializers.ModelSerializer):
@@ -20,6 +32,10 @@ class MeetingSerilizer(serializers.ModelSerializer):
         model = Meeting
         fields = (
             'meeting_code',
+            'creation_date',
+            'topic',
+            'start_time',
+            'end_time',
             'user1',
             'user2',
         )
@@ -29,10 +45,12 @@ class CourseSerilizer(serializers.ModelSerializer):
         model = Course
         fields = (
             'course_id',
+            'creation_date',
             'professor',
             'ta',
             'course_name',
             'course_code',
+            'course_description',
         )
 
 class CourseEnrollSerilizer(serializers.ModelSerializer):
@@ -47,6 +65,8 @@ class MessageSerilizer(serializers.ModelSerializer):
     class Meta:
         fields = (
             'message_id',
+            'chatroom_id',
+            'creation_date',
             'account',
             'content',
         )
@@ -56,22 +76,49 @@ class ChatRoomSerilizer(serializers.ModelSerializer):
         fields = (
             'chatroom_id',
             'chatroom_host',
-            'messages',
         )
-    
+
+class ModuleSerilizer(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            'module_id',
+            'creation_date',
+            'studygroup_id',
+        )
+
+class Announcements(serializers.ModelField):
+    class Meta:
+        fields = (
+            'announcements_id',
+            'creation_date',
+            'studygroup_id'
+        )
+
 class StudyGroupSerilizer(serializers.ModelSerializer):
     class Meta:
         fields = ( 
             'studygroup_id',
+            'creation_date',
             'stduygroup_host',
-            'chat_id'
+            'chat_id',
+            'invite_only',
         )
 
 class StudyEnrollSelizer(serializers.ModelSerializer):
     class Meta:
         fields = (
-            'material_id',
             'account',
             'studygroup_id'
-            'content'
+        )
+
+class MaterialSerlizer(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            'material_id',
+            'material_type',
+            'creation_date',
+            'account',
+            'module_id',
+            'content',
+            'file_content',
         )

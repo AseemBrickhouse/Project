@@ -1,0 +1,121 @@
+* {
+	margin: 0;
+	padding: 0;
+	font-family: 'Montserrat', sans-serif;
+}
+
+body {
+	height: 100vh;
+	width: 100%;
+	background: #6A6C6E;
+}
+
+.container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+	width: 100%;
+}
+
+.login-box {
+	background: #9F8170;
+	padding: 100px 100px 50px 100px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	width: 400px;
+	font-size: 14px;
+	border-radius: 5px;
+}
+
+.icon {
+
+	display: grid;
+	place-items: center;
+	justify-content: center;
+	position: relative;
+	outline: 0px;
+	flex-direction: column;
+	padding-bottom: 3%;
+
+	
+}
+
+.icon-text{
+	text-align: center;
+	justify-content: center;
+	position: relative;
+	outline: 0px;
+	flex-direction: column;
+	padding-bottom: 5%;
+
+}
+
+.tittle{
+	padding-bottom: 5%;
+}
+
+.user-icon i {
+	font-size: 40px;
+	color: #FFF;
+}
+
+.login {
+	width: 100%;
+}
+
+.elements {
+	margin-bottom: 20px;
+	display: fle;
+	flex-direction: column;
+	width: 100%;
+}
+
+.inputBoxes{
+	font-size: 16px;
+	outline: none;
+	width: calc(100% - 36px);
+	border: 2px solid #CCC;
+	padding: 16px;
+	border-radius: 2px;
+	transition: all 0.3s ease;
+}
+
+.inputBoxes:hover{
+	border: 2px solid #242112;
+}
+
+button {
+	outline: none;
+	background: #242124;
+	color: #FFF;
+	padding: 16px;
+	display: block;
+	width: 100%;
+	border: none;
+	text-transform: uppercase;
+	font-size: 16px;
+	cursor: pointer;
+	transition: all 0.3s ease;
+}
+.centered-link{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+button:hover {
+	box-shadow: 5px 5px 5px #242112;
+}
+
+a {
+	color: #242124;
+}
+
+a:hover {
+	color: #FFF;
+}
