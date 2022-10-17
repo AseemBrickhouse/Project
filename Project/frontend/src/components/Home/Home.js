@@ -1,16 +1,43 @@
 import React, { Component } from 'react';
-import Button from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import {Button} from 'react-bootstrap';
+import { Link, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as actions from "../../store/actions/auth";
 
 const Home = (props) => { 
     console.log(props)
+    const isAuthenticated = props.isAuthenticated
     return (
-        <h1>
-            Testing some code
-            <Link to = "/CreateAccount">
-                test
-            </Link>
-        </h1>   
+        <div>
+            <h1> Home Page tmp</h1>
+            <div>
+                {
+                    !isAuthenticated ? 
+                        <Link to = "/Login">
+                            <Button>
+                                Login
+                            </Button>
+                        </Link>
+                    :
+                        <Link to ='/Logout'>
+                            <Button>
+                                Logout
+                            </Button>
+                        </Link>
+                }
+            </div>
+        </div>
     );
 }
-export default Home;
+const mapStateToProps = (state) => {
+    return{
+        isAuthenticated: state.auth.token !== null,
+        account: state.auth.account
+    }
+  }
+  const mapDispatchToProps = dispatch => {
+      return {
+        logout : () => dispatch(actions.authLOGOUT())
+      }
+  }
+  export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Home));
