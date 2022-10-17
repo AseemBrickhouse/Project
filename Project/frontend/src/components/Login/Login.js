@@ -5,10 +5,7 @@ import * as actions from '../../store/actions/auth';
 import {Button, Form, FormControl } from 'react-bootstrap';
 
 const Login = (props) => {
-    // const test = {
-    //   username: "test1",
-    //   password: "s8530216",
-    // }
+
     console.log(props)
 
     const handleSubmit = (event) => {
