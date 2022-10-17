@@ -27,6 +27,7 @@ class Account(models.Model):
     phone_number = models.IntegerField(blank=True)
     role = models.CharField(max_length=10,choices=roles.choices)
     bio = models.TextField(null=True)
+    somenewField = models.TextField(null=True)
     # INSTALL PILLOW!!!
     # profile_pic = models.ImageField(blank=True, null=True)
 
