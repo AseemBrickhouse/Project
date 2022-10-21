@@ -7,6 +7,7 @@ import * as authActions from '../store/actions/auth';
 const App = (props) => {
     const token = localStorage.getItem('token');
     console.log(props)
+    
     useEffect(() => {
         props.AutoTrySignUp();
     },[])

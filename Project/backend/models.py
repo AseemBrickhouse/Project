@@ -71,6 +71,7 @@ class Message(models.Model):
 class StudyGroup(models.Model):
     studygroup_id = models.CharField(max_length=20, null=True)
     creation_date = models.DateTimeField(auto_now_add=True, blank = True, null=True)
+    studygroup_name = models.CharField(max_length=50, blank = False, null = True)
     invite_only = models.BooleanField(blank = True, null = True, default = False)
     studygroup_host = models.ForeignKey(Account, on_delete=models.CASCADE)
     chat_id = models.ForeignKey(ChatRoom, on_delete=models.CASCADE)

@@ -63,6 +63,7 @@ class CourseEnrollSerilizer(serializers.ModelSerializer):
 
 class MessageSerilizer(serializers.ModelSerializer):
     class Meta:
+        model = Message
         fields = (
             'message_id',
             'chatroom_id',
@@ -73,6 +74,7 @@ class MessageSerilizer(serializers.ModelSerializer):
 
 class ChatRoomSerilizer(serializers.ModelSerializer):
     class Meta:
+        model = ChatRoom
         fields = (
             'chatroom_id',
             'chatroom_host',
@@ -80,6 +82,7 @@ class ChatRoomSerilizer(serializers.ModelSerializer):
 
 class ModuleSerilizer(serializers.ModelSerializer):
     class Meta:
+        model = Module
         fields = (
             'module_id',
             'creation_date',
@@ -88,6 +91,7 @@ class ModuleSerilizer(serializers.ModelSerializer):
 
 class Announcements(serializers.ModelField):
     class Meta:
+        model = Announcements
         fields = (
             'announcements_id',
             'creation_date',
@@ -96,16 +100,20 @@ class Announcements(serializers.ModelField):
 
 class StudyGroupSerilizer(serializers.ModelSerializer):
     class Meta:
+        model = StudyGroup
         fields = ( 
+            'id',
             'studygroup_id',
             'creation_date',
-            'stduygroup_host',
+            'studygroup_name',
+            'studygroup_host',
             'chat_id',
             'invite_only',
         )
 
 class StudyEnrollSelizer(serializers.ModelSerializer):
     class Meta:
+        model = StudyEnroll
         fields = (
             'account',
             'studygroup_id'
@@ -113,6 +121,7 @@ class StudyEnrollSelizer(serializers.ModelSerializer):
 
 class MaterialSerlizer(serializers.ModelSerializer):
     class Meta:
+        model = Material
         fields = (
             'material_id',
             'material_type',
