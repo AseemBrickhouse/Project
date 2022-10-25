@@ -133,3 +133,15 @@ class MaterialSerlizer(serializers.ModelSerializer):
             'content',
             'file_content',
         )
+
+class InviteSerlizer(serializers.ModelSerializer):
+    class Meta:
+        model = Invite
+        fields = (
+            'id',
+            'sender',
+            'creation_date',
+            'expiration_date',
+            'recipient',
+            'studygroup_id',
+        )

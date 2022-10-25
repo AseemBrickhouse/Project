@@ -1,9 +1,12 @@
+from wsgiref.handlers import format_date_time
 from ..serilizers import *
 from ..models import *
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.views import APIView
+from datetime import datetime
+from django.utils import timezone
 import random
 import string
 
@@ -23,7 +26,7 @@ class GetAllUserStudyGroups(ObtainAuthToken):
 
         queryset = {}
 
-        if StudyGroup.objects.all() == []:
+        if not StudyGroup.objects.all():
             return Response({
                 "Message": "You are not in any study groups currently"
         })
@@ -141,15 +144,46 @@ class JoinStudyGroup(ObtainAuthToken):
             Account successfully join study group
     """
     def post(self, request, *args, **kwargs):
-        print(request.data['studygroup_id'])
+        #Implement functionality later on to have more people to create invites and not just the host
         def StudyEnrollCheck(studygroup, currentUser):
             #Do more chekcing
+            studygroupJSON = StudyGroupSerilizer(studygroup).data
             try:
                 studygroup_toEnroll = StudyEnroll.objects.all().get(studygroup_id=studygroup, account=currentUser)
                 return({
                     "Message": "Account is already enrolled in this study group"
                 })
             except StudyEnroll.DoesNotExist:
+                if studygroupJSON['invite_only']:
+                    #check if invite exist
+                    #need to check exipriation date
+                    today = datetime.now()
+                    #Get invite if it exist
+                    hasInvite = Invite.objects.all().filter(
+                            sender=studygroupJSON['studygroup_host'], 
+                            recipient=currentUser,
+                            studygroup_id=studygroup,
+                        )
+                    if not hasInvite:
+                        return ({
+                             "Message": "You do not have a invite to this group!"
+                         })
+                    else:
+                        #At this point the invite must exist at [0]
+                        hasInvite = hasInvite[0]
+                        #Format both of the dates to be compared
+                        format_date_today = today.strftime("%Y-%m-%d %H:%M:%S")
+                        format_date_exp = hasInvite.expiration_date.strftime("%Y-%m-%d %H:%M:%S")
+                        
+                        #If the exp is lower -> the invite is expired
+                        #So, do not join the group and delete the invite
+                        if format_date_exp < format_date_today:
+                            hasInvite.delete()
+                            return ({
+                                "Message": "Invite expired!"
+                            })
+
+                #After all checks are passed its safe to enroll the user in the group
                 studygroup_toEnroll = StudyEnroll.objects.create(
                     studygroup_id = studygroup,
                     account = currentUser,
@@ -164,7 +198,7 @@ class JoinStudyGroup(ObtainAuthToken):
         currentUser = User.objects.all().filter(id=token)[0].account
 
         studygroup = StudyGroup.objects.all().get(studygroup_id=request.data['studygroup_id'])
-        print(studygroup)
+
         StudyGroupEnroll_message = StudyEnrollCheck(studygroup, currentUser)
 
 
@@ -217,7 +251,8 @@ class DeleteStudyGroup(ObtainAuthToken):
 
         try:
             toDelete = StudyGroup.objects.get(studygroup_host=currentUser, studygroup_id=key)
-
+            
+            #Deleting the chat room deletes all the enrolls, group, and the chatroom
             toDelete.chat_id.delete()
 
             return Response({
@@ -264,15 +299,35 @@ class LeaveStudyGroup(ObtainAuthToken):
         Message telling whether or not the user has left the group
     """
     def post(self, request, *args, **kwargs):
+        #   More checks to be done
+        #   When the last user of the group leaves -> delete the group
+        #   Who gets host when the host leaves -> the next person in-line of study enroll
+        
         token = Token.objects.get(key=request.data['token']).user_id
         currentUser = User.objects.all().filter(id=token)[0].account
 
-        studygroup = StudyGroup.objects.all().get(studygroup_id=request.data['studygroup_id'])
-        studygroupID = StudyGroupSerilizer(studygroup).data['id']
+        studygroup = StudyGroup.objects.all().get(studygroup_id=request.data['studygroup_id'])  
+        studygroup_userlist = StudyEnroll.objects.all().filter(studygroup_id=studygroup)
 
+        #Special case when current user is the host i.e cant host a group youre not in :)
+        if currentUser == studygroup.studygroup_host:
+            #More than 1 person in group so delegate host
+            if len(studygroup_userlist) > 1:
+                studygroup.studygroup_host = studygroup_userlist[1].account
+                studygroup.save(update_fields=['studygroup_host'])  
+                               
+            else:
+                #Safe to delete study group if the last person in the group leaves
+                studygroup.delete()
+                return Response({
+                    "Message": "Group successfully left and group is deleted(No more active users)."
+                })
+        
         try:
+            #Remove the user from the group if they exist
             toLeave = StudyEnroll.objects.all().get(studygroup_id=studygroup, account=currentUser)
             toLeave.delete()
+
             return Response({
                 "Message": "You have successfully left the group"
             })
