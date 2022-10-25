@@ -79,6 +79,7 @@ class StudyGroup(models.Model):
 class Module(models.Model):
     module_id = models.CharField(max_length=20)
     creation_date = models.DateTimeField(auto_now_add=True, blank = True, null=True)
+    module_owner = models.ForeignKey(Account, on_delete=models.CASCADE, null=True, blank=True)
     studygroup_id = models.ForeignKey(StudyGroup, on_delete=models.CASCADE,null=True)
 
 class Announcements(models.Model):
@@ -98,3 +99,10 @@ class Material(models.Model):
     module_id = models.ForeignKey(Module, on_delete=models.CASCADE, null=True)
     content = models.TextField(null = True, blank = True)
     file_content = models.FileField(upload_to='images/', blank=True, null=True)
+
+class Invite(models.Model):
+    sender = models.ForeignKey(Account, on_delete=models.CASCADE, null=True, blank=True, related_name="sender")
+    creation_date = models.DateTimeField(auto_now_add=True, blank = True, null=True)
+    expiration_date = models.DateTimeField(blank = True, null=True)
+    recipient = models.ForeignKey(Account, on_delete=models.CASCADE, null=True, blank=True, related_name="recipient")
+    studygroup_id = models.ForeignKey(StudyGroup, on_delete=models.CASCADE,null=True)

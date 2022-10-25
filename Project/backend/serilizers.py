@@ -84,6 +84,7 @@ class ModuleSerilizer(serializers.ModelSerializer):
     class Meta:
         model = Module
         fields = (
+            'id',
             'module_id',
             'creation_date',
             'studygroup_id',
@@ -123,6 +124,7 @@ class MaterialSerlizer(serializers.ModelSerializer):
     class Meta:
         model = Material
         fields = (
+            'id',
             'material_id',
             'material_type',
             'creation_date',
