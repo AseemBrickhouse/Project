@@ -47,8 +47,9 @@ class Meeting(models.Model):
 class Course(models.Model):
     course_id = models.CharField(max_length=20)
     creation_date = models.DateTimeField(auto_now_add=True, blank = True, null=True)
-    professor = models.ForeignKey(Account, on_delete=models.CASCADE, related_name="professor")
-    ta = models.ForeignKey(Account, on_delete=models.CASCADE, related_name="ta")
+    course_owner = models.ForeignKey(Account, on_delete=models.CASCADE, related_name="course_owner", null=True, blank=True)
+    professor = models.ForeignKey(Account, on_delete=models.CASCADE, related_name="professor", null=True, blank=True)
+    ta = models.ForeignKey(Account, on_delete=models.CASCADE, related_name="ta", null=True, blank=True)
     course_name = models.CharField(max_length=30, null=True)
     course_code = models.IntegerField(null=True)
     course_description = models.TextField(max_length=10000, null=True, blank = True)

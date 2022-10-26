@@ -1,4 +1,3 @@
-from wsgiref.handlers import format_date_time
 from ..serilizers import *
 from ..models import *
 from rest_framework.response import Response
@@ -22,7 +21,7 @@ class GetAllUserStudyGroups(ObtainAuthToken):
     """
     def post(self, request, *args, **kwargs):
         token = Token.objects.get(key=request.data['token']).user_id
-        currentUser = User.objects.all().filter(id=token)[0].account
+        current_user = User.objects.all().filter(id=token)[0].account
 
         queryset = {}
 
@@ -31,10 +30,10 @@ class GetAllUserStudyGroups(ObtainAuthToken):
                 "Message": "You are not in any study groups currently"
         })
 
-        for enroll in StudyEnroll.objects.all().filter(account=currentUser):
+        for enroll in StudyEnroll.objects.all().filter(account=current_user):
             studygroup = enroll.studygroup_id
-            groupJSON = StudyGroupSerilizer(studygroup).data
-            queryset[groupJSON['studygroup_id']] = groupJSON
+            group_json = StudyGroupSerilizer(studygroup).data
+            queryset[group_json['studygroup_id']] = group_json
 
         return Response(queryset)
         
@@ -54,8 +53,8 @@ class GetAllStudyGroups(APIView):
                 "Message": "No availible study gorups"
             })
         for group in StudyGroup.objects.all():
-            groupJSON = StudyGroupSerilizer(group).data
-            queryset[groupJSON['studygroup_id']] = groupJSON
+            group_json= StudyGroupSerilizer(group).data
+            queryset[group_json['studygroup_id']] = group_json
 
         return Response(queryset)
 
@@ -80,14 +79,6 @@ class CreateStudyGroup(ObtainAuthToken):
     """
     def post(self, request, *args, **kwargs):
 
-        def createStudyGroupChat(host):
-            chat_toCreate = ChatRoom.objects.create(
-                chatroom_id = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(20)),
-                chatroom_host = host
-            )
-            chat_toCreate.save()
-            return chat_toCreate
-
         def StudyGroupNameCheck(name):
             try: 
                 query = StudyGroup.objects.get(studygroup_name=name)
@@ -95,18 +86,26 @@ class CreateStudyGroup(ObtainAuthToken):
             except StudyGroup.DoesNotExist:
                 return False
 
-        def createStudyGroupEnroll(StudyGroupChat_toCreate, currentUser):
-            StudyEnroll_toCreate = StudyEnroll.objects.create(
-                studygroup_id = StudyGroupChat_toCreate,
-                account = currentUser,
+        def createStudyGroupChat(host):
+            chat_to_create = ChatRoom.objects.create(
+                chatroom_id = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(20)),
+                chatroom_host = host
             )
-            StudyEnroll_toCreate.save()
+            chat_to_create.save()
+            return chat_to_create
 
-            return StudyEnroll_toCreate
+        def createStudyGroupEnroll(StudyGroup_to_create, current_user):
+            StudyEnroll_to_create = StudyEnroll.objects.create(
+                studygroup_id = StudyGroup_to_create,
+                account = current_user,
+            )
+            StudyEnroll_to_create.save()
+
+            return StudyEnroll_to_create
 
         #Get current user
         token = Token.objects.get(key=request.data['token']).user_id
-        currentUser = User.objects.all().filter(id=token)[0].account
+        current_user = User.objects.all().filter(id=token)[0].account
 
         #Check name
         if StudyGroupNameCheck(request.data['name']):
@@ -114,21 +113,23 @@ class CreateStudyGroup(ObtainAuthToken):
                 "Message": "Study group name already taken"
             })
 
-        StudyGroupChat_toCreate = createStudyGroupChat(currentUser)
-        StudyGroup_toCreate = StudyGroup.objects.create(
+        StudyGroup_chat_to_create = createStudyGroupChat(current_user)
+
+        StudyGroup_to_create = StudyGroup.objects.create(
             studygroup_name = request.data['name'],
             studygroup_id = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(20)),
             invite_only = request.data['invite_only'],
-            studygroup_host = currentUser,
-            chat_id = StudyGroupChat_toCreate,
+            studygroup_host = current_user,
+            chat_id = StudyGroup_chat_to_create,
         )
 
-        StudyGroup_toCreate.save()
+        StudyGroup_to_create.save()
         
-        StudyGroupEnroll_toCreate = createStudyGroupEnroll(StudyGroup_toCreate, currentUser)
-        StudyGroup_toCreateJSON = StudyGroupSerilizer(StudyGroup_toCreate).data
+        createStudyGroupEnroll(StudyGroup_to_create, current_user)
+
+        StudyGroup_to_create_json = StudyGroupSerilizer(StudyGroup_to_create).data
         
-        return Response(StudyGroup_toCreateJSON)
+        return Response(StudyGroup_to_create_json)
 
 class JoinStudyGroup(ObtainAuthToken):
     """
@@ -145,64 +146,64 @@ class JoinStudyGroup(ObtainAuthToken):
     """
     def post(self, request, *args, **kwargs):
         #Implement functionality later on to have more people to create invites and not just the host
-        def StudyEnrollCheck(studygroup, currentUser):
+        def StudyEnrollCheck(studygroup, current_user):
             #Do more chekcing
-            studygroupJSON = StudyGroupSerilizer(studygroup).data
+            studygroup_json = StudyGroupSerilizer(studygroup).data
             try:
-                studygroup_toEnroll = StudyEnroll.objects.all().get(studygroup_id=studygroup, account=currentUser)
+                studygroup_to_enroll = StudyEnroll.objects.all().get(studygroup_id=studygroup, account=current_user)
                 return({
                     "Message": "Account is already enrolled in this study group"
                 })
             except StudyEnroll.DoesNotExist:
-                if studygroupJSON['invite_only']:
+                if studygroup_json['invite_only']:
                     #check if invite exist
                     #need to check exipriation date
                     today = datetime.now()
                     #Get invite if it exist
-                    hasInvite = Invite.objects.all().filter(
-                            sender=studygroupJSON['studygroup_host'], 
-                            recipient=currentUser,
+                    has_invite = Invite.objects.all().filter(
+                            sender=studygroup_json['studygroup_host'], 
+                            recipient=current_user,
                             studygroup_id=studygroup,
                         )
-                    if not hasInvite:
+                    if not has_invite:
                         return ({
                              "Message": "You do not have a invite to this group!"
                          })
                     else:
                         #At this point the invite must exist at [0]
-                        hasInvite = hasInvite[0]
+                        has_invite = has_invite[0]
                         #Format both of the dates to be compared
                         format_date_today = today.strftime("%Y-%m-%d %H:%M:%S")
-                        format_date_exp = hasInvite.expiration_date.strftime("%Y-%m-%d %H:%M:%S")
+                        format_date_exp = has_invite.expiration_date.strftime("%Y-%m-%d %H:%M:%S")
                         
                         #If the exp is lower -> the invite is expired
                         #So, do not join the group and delete the invite
                         if format_date_exp < format_date_today:
-                            hasInvite.delete()
+                            has_invite.delete()
                             return ({
                                 "Message": "Invite expired!"
                             })
 
                 #After all checks are passed its safe to enroll the user in the group
-                studygroup_toEnroll = StudyEnroll.objects.create(
+                studygroup_to_enroll = StudyEnroll.objects.create(
                     studygroup_id = studygroup,
-                    account = currentUser,
+                    account = current_user,
                 )
-                studygroup_toEnroll.save()
+                studygroup_to_enroll.save()
 
             return({
                 "Message": "Study group joined"
             })
 
         token = Token.objects.get(key=request.data['token']).user_id
-        currentUser = User.objects.all().filter(id=token)[0].account
+        current_user = User.objects.all().filter(id=token)[0].account
 
         studygroup = StudyGroup.objects.all().get(studygroup_id=request.data['studygroup_id'])
 
-        StudyGroupEnroll_message = StudyEnrollCheck(studygroup, currentUser)
+        StudyGroup_enroll_message = StudyEnrollCheck(studygroup, current_user)
 
 
-        return Response(StudyGroupEnroll_message)
+        return Response(StudyGroup_enroll_message)
 
 
 class GetUserHostedGroups(ObtainAuthToken):
@@ -216,20 +217,20 @@ class GetUserHostedGroups(ObtainAuthToken):
     """
     def post(self, request, *args, **kwargs):
         token = Token.objects.get(key=request.data['token']).user_id
-        currentUser = User.objects.all().filter(id=token)[0].account
+        current_user = User.objects.all().filter(id=token)[0].account
 
-        allUserHostedGroups = StudyGroup.objects.all().filter(studygroup_host=currentUser)
+        all_user_hosted_groups = StudyGroup.objects.all().filter(studygroup_host=current_user)
 
-        if not allUserHostedGroups:
+        if not all_user_hosted_groups:
             return Response({
                 "Message": "No hosted groups"
             })
 
         queryset = {}
 
-        for group in allUserHostedGroups:
-            groupJSON = StudyGroupSerilizer(group).data
-            queryset[groupJSON['studygroup_id']] = groupJSON
+        for group in all_user_hosted_groups:
+            group_json = StudyGroupSerilizer(group).data
+            queryset[group_json['studygroup_id']] = group_json
 
         return Response(queryset)
 
@@ -245,15 +246,15 @@ class DeleteStudyGroup(ObtainAuthToken):
     """
     def post(self, request, *args, **kwargs):
         token = Token.objects.get(key=request.data['token']).user_id
-        currentUser = User.objects.all().filter(id=token)[0].account
+        current_user = User.objects.all().filter(id=token)[0].account
 
         key = request.data['studygroup_id']
 
         try:
-            toDelete = StudyGroup.objects.get(studygroup_host=currentUser, studygroup_id=key)
+            to_delete = StudyGroup.objects.get(studygroup_host=current_user, studygroup_id=key)
             
             #Deleting the chat room deletes all the enrolls, group, and the chatroom
-            toDelete.chat_id.delete()
+            to_delete.chat_id.delete()
 
             return Response({
                 "Message": "Study group successfully deleted"
@@ -277,13 +278,13 @@ class GetUsersInGroup(APIView):
     def post(self, request, *args, **kwargs):
         studygroup = StudyGroup.objects.all().get(studygroup_id=request.data['studygroup_id'])
 
-        userList = StudyEnroll.objects.all().filter(studygroup_id=studygroup)
+        user_list = StudyEnroll.objects.all().filter(studygroup_id=studygroup)
 
         queryset = {}
 
-        for user in userList:
-            userJSON = AccountSerilizer(user.account).data
-            queryset[userJSON['key']] = userJSON
+        for user in user_list:
+            user_json = AccountSerilizer(user.account).data
+            queryset[user_json['key']] = user_json
 
         return Response(queryset)
 
@@ -304,16 +305,17 @@ class LeaveStudyGroup(ObtainAuthToken):
         #   Who gets host when the host leaves -> the next person in-line of study enroll
         
         token = Token.objects.get(key=request.data['token']).user_id
-        currentUser = User.objects.all().filter(id=token)[0].account
+        current_user = User.objects.all().filter(id=token)[0].account
 
         studygroup = StudyGroup.objects.all().get(studygroup_id=request.data['studygroup_id'])  
-        studygroup_userlist = StudyEnroll.objects.all().filter(studygroup_id=studygroup)
+        studygroup_user_list = StudyEnroll.objects.all().filter(studygroup_id=studygroup)
 
         #Special case when current user is the host i.e cant host a group youre not in :)
-        if currentUser == studygroup.studygroup_host:
+        print(current_user, studygroup.studygroup_host)
+        if current_user == studygroup.studygroup_host:
             #More than 1 person in group so delegate host
-            if len(studygroup_userlist) > 1:
-                studygroup.studygroup_host = studygroup_userlist[1].account
+            if len(studygroup_user_list) > 1:
+                studygroup.studygroup_host = studygroup_user_list[1].account
                 studygroup.save(update_fields=['studygroup_host'])  
                                
             else:
@@ -325,8 +327,8 @@ class LeaveStudyGroup(ObtainAuthToken):
         
         try:
             #Remove the user from the group if they exist
-            toLeave = StudyEnroll.objects.all().get(studygroup_id=studygroup, account=currentUser)
-            toLeave.delete()
+            to_leave = StudyEnroll.objects.all().get(studygroup_id=studygroup, account=current_user)
+            to_leave.delete()
 
             return Response({
                 "Message": "You have successfully left the group"
@@ -350,21 +352,21 @@ class GetGroupModules(APIView):
             queryset = {}
 
             for entry in  Material.objects.all().filter(module_id=module):
-                entryJSON = MaterialSerlizer(entry).data
-                queryset[entryJSON['material_id']] = entryJSON
+                entry_json = MaterialSerlizer(entry).data
+                queryset[entry_json['material_id']] = entry_json
 
             return queryset
 
         studygroup = StudyGroup.objects.all().get(studygroup_id=request.data['studygroup_id'])
-        studygroupJSON = StudyGroupSerilizer(studygroup).data
+        studygroup_json = StudyGroupSerilizer(studygroup).data
 
-        studygroup_modules = Module.objects.all().filter(studygroup_id=studygroupJSON['id'])
+        studygroup_modules = Module.objects.all().filter(studygroup_id=studygroup_json['id'])
 
         queryset = {}
 
         for module in studygroup_modules:
-            moduleJSON = ModuleSerilizer(module).data
-            queryset[moduleJSON['module_id']] = moduleJSON
-            queryset[moduleJSON['module_id']]['content'] = getContent(module)
+            module_json = ModuleSerilizer(module).data
+            queryset[module_json['module_id']] = module_json
+            queryset[module_json['module_id']]['content'] = getContent(module)
 
         return Response(queryset)
