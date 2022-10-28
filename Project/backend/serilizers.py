@@ -90,11 +90,12 @@ class ModuleSerilizer(serializers.ModelSerializer):
             'studygroup_id',
         )
 
-class Announcements(serializers.ModelField):
+class AnnouncementSerilizer(serializers.ModelSerializer):
     class Meta:
         model = Announcements
         fields = (
-            'announcements_id',
+            'id',
+            'announcement_id',
             'creation_date',
             'studygroup_id'
         )

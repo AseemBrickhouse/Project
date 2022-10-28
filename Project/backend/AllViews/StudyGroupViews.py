@@ -244,7 +244,7 @@ class DeleteStudyGroup(ObtainAuthToken):
     @ Return    
         message telling whether or not the group was deleted
     """
-    def post(self, request, *args, **kwargs):
+    def delete(self, request, *args, **kwargs):
         token = Token.objects.get(key=request.data['token']).user_id
         current_user = User.objects.all().filter(id=token)[0].account
 
@@ -299,7 +299,7 @@ class LeaveStudyGroup(ObtainAuthToken):
     @ Return    
         Message telling whether or not the user has left the group
     """
-    def post(self, request, *args, **kwargs):
+    def delete(self, request, *args, **kwargs):
         #   More checks to be done
         #   When the last user of the group leaves -> delete the group
         #   Who gets host when the host leaves -> the next person in-line of study enroll

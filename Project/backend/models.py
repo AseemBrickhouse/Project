@@ -87,7 +87,7 @@ class Announcements(models.Model):
     announcement_id = models.CharField(max_length=20)
     creation_date = models.DateTimeField(auto_now_add=True, blank = True, null=True)
     studygroup_id = models.ForeignKey(StudyGroup, on_delete=models.CASCADE,null=True)
-
+    #add From user
 class StudyEnroll(models.Model):
     studygroup_id = models.ForeignKey(StudyGroup, on_delete=models.CASCADE,null=True)
     account = models.ForeignKey(Account, on_delete=models.CASCADE)

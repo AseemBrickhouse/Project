@@ -33,4 +33,7 @@ urlpatterns = [
     path('GetAllCourses/', GetAllCourses.as_view()),
     path('GetUsersInCourse/', GetUsersInCourse.as_view()),
     path('CreateCourse/', CreateCourse.as_view()),
+
+    #FEED VIEWS
+    path('GetUserFeed/', GetUserFeed.as_view()),
 ]
