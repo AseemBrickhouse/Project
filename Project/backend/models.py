@@ -76,6 +76,7 @@ class StudyGroup(models.Model):
     invite_only = models.BooleanField(blank = True, null = True, default = False)
     studygroup_host = models.ForeignKey(Account, on_delete=models.CASCADE)
     chat_id = models.ForeignKey(ChatRoom, on_delete=models.CASCADE)
+    studygroup_description=models.TextField(null=True, blank=True)
 
 class Module(models.Model):
     module_id = models.CharField(max_length=20)
@@ -87,7 +88,9 @@ class Announcements(models.Model):
     announcement_id = models.CharField(max_length=20)
     creation_date = models.DateTimeField(auto_now_add=True, blank = True, null=True)
     studygroup_id = models.ForeignKey(StudyGroup, on_delete=models.CASCADE,null=True)
-    #add From user
+    announcement_creator = models.ForeignKey(Account, on_delete=models.CASCADE, null=True)
+    announcement_description = models.TextField(null=True, blank=True)
+
 class StudyEnroll(models.Model):
     studygroup_id = models.ForeignKey(StudyGroup, on_delete=models.CASCADE,null=True)
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
@@ -102,6 +105,7 @@ class Material(models.Model):
     file_content = models.FileField(upload_to='images/', blank=True, null=True)
 
 class Invite(models.Model):
+    invite_id = models.CharField(max_length=20, blank=True, null=True)
     sender = models.ForeignKey(Account, on_delete=models.CASCADE, null=True, blank=True, related_name="sender")
     creation_date = models.DateTimeField(auto_now_add=True, blank = True, null=True)
     expiration_date = models.DateTimeField(blank = True, null=True)

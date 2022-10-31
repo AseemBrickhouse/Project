@@ -80,15 +80,16 @@ class GetUserFeed(ObtainAuthToken):
         
         queryset = []
         queryset = StudyGroupFeed(current_user) + MeetingFeed(current_user)
-        # print(MeetingFeed(current_user))
+
 
         queryset.sort(key=Content_Type_Date)
-        print(queryset)
-
+        
         send = {}
-        cnt = 0
+        #TODO:
+        #Change index to be a more meaningful value
+        index = 0
         for x in queryset:
-           send[cnt] = Content_Type_Info(x)
-           cnt = cnt + 1
-        # print(queryset)
+           send[index] = Content_Type_Info(x)
+           index = index + 1
+
         return Response(send)

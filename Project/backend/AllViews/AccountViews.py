@@ -43,7 +43,7 @@ class AccountCreation(ObtainAuthToken):
 
         account = Account.objects.create(
             user=user,
-            key= ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(20)),
+            key= ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(20)),
             first_name=request.data['first_name'],
             last_name=request.data['last_name'],
             email=request.data['email'],
@@ -52,3 +52,42 @@ class AccountCreation(ObtainAuthToken):
         account.save()
 
         return Response (request.data)
+
+class EditAccount(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
+        token_id = Token.objects.get(key=request.data['token']).user_id
+        current_user = User.objects.all().filter(id=token_id)[0]
+
+        Account.objects.filter(user=current_user).update(
+            first_name=request.data['first_name'] if request.data['first_name'] != "" else current_user.account.first_name,
+            last_name=request.data['last_name'] if request.data['last_name'] != "" else current_user.account.last_name,
+            phone=request.data['phone'] if request.data['phone'] != "" else current_user.account.phone,
+            bio=request.data['bio'] if request.data['bio'] != "" else current_user.account.bio,
+            email=request.data['email'] if request.data['email'] != "" else current_user.account.email,
+        )
+
+        return Response(request.data)
+
+class GetPerson(APIView):
+    def post(self, request, *args, **kwargs):
+        person_object = Account.objects.filter(
+            first_name = request.data['first_name'],
+            last_name = request.data['last_name'],
+            email = request.data['email'],
+        )[0]
+        person_json = AccountSerilizer(person_object).data
+        if request.data['token'] != None:
+            #TODO:
+            #Implement for friends later
+            pass
+
+        return Response(person_json)
+
+class AllAccounts(APIView):
+    def get(self, request, *args, **kwargs):
+        queryset = {}
+        for account in Account.objects.all():
+            account_json = AccountSerilizer(account).data
+            queryset[account_json['key']] = account_json
+
+        return Response(queryset)

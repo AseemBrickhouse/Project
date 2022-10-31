@@ -5,6 +5,7 @@ from backend.AllViews.StudyGroupViews import *
 from backend.AllViews.ModuleViews import *
 from backend.AllViews.CourseViews import *
 from backend.AllViews.UserFeedViews import *
+from backend.AllViews.MeetingViews import *
 
 urlpatterns = [
     path('rest-auth/', include('rest_auth.urls')),
@@ -13,6 +14,9 @@ urlpatterns = [
     #ACCOUNT VIEWS
     path('AccountCreation/', AccountCreation.as_view()),
     path('CurrentUser/', CurrentUser.as_view()),
+    path('EditAccount/', EditAccount.as_view()),
+    path('GetPerson/', GetPerson.as_view()),
+    path('AllAccounts/', AllAccounts.as_view()),
 
     #STUDYGROUP VIEWS
     path('GetAllStudyGroups/', GetAllStudyGroups.as_view()),
@@ -36,4 +40,9 @@ urlpatterns = [
 
     #FEED VIEWS
     path('GetUserFeed/', GetUserFeed.as_view()),
+
+    #MEETING VIEWS
+    path('CreateMeeting/', CreateMeeting.as_view()),
+    path('GetUserMeetings/', GetUserMeetings.as_view()),
+    path('DeleteMeeting/', DeleteMeeting.as_view()),
 ]

@@ -31,6 +31,7 @@ class MeetingSerilizer(serializers.ModelSerializer):
     class Meta:
         model = Meeting
         fields = (
+            'id',
             'meeting_code',
             'creation_date',
             'topic',
@@ -44,6 +45,7 @@ class CourseSerilizer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = (
+            'id',
             'course_id',
             'creation_date',
             'professor',
@@ -57,6 +59,7 @@ class CourseEnrollSerilizer(serializers.ModelSerializer):
     class Meta:
         model = CourseEnroll
         fields = (
+            'id',
             'account',
             'course',
         )
@@ -65,6 +68,7 @@ class MessageSerilizer(serializers.ModelSerializer):
     class Meta:
         model = Message
         fields = (
+            'id',
             'message_id',
             'chatroom_id',
             'creation_date',
@@ -97,7 +101,9 @@ class AnnouncementSerilizer(serializers.ModelSerializer):
             'id',
             'announcement_id',
             'creation_date',
-            'studygroup_id'
+            'studygroup_id',
+            'announcement_creator',
+            'announcement_description',
         )
 
 class StudyGroupSerilizer(serializers.ModelSerializer):
@@ -111,6 +117,7 @@ class StudyGroupSerilizer(serializers.ModelSerializer):
             'studygroup_host',
             'chat_id',
             'invite_only',
+            'studygroup_description',
         )
 
 class StudyEnrollSelizer(serializers.ModelSerializer):
@@ -141,6 +148,7 @@ class InviteSerlizer(serializers.ModelSerializer):
         fields = (
             'id',
             'sender',
+            'invite_id',
             'creation_date',
             'expiration_date',
             'recipient',

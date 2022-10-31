@@ -1,4 +1,3 @@
-from pipes import Template
 from ..serilizers import *
 from ..models import *
 
@@ -65,7 +64,7 @@ def Content_Type_Info(model_obj):
         print(body[2][2])
         template = {
             "Header": {
-                "id": header[0],
+                "id":   header[0],
                 "Type": header[1],
                 "Key":  header[2],
                 "Name": header[3],
@@ -101,23 +100,32 @@ def Content_Type_Info(model_obj):
         #Study group
         case "Announcements":
             announcement_json = AnnouncementSerilizer(model_obj).data
+
+            studygroup = StudyGroup.objects.all().get(id=announcement_json['studygroup_id'])
+            studygroup_json = StudyGroupSerilizer(studygroup).data
+            
+            user = Account.objects.all().get(id=announcement_json['announcement_creator'])
+            user_json = AccountSerilizer(user).data
+            user_name = user_json['first_name'] + user_json['last_name']
+
             header = (
                 announcement_json['id'],
                 "StudyGroup",
                 announcement_json['announcement_id'],
-                None,
+                studygroup_json['studygroup_name'],
             )
             body = (
                 ("Announcement"),
-                #add model field for announcement data
-                (None),
+                (announcement_json['announcement_description']),
                 (announcement_json['creation_date'], None, None),
-                 #Add creator model field
-                (None, None, None, None)
+                (user_name, user_json, None, None)
             )
             return Format_data(header, body)
         case "Invite":
             invite_json = InviteSerlizer(model_obj).data
+
+            studygroup = StudyGroup.objects.all().get(id=invite_json['studygroup_id'])
+            studygroup_json = StudyGroupSerilizer(studygroup).data
 
             sender_obj = Account.objects.all().filter(id=invite_json['sender'])[0]
             sender_info = AccountSerilizer(sender_obj).data
@@ -127,28 +135,56 @@ def Content_Type_Info(model_obj):
             recipient_info = AccountSerilizer(recipient_obj).data
             recipient = recipient_info['first_name'] + recipient_info['last_name']
 
+            description = "Studygroup invite to " + studygroup_json['studygroup_name']
             header = (
                 invite_json['id'],
                 "StudyGroup",
-                #Have to Add id field for invites invite_json['invite_id'],
-                None,
+                invite_json['invite_id'],
                 None,
             )
             body = (
                 ("Invite"),
-                (None),
-                (invite_json['creation_date'], None, invite_json['expiration_date']),
+                (description),
+                (invite_json['creation_date'], invite_json['creation_date'], invite_json['expiration_date']),
                 (sender, sender_info, recipient, recipient_info),
             )
             return Format_data(header, body)
+
         case "Module":
+            #TODO:
+            # When Module is more developed
+            # Get all material objects given the Module id -> parse data -> format in description
             return ModuleSerilizer(model_obj).data
+
+        #Prob no need for Material seeing its part of modules
         case "Material":
             pass
         
         #Meeting
         case "Meeting":
-            return MeetingSerilizer(model_obj).data
+            meeting_json = MeetingSerilizer(model_obj).data
+
+            sender_obj = Account.objects.all().filter(id=meeting_json['user1'])[0]
+            sender_info = AccountSerilizer(sender_obj).data
+            sender = sender_info['first_name'] + sender_info['last_name']
+
+            recipient_obj = Account.objects.all().filter(id=meeting_json['user2'])[0]
+            recipient_info = AccountSerilizer(recipient_obj).data
+            recipient = recipient_info['first_name'] + recipient_info['last_name']
+
+            header = (
+                meeting_json['id'],
+                "Meeting",
+                None,
+                meeting_json['meeting_code'],
+            )
+            body = (
+                (None),
+                (meeting_json['topic']),
+                (meeting_json['creation_date'], meeting_json['start_time'], meeting_json['end_time']),
+                (sender, sender_info, recipient, recipient_info),
+            )
+            return Format_data(header, body)
 
         #Course
         case "Course_Module":
