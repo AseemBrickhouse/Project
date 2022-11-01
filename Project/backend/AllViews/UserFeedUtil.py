@@ -1,7 +1,16 @@
 from ..serilizers import *
 from ..models import *
 
+
 def StudyGroupFeed(current_user):
+    """
+    @ function
+        Given the current user return all of the objects related to all the study groups the user is in
+    @ request Params
+        current_user: Account object
+    @ Return    
+        All objects related to the study groups the user is in. -> Type [<Invite: Object> | <Module: Object> | <Announcement: Object>]
+    """
     queryset = []
     enrolled_studygroups = {}
     for enroll in StudyEnroll.objects.all().filter(account=current_user):
@@ -21,6 +30,14 @@ def StudyGroupFeed(current_user):
     return queryset
 
 def MeetingFeed(current_user):
+    """
+    @ function
+        Given the current user return all the meetings the user in is
+    @ request Params
+        current_user: Account object
+    @ Return    
+        All meetings the user is in. -> Type [<Meeting: Object>]
+    """
     queryset = []
     all_meetings = Meeting.objects.all().filter(user1=current_user) | Meeting.objects.all().filter(user2=current_user)
     for meeting in all_meetings:
@@ -37,6 +54,15 @@ def Course():
     pass
 
 def Content_Type_Date(model_obj):
+    """
+    @ function
+        Given a random model, find out what model is being called and return the creation date of the model object.
+        Mainly used for a key for sorting the Object List
+    @ request Params
+        model_obj: random model
+    @ Return    
+        Creation date of the model.
+    """
     model_name = model_obj.__class__.__name__
 
     match model_name:
@@ -60,6 +86,15 @@ def Content_Type_Date(model_obj):
             pass
         
 def Content_Type_Info(model_obj):
+    """
+    @ function
+        Given a random model, find out what model is being called -> Parse the data into tuples -> Format the data in the correct json fields -> return formmated json 
+        Mainly used for a key for sorting the Object List
+    @ request Params
+        model_obj: random model
+    @ Return    
+        Formattted json of the given model object
+    """
     def Format_data(header, body):
         print(body[2][2])
         template = {

@@ -7,6 +7,14 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from .UserFeedUtil import *
 
 class GetUserFeed(ObtainAuthToken):
+    """
+    @ function
+        Given a user token, return all the current activity of the user
+    @ request Params
+        user token: request.data['token']
+    @ Return    
+        The feed of the current user, this includes meedting creations, modules, study group info, etc.
+    """
     def post(self, request, *args, **kwargs):
         """
         Given a Token -> Get user
