@@ -225,3 +225,60 @@ def Content_Type_Info(model_obj):
         case "Course_Module":
             pass
         
+def Content_Type_View(sub_type, id):
+    match sub_type:
+        #Study group
+        case "Announcements" | "Announcement":
+            announcement = Announcements.objects.all().get(announcement_id=id)
+            announcement_json = AnnouncementSerilizer(announcement).data
+
+            studygroup = StudyGroup.objects.all().get(id=announcement_json['studygroup_id'])
+            studygroup_json = StudyGroupSerilizer(studygroup).data
+
+            queryset = {
+                studygroup_json['studygroup_id']: studygroup_json,
+                announcement_json['announcement_id']: announcement_json
+            }
+            return queryset
+
+        case "Invite":
+            invite = Invite.objects.all().get(invite_id=id)
+            invite_json = InviteSerlizer(invite).data
+
+            studygroup = StudyGroup.objects.all().get(id=invite_json['studygroup_id'])
+            studygroup_json = StudyGroupSerilizer(studygroup).data
+
+            queryset = {
+                studygroup_json['studygroup_id']: studygroup_json,
+                invite_json['invite_id']: invite_json
+            }            
+            return queryset
+
+        #Still thinking of some logic for this
+        case "Module":
+            pass
+        case "Material":
+            pass
+
+        #Meeting
+        case "Meeting":
+            meeting = Meeting.objects.all().get(meeting_code=id)
+            meeting_json = MeetingSerilizer(meeting).data
+
+            user1 = Account.objects.all().get(id=meeting_json['user1'])
+            user1_json = AccountSerilizer(user1).data
+
+            user2 = Account.objects.all().get(id=meeting_json['user2'])
+            user2_json = AccountSerilizer(user2).data
+
+            queryset = {
+                meeting_json['meeting_code']: meeting_json,
+                user1_json['key']: user1_json,
+                user2_json['key']: user2_json
+            }
+            
+            return queryset
+
+        #Course
+        case "Course_Module":
+            pass

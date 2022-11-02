@@ -1,10 +1,10 @@
-from turtle import pen
 from ..serilizers import *
 from ..models import *
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 from .UserFeedUtil import *
+from rest_framework.views import APIView
 
 class GetUserFeed(ObtainAuthToken):
     """
@@ -101,3 +101,11 @@ class GetUserFeed(ObtainAuthToken):
            index = index + 1
 
         return Response(send)
+
+class GetFeedItem(APIView):
+    def post(self, request, *args, **kwargs):
+        #Take in a 'id' for the sub_type, and the type, "Announcement", etc
+        type = request.data['sub_type']
+        type_id = request.data['id']
+        
+        return Response(Content_Type_View(type, type_id))

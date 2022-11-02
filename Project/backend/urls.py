@@ -40,6 +40,7 @@ urlpatterns = [
 
     #FEED VIEWS
     path('GetUserFeed/', GetUserFeed.as_view()),
+    path('GetFeedItem/', GetFeedItem.as_view()),
 
     #MEETING VIEWS
     path('CreateMeeting/', CreateMeeting.as_view()),
