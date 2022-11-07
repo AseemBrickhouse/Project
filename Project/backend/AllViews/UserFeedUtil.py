@@ -175,7 +175,7 @@ def Content_Type_Info(model_obj):
                 invite_json['id'],
                 "StudyGroup",
                 invite_json['invite_id'],
-                None,
+                studygroup_json['studygroup_name'],
             )
             body = (
                 ("Invite"),
@@ -210,8 +210,8 @@ def Content_Type_Info(model_obj):
             header = (
                 meeting_json['id'],
                 "Meeting",
-                None,
                 meeting_json['meeting_code'],
+                None,
             )
             body = (
                 (None),

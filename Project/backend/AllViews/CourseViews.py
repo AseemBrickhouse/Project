@@ -52,7 +52,6 @@ class CreateCourse(ObtainAuthToken):
                 course_owner=current_user,
                 course_name=request.data['course_name'],
                 course_code=request.data['course_code'],
-                course_description=request.data['course_description'],
             )
         except Course.DoesNotExist:
             course_to_create = Course.objects.create(

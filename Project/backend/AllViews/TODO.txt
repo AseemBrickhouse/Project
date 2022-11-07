@@ -1,0 +1,32 @@
+TODO
+
+Feed stuff
+    Notifications? (Should be simple in theroy)
+
+Create Invite calls for study group
+    Create
+    Delete
+    Get all invites for X group
+    User pov
+        View out going invites 
+        View incoming invites
+
+Create Course calls
+    Join course
+    Leave course
+    Delete Course
+    
+    Possible:
+        (Create course module, delete module, get all modules)
+
+Create Announcement calls
+    Create announcemnet
+    Delete announcement
+    Update announcement
+    Get all announcemnets for group
+    View my enrolled study group announcemnets 
+
+Create Chatroom calls
+    Get all messages 
+    create message
+    delete message

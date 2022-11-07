@@ -171,18 +171,20 @@ class JoinStudyGroup(ObtainAuthToken):
                     else:
                         #At this point the invite must exist at [0]
                         has_invite = has_invite[0]
-                        #Format both of the dates to be compared
-                        format_date_today = today.strftime("%Y-%m-%d %H:%M:%S")
-                        format_date_exp = has_invite.expiration_date.strftime("%Y-%m-%d %H:%M:%S")
-                        
-                        #If the exp is lower -> the invite is expired
-                        #So, do not join the group and delete the invite
-                        if format_date_exp < format_date_today:
-                            has_invite.delete()
-                            return ({
-                                "Message": "Invite expired!"
-                            })
+                        if has_invite.expiration_date != None:
+                            #Format both of the dates to be compared
+                            format_date_today = today.strftime("%Y-%m-%d %H:%M:%S")
+                            format_date_exp = has_invite.expiration_date.strftime("%Y-%m-%d %H:%M:%S")
 
+                            #If the exp is lower -> the invite is expired
+                            #So, do not join the group and delete the invite
+                            if format_date_exp < format_date_today:
+                                has_invite.delete()
+                                return ({
+                                    "Message": "Invite expired!"
+                                })
+
+                has_invite.delete()
                 #After all checks are passed its safe to enroll the user in the group
                 studygroup_to_enroll = StudyEnroll.objects.create(
                     studygroup_id = studygroup,
