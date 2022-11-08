@@ -80,7 +80,32 @@ class CreateInvite(ObtainAuthToken):
 
 class DeleteInvite(ObtainAuthToken):
     def delete(self, request, *args, **kwargs):
-        pass
+        token = Token.objects.get(key=request.data['token']).user_id
+        current_user = User.objects.all().filter(id=token)[0].account
+
+        if not request.data.__contains__('invite_id'):
+            return Response({
+                "Message": "No given invite id"
+            })
+
+        invite = Invite.objects.all().filter(invite_id=request.data['invite_id'])
+
+        if not invite:
+            return Response({
+                "Message": "Not a valid invite to delete"
+            })
+        else:
+            if invite[0].sender != current_user:
+                return Response({
+                    "Message": "You are not the sender of this invite"
+                })
+             
+            invite[0].delete()
+
+            return Response({
+                "Message": "Invite successfully deleted"
+            })
+    
 
 class GetOutboundInvites(ObtainAuthToken):
     def post(self, request, *args, **kwargs):

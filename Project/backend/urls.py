@@ -7,6 +7,7 @@ from backend.AllViews.CourseViews import *
 from backend.AllViews.UserFeedViews import *
 from backend.AllViews.MeetingViews import *
 from backend.AllViews.InviteViews import *
+from backend.AllViews.AnnouncementViews import *
 
 urlpatterns = [
     path('rest-auth/', include('rest_auth.urls')),
@@ -53,4 +54,10 @@ urlpatterns = [
     path('GetInboundInvites/', GetInboundInvites.as_view()),
     path('GetOutboundInvites/', GetOutboundInvites.as_view()),
     path('GetGroupInvites/', GetGroupInvites.as_view()),
+    path('DeleteInvite/', DeleteInvite.as_view()),
+
+
+    #ANNOUNCEMENT VIEWS
+    path('EnrolledGroupAnnouncements/', EnrolledGroupAnnouncements.as_view()),
+    path('GetGroupAnnouncements/', GetGroupAnnouncements.as_view()),
 ]

@@ -4,12 +4,12 @@ Feed stuff
     Notifications? (Should be simple in theroy)
 
 Create Invite calls for study group
-    Create
-    Delete
-    Get all invites for X group
+    Create --
+    Delete --
+    Get all invites for X group --
     User pov
-        View out going invites 
-        View incoming invites
+        View out going invites --
+        View incoming invites --
 
 Create Course calls
     Join course
