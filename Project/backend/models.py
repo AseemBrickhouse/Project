@@ -47,8 +47,9 @@ class Meeting(models.Model):
 class Course(models.Model):
     course_id = models.CharField(max_length=20)
     creation_date = models.DateTimeField(auto_now_add=True, blank = True, null=True)
-    professor = models.ForeignKey(Account, on_delete=models.CASCADE, related_name="professor")
-    ta = models.ForeignKey(Account, on_delete=models.CASCADE, related_name="ta")
+    course_owner = models.ForeignKey(Account, on_delete=models.CASCADE, related_name="course_owner", null=True, blank=True)
+    professor = models.ForeignKey(Account, on_delete=models.CASCADE, related_name="professor", null=True, blank=True)
+    ta = models.ForeignKey(Account, on_delete=models.CASCADE, related_name="ta", null=True, blank=True)
     course_name = models.CharField(max_length=30, null=True)
     course_code = models.IntegerField(null=True)
     course_description = models.TextField(max_length=10000, null=True, blank = True)
@@ -71,19 +72,24 @@ class Message(models.Model):
 class StudyGroup(models.Model):
     studygroup_id = models.CharField(max_length=20, null=True)
     creation_date = models.DateTimeField(auto_now_add=True, blank = True, null=True)
+    studygroup_name = models.CharField(max_length=50, blank = False, null = True)
     invite_only = models.BooleanField(blank = True, null = True, default = False)
     studygroup_host = models.ForeignKey(Account, on_delete=models.CASCADE)
     chat_id = models.ForeignKey(ChatRoom, on_delete=models.CASCADE)
+    studygroup_description=models.TextField(null=True, blank=True)
 
 class Module(models.Model):
     module_id = models.CharField(max_length=20)
     creation_date = models.DateTimeField(auto_now_add=True, blank = True, null=True)
+    module_owner = models.ForeignKey(Account, on_delete=models.CASCADE, null=True, blank=True)
     studygroup_id = models.ForeignKey(StudyGroup, on_delete=models.CASCADE,null=True)
 
 class Announcements(models.Model):
     announcement_id = models.CharField(max_length=20)
     creation_date = models.DateTimeField(auto_now_add=True, blank = True, null=True)
     studygroup_id = models.ForeignKey(StudyGroup, on_delete=models.CASCADE,null=True)
+    announcement_creator = models.ForeignKey(Account, on_delete=models.CASCADE, null=True)
+    announcement_description = models.TextField(null=True, blank=True)
 
 class StudyEnroll(models.Model):
     studygroup_id = models.ForeignKey(StudyGroup, on_delete=models.CASCADE,null=True)
@@ -97,3 +103,11 @@ class Material(models.Model):
     module_id = models.ForeignKey(Module, on_delete=models.CASCADE, null=True)
     content = models.TextField(null = True, blank = True)
     file_content = models.FileField(upload_to='images/', blank=True, null=True)
+
+class Invite(models.Model):
+    invite_id = models.CharField(max_length=20, blank=True, null=True)
+    sender = models.ForeignKey(Account, on_delete=models.CASCADE, null=True, blank=True, related_name="sender")
+    creation_date = models.DateTimeField(auto_now_add=True, blank = True, null=True)
+    expiration_date = models.DateTimeField(blank = True, null=True)
+    recipient = models.ForeignKey(Account, on_delete=models.CASCADE, null=True, blank=True, related_name="recipient")
+    studygroup_id = models.ForeignKey(StudyGroup, on_delete=models.CASCADE,null=True)

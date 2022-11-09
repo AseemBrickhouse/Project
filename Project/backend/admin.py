@@ -23,6 +23,8 @@ admin.site.register(StudyGroup)
 admin.site.register(StudyEnroll)
 admin.site.register(Module)
 admin.site.register(Friends)
+admin.site.register(Invite)
+admin.site.register(Announcements)
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
