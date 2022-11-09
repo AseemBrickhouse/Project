@@ -1,4 +1,3 @@
-from rest_framework import viewsets
 from ..serilizers import *
 from ..models import *
 from rest_framework.response import Response
@@ -11,9 +10,15 @@ import random
 import string
 
 
-
-
 class CurrentUser(ObtainAuthToken):
+    """
+    @ function
+        Retrives the current logged on user along with the information
+    @ request Params
+        user token: request.data['token']
+    @ Return 
+        All of the current users data in json format
+    """
     @csrf_exempt
     def post(self, request, *args, **kwargs):
         token = Token.objects.get(key=request.data['token']).user_id
@@ -28,6 +33,17 @@ class CurrentUser(ObtainAuthToken):
         return Response(accountJson)
         
 class AccountCreation(ObtainAuthToken):
+    """
+    @ function
+        Given a user token create an account and link it to the user
+    @ request Params
+        user token: request.data['token']
+        first name: request.data['first_name']
+        last name: request.data['last_name']
+        email: request.data['email']
+    @ Return 
+        Whether or not the account was successfully created
+    """
     def post(self, request, *args, **kwargs):
         token_id = Token.objects.get(key=request.data['token']).user_id
         #Current User to create account for
@@ -38,23 +54,37 @@ class AccountCreation(ObtainAuthToken):
                 last_name=request.data['last_name'],
                 email=request.data['email']
             )
+            return Response({
+                "Message": "Account to create already exists"
+            })
         except Account.DoesNotExist:
-            pass
+            account = Account.objects.create(
+                user=user,
+                key= ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(20)),
+                first_name=request.data['first_name'],
+                last_name=request.data['last_name'],
+                email=request.data['email'],
+                phone_number= request.data['phone'] if  request.data['phone'] != '' else None
+            )
+            account.save()
 
-        account = Account.objects.create(
-            user=user,
-            key= ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(20)),
-            first_name=request.data['first_name'],
-            last_name=request.data['last_name'],
-            email=request.data['email'],
-            phone_number= request.data['phone'] if  request.data['phone'] != '' else None
-        )
-        account.save()
-
-        return Response (request.data)
+        return Response({"Message": "Account succesfully created"})
 
 class EditAccount(ObtainAuthToken):
-    def post(self, request, *args, **kwargs):
+    """
+    @ function
+        Given a user token update the account information
+    @ request Params
+        user token: request.data['token']
+        first name: request.data['first_name']
+        last name: request.data['last_name']
+        email: request.data['email']
+        phone: request.data['phone']
+        bio: request.data['bio']
+    @ Return 
+        Whether or not the account update was successfull
+    """
+    def put(self, request, *args, **kwargs):
         token_id = Token.objects.get(key=request.data['token']).user_id
         current_user = User.objects.all().filter(id=token_id)[0]
 
@@ -66,9 +96,21 @@ class EditAccount(ObtainAuthToken):
             email=request.data['email'] if request.data['email'] != "" else current_user.account.email,
         )
 
-        return Response(request.data)
+        return Response({
+            "Message": "Account information pdated succesfully"
+            })
 
 class GetPerson(APIView):
+    """
+    @ function
+        Retrive a selected user given the first,last, and email /// Can change to key later
+    @ request Params
+        first name: request.data['first_name']
+        last name: request.data['last_name']
+        email: request.data['email']
+    @ Return 
+        The persons info in json format if they exists
+    """
     def post(self, request, *args, **kwargs):
         person_object = Account.objects.filter(
             first_name = request.data['first_name'],
@@ -84,6 +126,14 @@ class GetPerson(APIView):
         return Response(person_json)
 
 class AllAccounts(APIView):
+    """
+    @ function
+        Get all the current registered accounts
+    @ request Params
+        None
+    @ Return 
+        All accounts and info in json format
+    """
     def get(self, request, *args, **kwargs):
         queryset = {}
         for account in Account.objects.all():

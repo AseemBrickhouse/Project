@@ -12,21 +12,21 @@ Create Invite calls for study group
         View incoming invites --
 
 Create Course calls
-    Join course
-    Leave course
+    Join course--
+    Leave course--
     Delete Course
     
     Possible:
         (Create course module, delete module, get all modules)
 
 Create Announcement calls
-    Create announcemnet
-    Delete announcement
-    Update announcement
-    Get all announcemnets for group
-    View my enrolled study group announcemnets 
+    Create announcemnet--
+    Delete announcement--
+    Update announcement--
+    Get all announcemnets for group--
+    View my enrolled study group announcemnets --
 
 Create Chatroom calls
     Get all messages 
-    create message
+    create message -> open file write logs close file
     delete message

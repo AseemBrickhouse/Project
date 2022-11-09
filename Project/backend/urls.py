@@ -60,4 +60,7 @@ urlpatterns = [
     #ANNOUNCEMENT VIEWS
     path('EnrolledGroupAnnouncements/', EnrolledGroupAnnouncements.as_view()),
     path('GetGroupAnnouncements/', GetGroupAnnouncements.as_view()),
+    path('CreateAnnouncement/', CreateAnnouncement.as_view()),
+    path('UpdateAnnouncement/', UpdateAnnouncement.as_view()),
+    path('DeleteAnnouncement/', DeleteAnnouncement.as_view()),
 ]

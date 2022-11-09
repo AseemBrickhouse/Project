@@ -66,6 +66,57 @@ class CreateCourse(ObtainAuthToken):
             "Message": "Course successfully created"
         })
 
+class JoinCourse(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
+        token = Token.objects.get(key=request.data['token']).user_id
+        current_user = User.objects.all().filter(id=token)[0].account
+
+        course = None
+        try:
+            course = Course.objects.all().get(course_code=request.data['course_code'], course_id=request.data['course_id'])
+        except Course.DoesNotExist:
+            return Response({
+                "Message": "Course to join does not exists"
+            })
+
+        course_enroll = CourseEnroll.objects.all().filter(account = current_user, course = course)
+
+        if course_enroll:
+            return Response({
+                "Message": "You are already enrolled in this course."
+            })
+        else:
+            course_to_join = CourseEnroll.objects.create(
+                account = current_user,
+                course = course
+            )
+            course_to_join.save()
+
+        return Response({
+            "Message": "You have succesfully joined the course."
+        })
+
+class LeaveCourse(ObtainAuthToken):
+    def delete(self, request, *args, **kwargs):
+        token = Token.objects.get(key=request.data['token']).user_id
+        current_user = User.objects.all().filter(id=token)[0].account
+
+        course = Course.objects.all().get(course_id=request.data['course_id'])
+
+        try:
+            course_to_leave = CourseEnroll.objects.all().get(account=current_user, course=course)
+            course_to_leave.delete()
+            return Response({
+                "Message": "You have succesfully left the course."
+            })
+        except CourseEnroll.DoesNotExist:
+            return Response({
+                "Message": "You are not enrolled in this course."
+            })
+            
+class DeleteCourse(ObtainAuthToken):
+    def delete(self, request, *args, **kwargs):
+        pass
 #
 #class CourseModlue(APIView):
 #   Create a new model

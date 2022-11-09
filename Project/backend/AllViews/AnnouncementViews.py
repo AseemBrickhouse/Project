@@ -9,17 +9,98 @@ import random
 import string
 
 class CreateAnnouncement(ObtainAuthToken):
+    """
+    @ function
+        Given a user token, studygroup_id, and an announcement_description, create an announcement for the current group
+    @ request Params
+        user token: request.data['token']
+        studygroup id: request.data['studygroup_id']
+        announcement description: request.data['announcement_description']
+    @ Return    
+        Message telling whether or not the announcement was created
+    """
     def post(self, request, *args, **kwargs):
-        pass
+        token = Token.objects.get(key=request.data['token']).user_id
+        current_user = User.objects.all().filter(id=token)[0].account
+
+        studygroup = StudyGroup.objects.all().get(studygroup_id=request.data['studygroup_id'])
+
+        if studygroup.studygroup_host != current_user:
+            return Response({
+                "Message": "Only the study group host can create announcements."
+            })
+
+        try:
+            announcement = Announcements.objects.all().get(
+                announcement_description = request.data['announcement_description']
+            )
+            return Response({
+                "Message": "Announcement already exists"
+            })
+
+        except Announcements.DoesNotExist:
+            announcement = Announcements.objects.create(
+                announcement_id = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(20)),
+                studygroup_id = studygroup,
+                announcement_creator = current_user,
+                announcement_description = request.data['announcement_description'],
+            )
+            announcement.save()
+
+        return Response({
+            "Message": "Announcement succesfully create"
+        })
 
 class DeleteAnnouncement(ObtainAuthToken):
+    """
+    @ function
+        Given a user token, and an announcement_id, delete the announcement from the group
+    @ request Params
+        user token: request.data['token']
+        announcement id: request.data['announcement_id']
+    @ Return    
+        Message telling whether or not the announcement was deleted
+    """
     def delete(self, request, *args, **kwargs):
-        pass
+        token = Token.objects.get(key=request.data['token']).user_id
+        current_user = User.objects.all().filter(id=token)[0].account
+
+        if not request.data.__contains__('announcement_id'):
+            return Response({
+                "Message": "No given announcement id"
+            })
+                
+        announcement = Announcements.objects.all().filter(announcement_id=request.data['announcement_id'])
+
+        if not announcement:
+            return Response({
+                "Message" : "Announcement does not exists"
+            })
+        else:
+            if announcement[0].announcement_creator != current_user:
+                return Response({
+                    "Message": "You are not the creator of this announcement"
+                })
+            else:
+                announcement[0].delete()
+
+                return Response({
+                    "Message": "Announcement succesfully deleted"
+                })
 
 class UpdateAnnouncement(ObtainAuthToken):
-    def post(self, request, *args, **kwargs):
+    """
+    @ function
+        Given a user token, and an announcement_id, update the announcement for the current group
+    @ request Params
+        user token: request.data['token']
+        announcement id: request.data['announcement_id']
+    @ Return    
+        Message telling whether or not the announcement was updated
+    """
+    def put(self, request, *args, **kwargs):
         message  = request.data['announcement_description']
-        announcement = announcement.objects.all().get(announcement_id=request.data['announcement_id'])
+        announcement = Announcements.objects.all().get(announcement_id=request.data['announcement_id'])
         if not message:
             return Response({
                 "Message": "No changes made."
@@ -32,8 +113,15 @@ class UpdateAnnouncement(ObtainAuthToken):
             })
 
 class GetGroupAnnouncements(APIView):
+    """
+    @ function
+        Retrive all announcements of a study group
+    @ request Params
+       studygroup id: request.data['studygroup_id']
+    @ Return    
+        All announncements and their data in json format
+    """
     def post(self, request, *args, **kwargs):
-        
         queryset = {}
 
         studygroup = StudyGroup.objects.all().get(studygroup_id=request.data['studygroup_id'])
@@ -52,6 +140,14 @@ class GetGroupAnnouncements(APIView):
         return Response(queryset)
 
 class EnrolledGroupAnnouncements(ObtainAuthToken):
+    """
+    @ function
+        Retrive all announcements of enrolled study group
+    @ request Params
+        user token: request.data['token']
+    @ Return    
+        All studygroup and their announncements along with their data
+    """
     def post(self, request, *args, **kwargs):
         token = Token.objects.get(key=request.data['token']).user_id
         current_user = User.objects.all().filter(id=token)[0].account

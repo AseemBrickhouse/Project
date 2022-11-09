@@ -80,7 +80,7 @@ class GetUserFeed(ObtainAuthToken):
                         recipient = To everyone in group or just you
                     }
             }
-            Oh my God this is hard / a lot
+            Implenemt some type of prio fo meetings and stuff
         """
  
         token = Token.objects.get(key=request.data['token']).user_id
@@ -91,6 +91,7 @@ class GetUserFeed(ObtainAuthToken):
 
 
         queryset.sort(key=Content_Type_Date)
+        queryset = queryset[::-1]
         
         send = {}
         #TODO:
