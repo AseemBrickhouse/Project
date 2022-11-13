@@ -8,6 +8,7 @@ from backend.AllViews.UserFeedViews import *
 from backend.AllViews.MeetingViews import *
 from backend.AllViews.InviteViews import *
 from backend.AllViews.AnnouncementViews import *
+from backend.AllViews.ChatroomViews import *
 
 urlpatterns = [
     path('rest-auth/', include('rest_auth.urls')),
@@ -63,4 +64,7 @@ urlpatterns = [
     path('CreateAnnouncement/', CreateAnnouncement.as_view()),
     path('UpdateAnnouncement/', UpdateAnnouncement.as_view()),
     path('DeleteAnnouncement/', DeleteAnnouncement.as_view()),
+
+    #CHATROOM VIEWS
+    path('APITEST/', APITEST.as_view()),
 ]

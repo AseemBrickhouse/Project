@@ -1,0 +1,25 @@
+Prob not going to work buttt
+
+When we create a studygroup
+A new folder must be created
+In the folder we then create a new text file that store the information of the chat room similar to chat logs
+in the format of 
+[Type][Date][Group(although it should be know)][Name][message]
+
+[Type]: [Update][Delete][Creation]
+[Date]: [MM/DD/YYYY/ HH/MM/SS TIMEZONE]
+[Group]: [ID KEY NAME]
+[Name]: [ID KEY FULLNAME
+[Message]: [Literally just the message]
+
+Plan:
+Assume that the Folder(Study group key) with the file(chat room key)already exist
+
+Create message
+    Before we do the file stuff acutally create the object in the database
+    Go the parent CWD then into the study group key folder then into the chatroom id file
+    Open the chatroom id file in "a" mode something like that
+    With the corret information after we filter the objects and get necessary data 
+    foramt it and then write it
+
+Use the same process for deleting and updating the messagess

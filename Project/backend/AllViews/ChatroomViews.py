@@ -8,6 +8,12 @@ from datetime import datetime
 import random
 import string
 
+import os
+
+class APITEST(APIView):
+    def post(self, request, *args, **kwargs):
+        print(os.path)
+
 class GetAllMessages(APIView):
     def post(self, request, *args, **kwargs):
         pass

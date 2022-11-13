@@ -8,6 +8,7 @@ from datetime import datetime
 import random
 import string
 
+import os
 
 class GetAllUserStudyGroups(ObtainAuthToken):
     """
@@ -69,7 +70,6 @@ class CreateStudyGroup(ObtainAuthToken):
         user token: request.data['token']
         studygroup name: request.data['studygroup_name']
         invite only: request.data['invite_only'] - only avalible for invited users
-        //Add study group description later on
     @ Return 
         Error:
             study group name is already taken
