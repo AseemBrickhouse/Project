@@ -10,7 +10,7 @@ const Logout = (props) =>{
       <body>
         <div class="container">
           <div class="login-box">
-            <div class="tittle">
+            <div class="title">
               <h1>Logout of your account</h1>
             </div>
             <form class="login">

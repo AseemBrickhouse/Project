@@ -95,7 +95,24 @@ class DeleteMessage(ObtainAuthToken):
 
 class GetUserMessages(APIView):
     def post(self, request, *args, **kwargs):
-        pass
+        studygroup = StudyGroup.objects.get(studygroup_id = request.data['studygroup_id'])
+        chat = studygroup.id
+        account = Account.objects.all().get(first_name=request.data['first_name'], last_name=request.data['first_name'], email=request.data['email'])
+        print(account)
+        queryset = {}
+        print(chat)
+        print(studygroup)
+        messagees = Message.objects.all().filter(account=account, chatroom_id=chat)
+        print(messagees)    
+        for message in messagees:
+            message_json = MessageSerilizer(message).data
+            queryset[message_json['message_id']] = message_json
+
+            account_json = AccountSerilizer(account).data
+
+            queryset[message_json['message_id']]['account'] = account_json
+
+        return Response(queryset)
 
 class GetCurrentUserMessages(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
@@ -103,8 +120,11 @@ class GetCurrentUserMessages(ObtainAuthToken):
         current_user = User.objects.all().filter(id=token)[0].account
 
         queryset = {}
+        studygroup = StudyGroup.objects.get(studygroup_id = request.data['studygroup_id'])
 
-        for message in Message.objects.all().filter(account=current_user):
+        chat = studygroup.id
+
+        for message in Message.objects.all().filter(account=current_user, chatroom_id=chat):
             message_json = MessageSerilizer(message).data
             queryset[message_json['message_id']] = message_json
 

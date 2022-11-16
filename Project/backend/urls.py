@@ -70,6 +70,6 @@ urlpatterns = [
     path('CreateMessage/', CreateMessage.as_view()),
     path('GetAllMessages/', GetAllMessages.as_view()),
     path('DeleteMessage/', DeleteMessage.as_view()),
-    path('GetUserMessage/', GetUserMessages.as_view()),
+    path('GetUserMessages/', GetUserMessages.as_view()),
     path('GetCurrentUserMessages/', GetCurrentUserMessages.as_view()),
 ]

@@ -11,7 +11,20 @@ const Navbar = (props) => {
     return (
         props.location.pathname != '/Logout' &&props.location.pathname != '/Login' ?
             <div>
-              {
+              <div class="navContainer">
+                <div class="navigation">
+                    <li><a href="/home/">Students</a></li>
+                    <li><a href="/courses/">Instructors</a></li>
+                    <li><a href="/users/">Tutors</a></li>
+                    {
+                      !isAuthenticated ? 
+                        <li><a href="/Login">Login</a></li>
+                      : 
+                      <li><a href="/">Logout</a></li>
+                    }
+                </div>
+            </div>
+              {/* {
                 !isAuthenticated ? 
                     <Nav inverse collapseOnSelect>
                         <Nav.Item>
@@ -43,7 +56,8 @@ const Navbar = (props) => {
                         <Nav.Link href="/Logout">Logout</Nav.Link>
                     </NavDropdown>
                 </Nav>
-              }
+              } */}
+
               </div>
             :<></>
           );
