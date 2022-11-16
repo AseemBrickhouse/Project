@@ -9,23 +9,7 @@ const Home = (props) => {
     const isAuthenticated = props.isAuthenticated
     return (
         <div>
-            <h1> Demo test Page tmp</h1>
-            <div>
-                {
-                !isAuthenticated ? 
-                    <Link to = "/Login">
-                        <Button>
-                            Login
-                        </Button>
-                    </Link>
-                :   
-                    <Link to ='/Logout'>
-                        <Button>
-                            Logout
-                        </Button>
-                    </Link>
-                }
-            </div>
+
         </div>
     );
 }

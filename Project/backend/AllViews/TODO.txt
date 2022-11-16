@@ -30,3 +30,11 @@ Create Chatroom calls
     Get all messages 
     create message -> open file write logs close file
     delete message
+
+
+TEMPLATES:
+create study group
+create course
+study group view --
+
+maybe meeting

@@ -98,8 +98,35 @@ class DeleteMeeting(ObtainAuthToken):
         #We should not need to do this if we only show the right meetings on the front end
         try:
             meeting_to_delete = Meeting.objects.all().get(meeting_id=request.data['meeting_code'])
-            meeting_to_delete.delete()
+            if meeting_to_delete.user1 != current_user or meeting_to_delete.user2 != current_user:
+                return Response({
+                    "Message": "You are not in this meeting"
+                })
+            else:
+                meeting_to_delete.delete()
+
+                return Response({
+                    "Message": "Meeting successfully deleted"
+                })
         except Meeting.DoesNotExist:
             return Response({
                 "Message": "Meeting does not exists"
+            })
+
+#TODO
+class GetOpenMeetingTimes(APIView):
+    def post(self, request, *args, **kwargs):
+        
+        try:
+            account = Account.objects.all().get(
+                first_name=request.data['first_name'],
+                last_name=request.data['last_name'],
+                email=request.data['email'],
+            )
+            account_meetings = Meeting.objects.all().filter(user1=account) + Meeting.objects.all().filter(user2=account)
+
+            #[<[9-9:30],[9:30-10:00]>]
+        except Account.DoesNotExist:
+            return Response({
+                "Message": "User to get is not a valid user."
             })

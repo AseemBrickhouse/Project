@@ -10,4 +10,5 @@ urlpatterns = [
     path('RecoveryPassword', index),
     path('RecoveryMessage', index),
     path('CreateAccount', index),
+    path('StudyGroupHome', index),
 ]

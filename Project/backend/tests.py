@@ -179,7 +179,7 @@ class TestStudyGroup(TestCase):
         self.chat_id = self.chatroom_id
 
     def test_url(self):
-        self.assertEquals(resolve('CreateStudyGroup/').func.view_class, CurrentUser)
+        self.assertEquals(resolve('api/CreateStudyGroup/').func.view_class, CurrentUser)
 
     def test_createStudyGroup(self):
         StudyGroup.objects.create(studygroup_id=self.studygroup_id, invite_only=self.invite_only,

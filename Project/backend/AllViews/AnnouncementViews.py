@@ -99,8 +99,15 @@ class UpdateAnnouncement(ObtainAuthToken):
         Message telling whether or not the announcement was updated
     """
     def put(self, request, *args, **kwargs):
+        token = Token.objects.get(key=request.data['token']).user_id
+        current_user = User.objects.all().filter(id=token)[0].account
+
         message  = request.data['announcement_description']
         announcement = Announcements.objects.all().get(announcement_id=request.data['announcement_id'])
+        if announcement.announcement_creator != current_user:
+            return Response({
+                "Message": "You are not the study group host"
+            })
         if not message:
             return Response({
                 "Message": "No changes made."
@@ -109,7 +116,7 @@ class UpdateAnnouncement(ObtainAuthToken):
             announcement.announcement_description = message
             announcement.save(update_fields=['announcement_description'])
             return Response({
-                "Message": "Announcement description succesfully changes"
+                "Message": "Announcement description succesfully changed"
             })
 
 class GetGroupAnnouncements(APIView):

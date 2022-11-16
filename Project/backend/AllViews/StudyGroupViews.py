@@ -5,9 +5,9 @@ from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.views import APIView
 from datetime import datetime
+from backend.AllViews.Util.ChatroomUtil import *
 import random
 import string
-
 import os
 
 class GetAllUserStudyGroups(ObtainAuthToken):
@@ -70,6 +70,7 @@ class CreateStudyGroup(ObtainAuthToken):
         user token: request.data['token']
         studygroup name: request.data['studygroup_name']
         invite only: request.data['invite_only'] - only avalible for invited users
+        studygroup description: request.data['studygroup_description'] ccan be null
     @ Return 
         Error:
             study group name is already taken
@@ -102,24 +103,28 @@ class CreateStudyGroup(ObtainAuthToken):
 
             return StudyEnroll_to_create
 
+
         #Get current user
         token = Token.objects.get(key=request.data['token']).user_id
         current_user = User.objects.all().filter(id=token)[0].account
 
         #Check name
-        if StudyGroupNameCheck(request.data['name']):
+        if StudyGroupNameCheck(request.data['studygroup_name']):
             return Response({
                 "Message": "Study group name already taken"
             })
 
         StudyGroup_chat_to_create = createStudyGroupChat(current_user)
 
+        studygroup_id = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(20))
+
         StudyGroup_to_create = StudyGroup.objects.create(
-            studygroup_name = request.data['name'],
-            studygroup_id = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(20)),
+            studygroup_name = request.data['studygroup_name'],
+            studygroup_id = studygroup_id,
             invite_only = request.data['invite_only'],
             studygroup_host = current_user,
             chat_id = StudyGroup_chat_to_create,
+            studygroup_description = request.data['studygroup_description'] if request.data['studygroup_description'] != '' else None
         )
 
         StudyGroup_to_create.save()
@@ -127,7 +132,12 @@ class CreateStudyGroup(ObtainAuthToken):
         createStudyGroupEnroll(StudyGroup_to_create, current_user)
 
         StudyGroup_to_create_json = StudyGroupSerilizer(StudyGroup_to_create).data
-        
+
+        studygroup_host_name = current_user.first_name + " " + current_user.last_name
+
+        #Create file
+        init(studygroup_id, studygroup_host_name, StudyGroup_chat_to_create.chatroom_id)
+ 
         return Response(StudyGroup_to_create_json)
 
 class JoinStudyGroup(ObtainAuthToken):

@@ -1,0 +1,11 @@
+.color-nav{
+    background-color: #2B2827;
+}
+.color-nav-item{
+    color: white;   
+}
+
+.navbar-default .navbar-nav .open .dropdown-menu>li>a, .navbar-default .navbar-nav .open .dropdown-menu {
+    background-color: #3344ff;
+    color:black;
+  }
