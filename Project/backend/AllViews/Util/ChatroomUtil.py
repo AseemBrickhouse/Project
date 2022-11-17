@@ -31,7 +31,7 @@ def delete(group_key, person, chatroom_key, message):
     file_path = os.path.join(path, group_key)
     file_path = os.path.join(path, chatroom_key)
 
-    write(file_path, "a", "delete", group_key, person, message)
+    write(file_path, "a", "Delete", group_key, person, message)
 
 def write(path, mode, type, group_key, person, message):
     log = open(path, mode)

@@ -1,0 +1,38 @@
+.feedbody{
+    width: 50%;
+    position: absolute;
+    left: 25%;
+    top: -100%;
+    overflow-y: scroll;
+    flex: 1;
+    height: 81vh;
+    
+}::-webkit-scrollbar {
+        display:none;
+    }
+
+.Feed{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.FeedHeader{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 25%;
+}
+.FeedText{
+    margin-top: -10%;
+    width: 100%;
+    margin-left: 60px;
+    font-size: 16px;
+    white-space: pre;
+}
+.FeedCardDescription{
+    margin-top: -10%;
+    width: 100%;
+    margin-left: 60px;
+    font-size: 20px;
+
+}

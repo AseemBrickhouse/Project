@@ -9,7 +9,7 @@ const StudyGroupHome = (props) =>{
     const [load, setLoad] = useState(false)
 
     useEffect(() =>{
-        if(load==false){
+        if(!load){
             fetch("http://127.0.0.1:8000/api/GetAllUserStudyGroups/", {
                 method: "POST",
                 headers: {
@@ -29,15 +29,19 @@ const StudyGroupHome = (props) =>{
             })
         }
     },[load])
-
+    
     return(
         <div>
             {
-                Object.entries(data).map(([studygroup_id, studygroup]) => {
-                    return(
-                        <GroupCard {...studygroup}/>
-                    )
-                })
+                data != null ?
+                    Object.entries(data).map(([studygroup_id, studygroup]) => {
+                        return(
+                            <div>
+                                <GroupCard {...studygroup}/>
+                            </div>                        
+                        )
+                    })
+                : null
             }
         </div>
     )

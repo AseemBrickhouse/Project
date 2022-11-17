@@ -9,18 +9,21 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 const Navbar = (props) => { 
     const isAuthenticated = props.isAuthenticated
     return (
-        props.location.pathname != '/Logout' &&props.location.pathname != '/Login' ?
+        props.location.pathname != '/Logout' && props.location.pathname != '/Login' ?
             <div>
               <div class="navContainer">
                 <div class="navigation">
+                    <li><a href="/">Random Icon</a></li>
                     <li><a href="/home/">Students</a></li>
                     <li><a href="/courses/">Instructors</a></li>
                     <li><a href="/users/">Tutors</a></li>
+                    <li><a href="/StudyGroupHome">Studygroup</a></li>
+                    <li><a href="/ScholarshipInformation">Scholarships</a></li>
                     {
                       !isAuthenticated ? 
                         <li><a href="/Login">Login</a></li>
                       : 
-                      <li><a href="/">Logout</a></li>
+                      <li><a href="/Logout">Logout</a></li>
                     }
                 </div>
             </div>

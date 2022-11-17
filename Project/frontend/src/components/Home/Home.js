@@ -1,54 +1,61 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import FeedCard from './UserFeed/FeedCard';
 import * as actions from "../../store/actions/auth";
 
 const Home = (props) => {
     console.log(props)
     const isAuthenticated = props.isAuthenticated
+    const [load, setLoad] = useState(false)
+    const [feed, setFeed] = useState(null)
+    useEffect(() => {
+        if (!load){
+            fetch("http://127.0.0.1:8000/api/GetUserFeed/", {
+                method: "POST",
+                headers: {
+                    'Accept':'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    token: localStorage.getItem('token')
+                })
+            })
+            .then(response => {
+                return response.json()
+            })
+            .then(data =>{
+                setLoad(true)
+                setFeed(data)
+            })
+        }
+    },[load])
+    
     return (
         <div className='containerhome'>
-{/*             
-            <div class="navContainer">
-                <div class="navigation">
-                    <li><a href="/home/">Students</a></li>
-                    <li><a href="/courses/">Instructors</a></li>
-                    <li><a href="/users/">Tutors</a></li>
-                    <li><a href="/">Logout</a></li>
-                </div>
-            </div> */}
             <body className='bodyhome'>
                 <div className="containerhome">
                     <div className="login-box" >
                         <div className="login">
-                                <h1>Name</h1>
-                                <p>Providing connections to the things that matter.</p>
                             {
-                                !isAuthenticated ?
-                                    <div>
-                                        <div className='elements'>
-                                            <Link to="/Login">
-                                                <button type="submit">
-                                                    Login
-                                                </button>
-                                            </Link>
+                                isAuthenticated ?
+                                    feed != null ?
+                                        <div className="feedbody">
+                                        {
+                                            Object.entries(feed).map(([id, content]) => {
+                                                return (
+                                                    <FeedCard {...content}/>
+                                                )
+                                            })
+                                        }
                                         </div>
-                                            <p>New here?</p>
-                                        <div>
-                                            <Link to="/Login">
-                                                <button type="submit">
-                                                    Get Started
-                                                </button>
-                                            </Link>
-                                        </div>
-                                    </div>
-                                    :
-                                    <Link to='/Logout'>
-                                        <button type="submit">
-                                            Logout
-                                        </button>
-                                    </Link>
+                                    : null
+                                : 
+                                <div>
+                                    <h1>Name</h1>
+                                    <p>Providing connections to the things that matter.</p>
+                                </div>
                             }
                         </div>
                     </div>

@@ -21,8 +21,8 @@ def StudyGroupFeed(current_user):
         group_info = enrolled_studygroups[group]
         for announcement in Announcements.objects.all().filter(studygroup_id=group_info['id']):
             queryset.append(announcement)
-        for module in Module.objects.all().filter(studygroup_id=group_info['id']):
-            queryset.append(module)
+        # for module in Module.objects.all().filter(studygroup_id=group_info['id']):
+        #     queryset.append(module)
 
     for invite in Invite.objects.all().filter(recipient=current_user):
         queryset.append(invite)
