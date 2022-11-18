@@ -14,6 +14,7 @@ import RecoveryPassword from './Login/RecoveryPassword';
 import Navbar from './Navbar/Navbar';
 import StudyGroupHome from './Study Group/StudyGroupHome';
 import ScholarShipInformation from './Scholarship/ScholarshipInformation';
+import CreateStudyGroup from './Study Group/CreateStudyGroup';
 
 const Routes = (props) => {
     return (
@@ -36,6 +37,8 @@ const Routes = (props) => {
 
                     {/* Studygroup */}
                     <Route exact path = "/StudyGroupHome" component={StudyGroupHome}/>
+                    <Route exact path = "/CreateStudyGroup" component={CreateStudyGroup}/>
+
 
                     {/* Scholarship */}
                     <Route exact path = "/ScholarshipInformation" component={ScholarShipInformation}/>

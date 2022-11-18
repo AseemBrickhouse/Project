@@ -66,10 +66,13 @@ urlpatterns = [
     path('DeleteAnnouncement/', DeleteAnnouncement.as_view()),
 
     #CHATROOM VIEWS
-    path('APITEST/', APITEST.as_view()),
     path('CreateMessage/', CreateMessage.as_view()),
     path('GetAllMessages/', GetAllMessages.as_view()),
     path('DeleteMessage/', DeleteMessage.as_view()),
     path('GetUserMessages/', GetUserMessages.as_view()),
     path('GetCurrentUserMessages/', GetCurrentUserMessages.as_view()),
+    path('UpdateMessage/', UpdateMessage.as_view()),
+
+    #FRIENDS VIEW
+    
 ]

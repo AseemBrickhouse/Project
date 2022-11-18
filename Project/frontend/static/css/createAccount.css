@@ -44,7 +44,7 @@ body {
 
 .elements {
 	margin-bottom: 20px;
-	display: fle;
+	display: flex;
 	flex-direction: column;
 	width: 100%;
 }

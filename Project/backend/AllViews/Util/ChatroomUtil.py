@@ -25,6 +25,12 @@ def create(group_key, person, chatroom_key, message):
 def update(group_key, person, chatroom_key, old_message, new_message):
     path = getPath(group_key)
 
+    file_path = os.path.join(path, group_key)
+    file_path = os.path.join(path, chatroom_key)
+
+    message = old_message + " -> to -> " + new_message
+    write(file_path, "a", "Update", group_key, person, message)
+
 def delete(group_key, person, chatroom_key, message):
     path = getPath(group_key)
 

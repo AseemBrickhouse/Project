@@ -2,7 +2,7 @@ import React, { Component, useEffect, useState } from 'react';
 import {Button} from 'react-bootstrap';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import GroupCard from './GroupCard';
+import GroupCard from './Componenets/GroupCard';
 
 const StudyGroupHome = (props) =>{
     const [data, setData] = React.useState(null)

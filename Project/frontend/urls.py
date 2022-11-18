@@ -12,4 +12,5 @@ urlpatterns = [
     path('CreateAccount', index),
     path('StudyGroupHome', index),
     path('ScholarshipInformation', index),
+    path('CreateStudyGroup', index),
 ]

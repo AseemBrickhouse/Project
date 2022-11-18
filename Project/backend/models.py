@@ -28,12 +28,18 @@ class Account(models.Model):
     role = models.CharField(max_length=10,choices=roles.choices)
     bio = models.TextField(null=True)
     # INSTALL PILLOW!!!
-    # profile_pic = models.ImageField(blank=True, null=True)
+    profile_pic = models.ImageField(blank=True, null=True)
 
 class Friends(models.Model):
-    account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name="account")
-    friends_with = models.ForeignKey(Account, on_delete=models.CASCADE, related_name="friends_with")
+    account = models.OneToOneField(Account, on_delete=models.CASCADE, related_name="user_account")
+    friends = models.ManyToManyField(Account, related_name="friends")
     creation_date = models.DateTimeField(auto_now_add=True, blank = True, null=True)
+
+class FriendRequest(models.Model):
+    creation_date = models.DateTimeField(auto_now_add=True, blank = True, null=True)
+    from_user = models.ForeignKey(Account, on_delete=models.CASCADE, blank = True, null= True, related_name="from_user")
+    to_user = models.ForeignKey(Account, on_delete=models.CASCADE, blank = True, null= True, related_name="to_user")
+    
 
 class Meeting(models.Model):
     meeting_code = models.CharField(max_length=20)

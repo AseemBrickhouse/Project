@@ -16,9 +16,6 @@ const app = (
        <Provider store = {store}>
            <App/>
        </Provider>
-        // <div>
-        //     <App/>
-        // </div>
 )
 
 ReactDOM.render(app, document.getElementById('app'));

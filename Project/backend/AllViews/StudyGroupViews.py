@@ -138,7 +138,9 @@ class CreateStudyGroup(ObtainAuthToken):
         #Create file
         init(studygroup_id, studygroup_host_name, StudyGroup_chat_to_create.chatroom_id)
  
-        return Response(StudyGroup_to_create_json)
+        return Response({
+            "Message" : "Group succesfully created"
+        })
 
 class JoinStudyGroup(ObtainAuthToken):
     """

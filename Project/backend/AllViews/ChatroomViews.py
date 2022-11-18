@@ -72,10 +72,7 @@ class CreateMessage(ObtainAuthToken):
         current_user = User.objects.all().filter(id=token)[0].account
 
         studygroup = StudyGroup.objects.get(studygroup_id = request.data['studygroup_id'])
-        print(studygroup)
-
         chat = studygroup.chat_id
-        print(chat)
 
         message = Message.objects.create(
             message_id = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(20)),
@@ -87,23 +84,68 @@ class CreateMessage(ObtainAuthToken):
         person = current_user.first_name + " " + current_user.last_name
         create(studygroup.studygroup_id, person, chat.chatroom_id, request.data['message'])
 
-        return Response(request.data)
+        return Response({
+            "Message": "Message successfully created."
+        })
 
+class UpdateMessage(ObtainAuthToken):
+    def put(self, request, *args, **kwargs):
+        token = Token.objects.get(key=request.data['token']).user_id
+        current_user = User.objects.all().filter(id=token)[0].account
+
+        studygroup = StudyGroup.objects.get(studygroup_id = request.data['studygroup_id'])
+        chatroom = studygroup.chat_id
+
+        try:
+            message = Message.objects.all().get(account=current_user, message_id=request.data['message_id'])
+            person = current_user.first_name + " " + current_user.last_name
+
+            if request.data.__contains__('new_content'):
+                update(studygroup.studygroup_id, person, chatroom.chatroom_id, message.content, request.data['new_content'])
+                message.content = request.data['new_content']
+                message.save(update_fields=['content'])
+            else:
+                return Response({
+                    "Message": "Message to update is blank."
+                })
+
+            return Response({
+                "Message": "Message has been succesfully updated."
+            })
+        except Message.DoesNotExist:
+            return Response({
+                "Message": "You are not the creator of the message or the message to update does not exists."
+            })
 class DeleteMessage(ObtainAuthToken):
     def delete(self, request, *args, **kwargs):
-        pass
+        token = Token.objects.get(key=request.data['token']).user_id
+        current_user = User.objects.all().filter(id=token)[0].account
+
+        studygroup = StudyGroup.objects.get(studygroup_id = request.data['studygroup_id'])
+        chatroom = studygroup.chat_id
+
+        try:
+            message = Message.objects.all().get(account=current_user, message_id=request.data['message_id'])
+            person = current_user.first_name + " " + current_user.last_name
+            delete(studygroup.studygroup_id, person, chatroom.chatroom_id, message.content)
+
+            message.delete()
+            return Response({
+                "Message": "Message has been succesfully deleted."
+            })
+        except Message.DoesNotExist:
+            return Response({
+                "Message": "You are not the creator of the message or the message to delete does not exists."
+            })
+
 
 class GetUserMessages(APIView):
     def post(self, request, *args, **kwargs):
         studygroup = StudyGroup.objects.get(studygroup_id = request.data['studygroup_id'])
         chat = studygroup.id
         account = Account.objects.all().get(first_name=request.data['first_name'], last_name=request.data['first_name'], email=request.data['email'])
-        print(account)
         queryset = {}
-        print(chat)
-        print(studygroup)
         messagees = Message.objects.all().filter(account=account, chatroom_id=chat)
-        print(messagees)    
         for message in messagees:
             message_json = MessageSerilizer(message).data
             queryset[message_json['message_id']] = message_json
@@ -121,9 +163,9 @@ class GetCurrentUserMessages(ObtainAuthToken):
 
         queryset = {}
         studygroup = StudyGroup.objects.get(studygroup_id = request.data['studygroup_id'])
-
-        chat = studygroup.id
-
+        print(studygroup)
+        chat = studygroup.chat_id
+        print(chat)
         for message in Message.objects.all().filter(account=current_user, chatroom_id=chat):
             message_json = MessageSerilizer(message).data
             queryset[message_json['message_id']] = message_json

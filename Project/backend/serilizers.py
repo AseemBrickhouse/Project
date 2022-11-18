@@ -18,12 +18,24 @@ class AccountSerilizer(serializers.ModelSerializer):
             # 'profile_pic',
         )
 
-class FriendsSerilize(serializers.ModelSerializer):
+class FriendsSerilizer(serializers.ModelSerializer):
     class Meta:
         model = Friends
         fields = (
-            'user1',
-            'user2',
+            'id',
+            'user',
+            'friends',
+            'creation_date'
+        )
+
+
+class FriendsRequestSerilizer(serializers.ModelSerializer):
+    class Meta:
+        model = FriendRequest
+        fields = (
+            'id',
+            'from_user',
+            'to_user',
             'creation_date'
         )
 

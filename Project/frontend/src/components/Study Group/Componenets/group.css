@@ -5,9 +5,9 @@
 }
 
 body {
-	height: 90vh;
-	width: 100vw;
-	/* background: #6A6C6E; */
+	height: 100vh;
+	width: 100%;
+	background: #6A6C6E;
 }
 
 .container {
@@ -17,7 +17,6 @@ body {
 	align-items: center;
 	height: 125%;
 	width: 100%;
-	margin-top: -5%;
 }
 
 .info-box {
@@ -28,7 +27,8 @@ body {
 	align-items: center;
 	justify-content: center;
 	position: relative;
-	width: 1000px;
+	height: 300px;
+	width: 200px;
 	font-size: 12px;
 	border-radius: 5px;
 }
@@ -50,8 +50,30 @@ body {
 	width: 100%;
 }
 
-.elements p{
-	font-size: 20px;
+.footer{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	width: 100%;
+}
+
+.footer button{
+	/* text-align: center;
+	width: 50%; */
+	margin-right: 5%;
+	display: inline-block;
+	flex-direction: column;
+	justify-content: center;
+	outline: none;
+	position:relative;
+
+	padding: 16px;
+
+	border: none;
+	text-transform: uppercase;
+	font-size: 16px;
+	cursor: pointer;
+	transition: all 0.3s ease;
 }
 .inputBoxes{
 	font-size: 16px;
@@ -67,14 +89,25 @@ body {
 .inputBoxes:hover{
 	border: 2px solid #242112;
 }
+.small-button{
+	
+	width: 100%;
+	display: inline;
+	color: #FFF;
+	vertical-align:middle;
+	
+}
 
 button {
+	
+	display: inline-block;
+	flex-direction: column;
+	justify-content: center;
 	outline: none;
-	background: #242124;
-	color: #FFF;
+	position:relative;
+
 	padding: 16px;
-	display: block;
-	width: 100%;
+
 	border: none;
 	text-transform: uppercase;
 	font-size: 16px;
@@ -85,6 +118,14 @@ button {
 button:hover {
 	box-shadow: 5px 5px 5px #242112;
 }
+
+.center {
+	top: 100%;
+	display: flex;
+	margin: auto;
+	padding: 10px;
+
+  }
 /* Style the button that is used to open and close the collapsible content */
 .collapsible {
 	background-color: #eee;

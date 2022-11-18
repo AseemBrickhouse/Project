@@ -1,5 +1,5 @@
-from ..serilizers import *
-from ..models import *
+from ...serilizers import *
+from ...models import *
 
 
 def StudyGroupFeed(current_user):
