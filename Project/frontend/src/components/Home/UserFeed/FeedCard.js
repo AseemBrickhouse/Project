@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import Card from 'react-bootstrap/Card';
 import Image from "react-bootstrap/Image";
 
+import styles from "./Components/Feed css/feed.modules.css";
+
 const FeedCard = (props) =>{
     const formatDate = (date) => {
         if (date == null){
@@ -33,8 +35,8 @@ const FeedCard = (props) =>{
     return(
         <div>
             <Card style={{marginBottom: "5px", height: "200px"}}>
-                <Card.Body className="Feed">
-                  <Card.Title className="FeedHeader">
+                <Card.Body className={styles.Feed}>
+                  <Card.Title className={styles.FeedHeader}>
                   <Image
                         src="https://cdn-icons-png.flaticon.com/512/2102/2102647.png"
                         roundedCircle
@@ -44,7 +46,7 @@ const FeedCard = (props) =>{
                       />
                     {`${info.Body.Users.Sender.Info.first_name} ${info.Body.Users.Sender.Info.last_name}`}
                 </Card.Title>
-                  <Card.Text className="FeedText">      
+                  <Card.Text className={styles.FeedText}>      
                     {info.Body.Sub_Type.Type == "Announcement" ?
                         `Announcement from group ${info.Header.Name}`
                     : null}
@@ -55,7 +57,7 @@ const FeedCard = (props) =>{
                         `${info.Body.Users.Sender.Info.first_name} Invited you to  study group ${info.Header.Name}`
                     : null} 
                   </Card.Text>
-                  <Card.Text className="FeedCardDescription">
+                  <Card.Text className={styles.FeedCardDescription}>
                     {info.Body.Info.Description != null ?
                         `${info.Body.Info.Description}`
                     : null}

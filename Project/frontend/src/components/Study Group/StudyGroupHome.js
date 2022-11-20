@@ -1,8 +1,6 @@
 import React, { Component, useEffect, useState } from 'react';
-import {Button} from 'react-bootstrap';
-import { Link, withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
 import GroupCard from './Componenets/GroupCard';
+import styles from "./Componenets/css/StudyGroupHome.module.css";
 
 const StudyGroupHome = (props) =>{
     const [data, setData] = React.useState(null)
@@ -31,18 +29,20 @@ const StudyGroupHome = (props) =>{
     },[load])
     
     return(
-        <div>
-            {
-                data != null ?
-                    Object.entries(data).map(([studygroup_id, studygroup]) => {
-                        return(
-                            <div>
-                                <GroupCard {...studygroup}/>
-                            </div>                        
-                        )
-                    })
-                : null
-            }
+        <div className={styles.studyGroupContainer}>
+            <div className={styles.studyGroupLayout}>
+                {
+                    data != null ?
+                        Object.entries(data).map(([_, studygroup]) => {
+                            return(
+                                <div className={styles.groupCardContainer}>
+                                    <GroupCard {...studygroup}/>
+                                </div>                        
+                            )
+                        })
+                    : null
+                }
+            </div>
         </div>
     )
 }

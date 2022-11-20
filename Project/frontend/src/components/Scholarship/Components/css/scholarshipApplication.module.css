@@ -1,4 +1,4 @@
-* {
+/* * {
 	margin: 0;
 	padding: 0;
 	font-family: 'Montserrat', sans-serif;
@@ -7,20 +7,26 @@
 body {
 	height: 90vh;
 	width: 100vw;
-	/* background: #6A6C6E; */
+} */
+.back{
+	height: 100vh;
+	width: 100vw;
+	background: #6A6C6E;
+	justify-content: center;
+	overflow: hidden;
 }
-
 .container {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	height: 125%;
-	width: 100%;
-	margin-top: -5%;
+	
+	/* height: 125%;
+	width: 100%; */
+	/* margin-top: -5%; */
 }
 
-.info-box {
+.infoBox {
 	background: #9F8170;
 	padding: 100px 100px 50px 100px;
 	display: flex;
@@ -31,6 +37,8 @@ body {
 	width: 1000px;
 	font-size: 12px;
 	border-radius: 5px;
+	margin-top: 25%;
+	transform: translate(0, -50%);
 }
 
 
@@ -68,7 +76,7 @@ body {
 	border: 2px solid #242112;
 }
 
-button {
+.button {
 	outline: none;
 	background: #242124;
 	color: #FFF;
@@ -82,7 +90,7 @@ button {
 	transition: all 0.3s ease;
 }
 
-button:hover {
+.button:hover {
 	box-shadow: 5px 5px 5px #242112;
 }
 /* Style the button that is used to open and close the collapsible content */

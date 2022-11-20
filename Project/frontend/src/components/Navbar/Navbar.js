@@ -5,50 +5,38 @@ import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from "../../store/actions/auth";
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import Container from 'react-bootstrap/Container';
+
+import styles from "./Componenets/css/Navbar.module.css";
 
 const Navbar = (props) => { 
     const isAuthenticated = props.isAuthenticated
     return (
         props.location.pathname != '/Logout' && props.location.pathname != '/Login' ?
-            <div>
-               {/* <div class="navContainer">
-                 <div class="navigation">
-                     <li><a href="/">Random Icon</a></li>
-                     <li><a href="/home/">Students</a></li>
-                     <li><a href="/courses/">Instructors</a></li>
-                     <li><a href="/users/">Tutors</a></li>
-                     <li><a href="/StudyGroupHome">Studygroup</a></li>
-                     <li><a href="/ScholarshipInformation">Scholarships</a></li>
-                     {
-                       !isAuthenticated ? 
-                         <li><a href="/Login">Login</a></li>
-                       : 
-                       <li><a href="/Logout">Logout</a></li>
-                     }
-                 </div>
-             </div> */}
+            <div style={{backgroundColor: "#2B2827"}}>
               {
                 !isAuthenticated ? 
-                    <Nav inverse collapseOnSelect className="color-nav">
+                    <Nav inverse collapseOnSelect className={styles.colorNav}>
                         <Nav.Item>
-                          <Nav.Link href="/" className="color-nav-item" >Some random icon</Nav.Link>
+                          <Nav.Link href="/" className={styles.colorNavItem} >Some random icon</Nav.Link>
                         </Nav.Item>
-                        <Nav.Link href="/Login" className="color-nav-item">Login</Nav.Link>
+                        <Nav.Link href="/Login" className={styles.colorNavItem}>Login</Nav.Link>
+                        <Nav.Link href="/CreateAccount" className={styles.colorNavItem}>Sign up</Nav.Link>
                     </Nav>
                 :
-                <Nav inverse collapseOnSelect  className="color-nav">
+                <Nav inverse collapseOnSelect  className="color-nav" sticky="top">
                   <Nav.Item>
-                    <Nav.Link href="/" className="color-nav-item">Some random icon</Nav.Link>
+                    <Nav.Link href="/" className={styles.colorNavItem}>Some random icon</Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
-                    <Nav.Link eventKey="link-1" className="color-nav-item">Meeting</Nav.Link>
+                    <Nav.Link eventKey="link-1" className={styles.colorNavItem}>Meeting</Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
-                    <Nav.Link className="color-nav-item" href="/ScholarshipInformation">Scholarships</Nav.Link>
+                    <Nav.Link className={styles.colorNavItem} href="/ScholarshipInformation">Scholarships</Nav.Link>
                   </Nav.Item>
                   <NavDropdown
                     title={
-                        <span className="color-nav-item">People</span>
+                        <span className={styles.colorNavItem}>People</span>
                     }
                     id="nav-dropdown"
                   >
@@ -58,18 +46,18 @@ const Navbar = (props) => {
                   </NavDropdown>
                   <NavDropdown
                     title={
-                        <span className="color-nav-item">Study Groups</span>
+                        <span className={styles.colorNavItem}>Study Groups</span>
                     }
                     id="nav-dropdown"
                   >
-                    <NavDropdown.Item href="/CreateStudyGroup">View All Group</NavDropdown.Item>
+                    <NavDropdown.Item href="/StudyGroupHome">View All Group</NavDropdown.Item>
                     <NavDropdown.Item href="/CreateStudyGroup">View Enrolled Group</NavDropdown.Item>
                     <NavDropdown.Divider />
                     <NavDropdown.Item href="/CreateStudyGroup">Create Group</NavDropdown.Item>
                   </NavDropdown>
                   <NavDropdown
                       title={
-                          <span className="color-nav-item">Profile</span>
+                          <span className={styles.colorNavItem}>Profile</span>
                       }
                       id="nav-dropdown"
                   >

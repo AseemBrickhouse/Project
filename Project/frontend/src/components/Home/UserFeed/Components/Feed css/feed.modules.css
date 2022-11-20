@@ -1,3 +1,37 @@
+.containerhome {
+	background: #9F8170;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 70%;
+	width: 100%;
+}
+
+.bodyhome {
+	height: 100vh;
+	width: 100%;
+	background: #9F8170;
+}
+
+
+.login {
+	width: 100%;
+}
+
+.loginBox {
+	background: #9F8170;
+	padding: 100px 100px 50px 100px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	width: 60%;
+	font-size: 14px;
+	border-radius: 5px;
+}
+
 .feedbody{
     width: 50%;
     position: absolute;

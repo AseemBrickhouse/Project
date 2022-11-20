@@ -1,139 +1,101 @@
-import React, { Component } from 'react';
+import React, { Component,useState, useEffect } from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/auth';
 import {Button, Form, FormControl } from 'react-bootstrap';
+import Loading from "../Loadings/Login/Loading";
+import styles from "./Componenets/css/login.module.css";
 
 const Login = (props) => {
+    const [error, setError] = useState(null);
+    const [load, setLoad] = useState(false);
 
-    console.log(props)
+    useEffect(()=>{
+      setError(props.error)
+    }, [load])
 
     const handleSubmit = (event) => {
       event.preventDefault();
       const data = new FormData(event.currentTarget);
       props.onAuth(data.get('username'), data.get('password'));
-
+      setLoad(true);
+      console.log(props)
       setTimeout(()=>{
-        props.history.push('/')
-      }, 1000)
+        setLoad(false); 
+        if(props.error != null){
+          setLoad(false); 
+          setError(true);
+        }else{
+          props.isAuthenticated ? props.history.push('/') : setError(true);
+        }
+      }, 3000)
     }
     return (
-      <body>
-        <div className="container">
-          <div className="login-box">
-              <Form className="login" onSubmit={handleSubmit}>
-                <div className="elements">
-                  <h1>Login to your account</h1>
-                </div>
-                <div className="elements">
-                  <FormControl
-                    // className="inputBoxes"
-                    id="username"
-                    name="username"
-                    type="text"
-                    placeholder="Username"
-                  />
-                </div>
-                <div className="elements">
-                  <FormControl
-                    id="password"
-                    name="password"
-                    type="password"
-                    placeholder="Password"
-                  />
-                </div>
-                <div className="elements">
-                  <Link to = '/RecoveryPassword'>
-                    <a>Forgot Password</a>
-                  </Link>
-                </div>
-                <div className="elements">
-                  <div component="form">
-                    <button type="submit">
-                      Login
-                    </button>
-                  </div>
-                </div>
-                <div className="elements">
-                 <Link to = '/CreateAccount'>
-                     <button>
-                         Sign up
-                     </button>
-                 </Link>
-                </div>
-              </Form>
+      <div>
+      {
+        load ? 
+          <div>
+            <Loading/>
           </div>
+        :
+      <body>
+      <div className={styles.container}>
+        <div className={styles.loginBox}>
+            <Form className={styles.login} onSubmit={handleSubmit}>
+              <div className={styles.elements}>
+                <h1>Login to your account</h1>
+                {error ? <div>
+                <p>Invalid Username and/or password</p>
+                </div> : null}
+              </div>
+              <div className={styles.elements}>
+                <FormControl
+                  id="username"
+                  name="username"
+                  type="text"
+                  placeholder="Username"
+                />
+              </div>
+              <div className={styles.elements}>
+                <FormControl
+                  id="password"
+                  name="password"
+                  type="password"
+                  placeholder="Password"
+                />
+              </div>
+              <div className={styles.elements}>
+                <Link to = '/RecoveryPassword'>
+                  <div className={styles.a}>Forgot Password</div>
+                </Link>
+              </div>
+              <div className={styles.elements}>
+                <div component="form">
+                  <button className={styles.button} type="submit">
+                    Login
+                  </button>
+                </div>
+              </div>
+              <div className={styles.elements}>
+               <Link to = '/CreateAccount'>
+                  <div className={styles.button}>
+                      Sign up
+                  </div>
+               </Link>
+              </div>
+            </Form>
         </div>
-      </body>
-      // <div>
-      //   <Form className="container" onSubmit={handleSubmit}>
-      //     {/* <CSRFToken/> */}
-      //     <Form.Group>
-      //       <FormControl
-      //         type="text"
-      //         name="username"
-      //         id="username"
-      //         value={test.username}
-      //         placeHolder="Username"
-      //       />
-      //       <FormControl
-      //         id="password"
-      //         type="text"
-      //         name="password"
-      //         value={test.password}
-      //         placeHolder="Password"
-      //       />
-      //     </Form.Group>
-      //     <Button type="submit">
-      //       Login
-      //     </Button>
-      //   </Form>
-      // </div>
-    // <body>
-    //   <div class="container">
-    //     <div class="login-box">
-    //       <form class="login">
-    //         <div class="elements">
-    //           <h1>Login to your account</h1>
-    //         </div>
-    //         <div class="elements">
-    //           <input type="text" placeholder="Username" id="username" class="inputBoxes" />
-    //         </div>
-    //         <div class="elements">
-    //           <input type="password" placeholder="Password" id="password" class="inputBoxes" />
-    //         </div>
-    //         <div class="elements">
-    //           <Link to = '/RecoveryPassword'>
-    //             <a>Forgot Password</a>
-    //           </Link>
-    //           {/* <a href= "/Project/frontend/templates/frontend/login/forgotPassword.html">Forgot Password?</a> */}
-    //         </div>
-    //         <div class="elements">
-    //           {/* <button class="full-btn">Login</button> */}
-    //           <div component='form' noValidate onSubmit={handleSubmit}>
-    //               <Button type="submit">
-    //                 Login
-    //               </Button>
-    //           </div>
-    //         </div>
-    //         <div class="elements">
-    //             <Link to = '/CreateAccount'>
-    //                 <button>
-    //                     Sign up
-    //                 </button>
-    //             </Link>
-    //           {/* <a href= "/Project/frontend/templates/frontend/createAccount/createAccount.html">Sign Up</a> */}
-    //         </div>
-    //       </form>
-    //     </div>
-    //   </div>
-    // </body>
+      </div>
+    </body>
+      }
+    </div>
     )
 }
 
 const mapStateToProps = (state) => {
   return{
     loading: state.auth.loading,
+    isAuthenticated: state.auth.token != null,
     error: state.auth.error,
   }
 }

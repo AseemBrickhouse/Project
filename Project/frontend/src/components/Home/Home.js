@@ -4,6 +4,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import FeedCard from './UserFeed/FeedCard';
 import * as actions from "../../store/actions/auth";
+import styles from "./UserFeed/Components/Feed css/feed.modules.css";
 
 const Home = (props) => {
     console.log(props)
@@ -33,15 +34,15 @@ const Home = (props) => {
     },[load])
     
     return (
-        <div className='containerhome'>
-            <body className='bodyhome'>
-                <div className="containerhome">
-                    <div className="login-box" >
-                        <div className="login">
+        <div className={styles.containerhome}>
+            <body className={styles.bodyhome}>
+                <div className={styles.containerhome}>
+                    <div className={styles.loginBox} >
+                        <div className={styles.login}>
                             {
                                 isAuthenticated ?
                                     feed != null ?
-                                        <div className="feedbody">
+                                        <div className={styles.feedbody}>
                                         {
                                             Object.entries(feed).map(([id, content]) => {
                                                 return (

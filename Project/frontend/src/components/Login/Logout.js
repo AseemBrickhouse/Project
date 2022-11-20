@@ -4,35 +4,37 @@ import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from "../../store/actions/auth";
 
+import styles from "./Componenets/css/login.module.css";
+
 const Logout = (props) =>{
   const account = props.account
     return (
       <body>
-        <div class="container">
-          <div class="login-box">
-            <div class="title">
+        <div className={styles.container}>
+          <div className={styles.loginBox}>
+            <div className={styles.title}>
               <h1>Logout of your account</h1>
             </div>
-            <form class="login">
+            <form class={styles.login}>
               <section>
-                <span class="icon">
+                <span className={styles.icon}>
                   <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png" />
                 </span>
-                <section class="icon-text">
+                <section className={styles.iconText}>
                   <h2>{`${account.first_name} ${account.last_name}`}</h2>
                   <p>{`${account.email}`}</p>
                 </section>
               </section>
-              <div class="elements">
+              <div className={styles.elements}>
                 <Link to='/'>
-                  <button onClick={props.logout}>
+                  <div className={styles.button} onClick={props.logout}>
                       Logout
-                  </button>
+                  </div>
                 </Link>
                 {/* <button onclick = "location.href='/Project/frontend/templates/frontend/login/login.html'" type="button">Logout</button> */}
               </div>
-              <div class="elements">
-                <a href = "/Project/frontend/templates/frontend/login/login.html" class = "centered-link">Sign into another account</a>
+              <div className={styles.elements}>
+                <div className = {styles.centerLink} href = "/Project/frontend/templates/frontend/login/login.html">Sign into another account</div>
               </div>
             </form>
           </div>

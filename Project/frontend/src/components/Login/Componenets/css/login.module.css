@@ -7,7 +7,7 @@
 body {
 	height: 100vh;
 	width: 100%;
-	/* background: #6A6C6E; */
+	background: #6A6C6E;
 }
 .bodyhome {
 	height: 100vh;
@@ -63,7 +63,7 @@ body {
 }
 
 
-.login-box {
+.loginBox {
 	background: #9F8170;
 	padding: 100px 100px 50px 100px;
 	display: flex;
@@ -71,7 +71,7 @@ body {
 	align-items: center;
 	justify-content: center;
 	position: relative;
-	width: 60%;
+	width: 30%;
 	font-size: 14px;
 	border-radius: 5px;
 }
@@ -89,7 +89,7 @@ body {
 	
 }
 
-.icon-text{
+.iconText{
 	text-align: center;
 	justify-content: center;
 	position: relative;
@@ -103,7 +103,7 @@ body {
 	padding-bottom: 5%;
 }
 
-.user-icon i {
+.i {
 	font-size: 40px;
 	color: #FFF;
 }
@@ -133,7 +133,7 @@ body {
 	border: 2px solid #242112;
 }
 
-button {
+.button {
 	outline: none;
 	background: #242124;
 	color: #FFF;
@@ -146,20 +146,24 @@ button {
 	cursor: pointer;
 	transition: all 0.3s ease;
 }
-.centered-link{
+.centeredLink{
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	color: #242124
 }
 
-button:hover {
+.button:hover {
 	box-shadow: 5px 5px 5px #242112;
 }
 
-a {
+.a {
+	text-decoration: none;
 	color: #242124;
 }
 
-a:hover {
+.a:hover {
+	text-decoration: none;
+
 	color: #FFF;
 }

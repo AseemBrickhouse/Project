@@ -48,10 +48,5 @@ const Routes = (props) => {
         </React.Fragment>
     )
 }
-// class Routes extends React.Component{
-//     render(){
-//         return(
-//         )
-//     }
-// }
+
 export default Routes;

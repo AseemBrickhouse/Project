@@ -1,34 +1,49 @@
-* {
+/* * {
 	margin: 0;
 	padding: 0;
 	font-family: 'Montserrat', sans-serif;
-}
+} */
 
-body {
+/* body {
 	height: 100vh;
 	width: 100%;
 	background: #6A6C6E;
-}
+} */
 
-.container {
+.containergroupcard{
+	/* margin-top: 20%;
+	margin-right: 10%; */
+	margin-top: 5vh;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	height: 125%;
-	width: 100%;
+	/* height: 125%;
+	width: auto; */
+	background: #6A6C6E;
+
 }
 
-.info-box {
+.Imgplaceholder{
+	/* position: relative; */
+	border-radius: 5px 5px 0px 0px;
+	margin-top: -20%;
+	background-color: white;
+	height: 150px;
+	width: 300px;
+	margin-left: 0%;
+	margin-bottom: 10%;
+}
+.infoboxgroupcard {
 	background: #9F8170;
-	padding: 100px 100px 50px 100px;
+	/* padding: 100px 100px 50px 100px; */
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	position: relative;
-	height: 300px;
-	width: 200px;
+	height: 400px;
+	width: 300px;
 	font-size: 12px;
 	border-radius: 5px;
 }
@@ -50,30 +65,35 @@ body {
 	width: 100%;
 }
 
-.footer{
+/* .footer{
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
 	width: 100%;
-}
+} */
 
-.footer button{
-	/* text-align: center;
-	width: 50%; */
-	margin-right: 5%;
-	display: inline-block;
-	flex-direction: column;
-	justify-content: center;
+.footer{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
 	outline: none;
 	position:relative;
-
 	padding: 16px;
+	width: 100%;
+}
 
+.button{
+	margin: auto;
+	justify-content: center;
+	padding: 16px;
+	border-radius: 5px;
+	background-color: #6A6C6E;
 	border: none;
 	text-transform: uppercase;
 	font-size: 16px;
 	cursor: pointer;
 	transition: all 0.3s ease;
+	
 }
 .inputBoxes{
 	font-size: 16px;
@@ -115,16 +135,16 @@ button {
 	transition: all 0.3s ease;
 }
 
-button:hover {
+.button:hover {
 	box-shadow: 5px 5px 5px #242112;
 }
 
 .center {
-	top: 100%;
+	top: 150%;
 	display: flex;
 	margin: auto;
 	padding: 10px;
-
+	margin-left: 5%;
   }
 /* Style the button that is used to open and close the collapsible content */
 .collapsible {
