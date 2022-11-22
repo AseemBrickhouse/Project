@@ -45,6 +45,10 @@ class AccountCreation(ObtainAuthToken):
         Whether or not the account was successfully created
     """
     def post(self, request, *args, **kwargs):
+        if request.data['token'] == None:
+            return Response({
+                "Message": "Token does not exists"
+            })
         token_id = Token.objects.get(key=request.data['token']).user_id
         #Current User to create account for
         user = User.objects.all().filter(id=token_id)[0]

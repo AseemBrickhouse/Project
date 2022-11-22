@@ -41,7 +41,7 @@ class CreateInvite(ObtainAuthToken):
         is_enrolled = StudyEnroll.objects.all().filter(studygroup_id=studygroup[0], account=recipient)
         if is_enrolled:
             return Response({
-                "Message": recipient.first_name + " " + recipient.last_name + " is already enrolled in " + studygroup[0].studygroup_name
+                "Message": "{} {} is already enrolled in {}".format(recipient.first_name, recipient.last_name, studygroup[0].studygroup_name)
             })
 
         if studygroup[0].studygroup_host == current_user:
@@ -64,13 +64,12 @@ class CreateInvite(ObtainAuthToken):
                     sender=current_user,
                     recipient = recipient,
                     studygroup_id=studygroup[0],
-                    #somehow put dates in
+                    expiration_date = datetime().now + datetime.timedelta(days = 3),
                 )
-                print("get")
                 invite.save()
 
             return Response({
-                "Message": recipient.first_name + " " + recipient.last_name + " has been invited to " + studygroup[0].studygroup_name
+                "Message": "{} {} has been invited to {}".format(recipient.first_name, recipient.last_name, studygroup[0].studygroup_name)
             })
         else:
             return Response({

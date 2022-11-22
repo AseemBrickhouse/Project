@@ -15,6 +15,7 @@ import Navbar from './Navbar/Navbar';
 import StudyGroupHome from './Study Group/StudyGroupHome';
 import ScholarShipInformation from './Scholarship/ScholarshipInformation';
 import CreateStudyGroup from './Study Group/CreateStudyGroup';
+import EnrolledStudyGroups from './Study Group/EnrolledStudyGroups';
 
 const Routes = (props) => {
     return (
@@ -37,6 +38,7 @@ const Routes = (props) => {
 
                     {/* Studygroup */}
                     <Route exact path = "/StudyGroupHome" component={StudyGroupHome}/>
+                    <Route exact path = "/EnrolledStudyGroups" component={EnrolledStudyGroups}/>
                     <Route exact path = "/CreateStudyGroup" component={CreateStudyGroup}/>
 
 

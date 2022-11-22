@@ -10,6 +10,23 @@ import random
 import string
 import os
 
+class GetStudyGroup(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
+        token = Token.objects.get(key=request.data['token']).user_id
+        current_user = User.objects.all().filter(id=token)[0].account
+
+        try:
+            studygroup = StudyGroup.objects.all().get(studygroup_id=request.data['studygroup_id'])
+        except StudyGroup.DoesNotExist:
+            return Response({
+                "Message": "Error"
+            })
+        queryset = StudyGroupSerilizer(studygroup).data
+        is_enrolled = StudyEnroll.objects.all().filter(studygroup_id=studygroup.id, account=current_user)
+        queryset['is_enrolled'] = False if not is_enrolled else True
+
+        return Response(queryset)
+
 class GetAllUserStudyGroups(ObtainAuthToken):
     """
     @ function
@@ -34,10 +51,12 @@ class GetAllUserStudyGroups(ObtainAuthToken):
             studygroup = enroll.studygroup_id
             group_json = StudyGroupSerilizer(studygroup).data
             queryset[group_json['studygroup_id']] = group_json
+            # is_enrolled = StudyEnroll.objects.filter(account = current_user, studygroup=)
+            queryset[group_json['studygroup_id']]['is_enrolled'] = True
 
         return Response(queryset)
         
-class GetAllStudyGroups(APIView):
+class GetAllStudyGroups(ObtainAuthToken):
     """
     @ function
         Allows a user to request for all avalible study groups
@@ -46,7 +65,10 @@ class GetAllStudyGroups(APIView):
     @ Return 
         queryset that contains study groups along with their information
     """
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
+        token = Token.objects.get(key=request.data['token']).user_id
+        current_user = User.objects.all().filter(id=token)[0].account
+
         queryset = {}
         if StudyGroup.objects.all() == []:
             return Response({
@@ -55,6 +77,8 @@ class GetAllStudyGroups(APIView):
         for group in StudyGroup.objects.all():
             group_json= StudyGroupSerilizer(group).data
             queryset[group_json['studygroup_id']] = group_json
+            is_enrolled = StudyEnroll.objects.all().filter(account=current_user, studygroup_id=group)
+            queryset[group_json['studygroup_id']]['is_enrolled'] = False if not is_enrolled else True
 
         return Response(queryset)
 
@@ -80,8 +104,10 @@ class CreateStudyGroup(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
 
         def StudyGroupNameCheck(name):
+            if not name:
+                return True
             try: 
-                query = StudyGroup.objects.get(studygroup_name=name)
+                StudyGroup.objects.get(studygroup_name=name)
                 return True
             except StudyGroup.DoesNotExist:
                 return False
@@ -104,6 +130,7 @@ class CreateStudyGroup(ObtainAuthToken):
             return StudyEnroll_to_create
 
 
+        
         #Get current user
         token = Token.objects.get(key=request.data['token']).user_id
         current_user = User.objects.all().filter(id=token)[0].account
@@ -196,7 +223,7 @@ class JoinStudyGroup(ObtainAuthToken):
                                     "Message": "Invite expired!"
                                 })
 
-                has_invite.delete()
+                            has_invite.delete()
                 #After all checks are passed its safe to enroll the user in the group
                 studygroup_to_enroll = StudyEnroll.objects.create(
                     studygroup_id = studygroup,
@@ -320,7 +347,12 @@ class LeaveStudyGroup(ObtainAuthToken):
         token = Token.objects.get(key=request.data['token']).user_id
         current_user = User.objects.all().filter(id=token)[0].account
 
-        studygroup = StudyGroup.objects.all().get(studygroup_id=request.data['studygroup_id'])  
+        try:
+            studygroup = StudyGroup.objects.all().get(studygroup_id=request.data['studygroup_id'])  
+        except StudyGroup.DoesNotExist:
+            return Response({
+                "Message": "Group does not exists"
+            })
         studygroup_user_list = StudyEnroll.objects.all().filter(studygroup_id=studygroup)
 
         #Special case when current user is the host i.e cant host a group youre not in :)

@@ -49,7 +49,7 @@ export const authLogin = (username, password) => {
             password: password
         })
         .then(response => {
-            console.log(response.data);
+            // console.log(response.data);
             const token = response.data.key;
             const expirationDate = new Date(new Date().getTime() + 50000 * 1000);
             localStorage.setItem('token', response.data.key);

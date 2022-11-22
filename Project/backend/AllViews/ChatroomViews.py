@@ -11,35 +11,16 @@ import string
 import os
 
 
-class APITEST(APIView):
-    def post(self, request, *args, **kwargs):
-        def getParentDir(CurrentPath, levels = 1):
-            current_new = CurrentPath
-            for i in range(levels + 1):
-                current_new = os.path.dirname(current_new)
-            
-            return os.path.relpath(CurrentPath, current_new)
-
-
-        par = "Chatroom"
-        directory = "Logs"
-        par_path = os.path.join(par, directory)
-        path = os.path.join(getParentDir(os.getcwd(), 0), par_path)
-
-        random_id = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(20))
-        file_path = os.path.join(path, random_id)
-
-        if not os.path.exists(file_path):
-            os.makedirs(file_path)
-
-        file_path = os.path.join(file_path, random_id)
-        make_file = open(file_path, "a")
-        make_file.close()
-
-        print(file_path)
-        return Response(request.data)
 
 class GetAllMessages(APIView):
+    """
+    @ function
+        Retrive all messages of current group
+    @ request Params
+        studygroup_id: request.data['studygroup_id']
+    @ Return    
+        All messages in group
+    """
     def post(self, request, *args, **kwargs):
 
         studygroup = StudyGroup.objects.get(studygroup_id=request.data['studygroup_id'])
@@ -61,10 +42,14 @@ class GetAllMessages(APIView):
 
 class CreateMessage(ObtainAuthToken):
     """
-    We should have the studygroup id
-    from here we can get the chat id
-    then create the message in the database
-    then open the file and write a new entry
+    @ function
+        Given a user token, studygroup_id, and message, create a message for the group
+    @ request Params
+        user token: request.data['token']
+        studygroup id: request.data['studygroup_id']
+        message: request.data['message]
+    @ Return    
+        Message telling whether or not the message was created
     """
     def post(self, request, *args, **kwargs):
         
@@ -89,6 +74,17 @@ class CreateMessage(ObtainAuthToken):
         })
 
 class UpdateMessage(ObtainAuthToken):
+    """
+    @ function
+        Given a user token, studygroup_id, message id, and new message, update a message for the group
+    @ request Params
+        user token: request.data['token']
+        studygroup id: request.data['studygroup_id']
+        message id: request.data['message_id']
+        new_message : request.data['new_content']
+    @ Return    
+        Message telling whether or not the message was updated
+    """
     def put(self, request, *args, **kwargs):
         token = Token.objects.get(key=request.data['token']).user_id
         current_user = User.objects.all().filter(id=token)[0].account
@@ -116,7 +112,18 @@ class UpdateMessage(ObtainAuthToken):
             return Response({
                 "Message": "You are not the creator of the message or the message to update does not exists."
             })
+
 class DeleteMessage(ObtainAuthToken):
+    """
+    @ function
+        Given a user token, studygroup_id, message id, delete the message for the group
+    @ request Params
+        user token: request.data['token']
+        studygroup id: request.data['studygroup_id']
+        message id: request.data['message_id']
+    @ Return    
+        Message telling whether or not the message was deleted
+    """
     def delete(self, request, *args, **kwargs):
         token = Token.objects.get(key=request.data['token']).user_id
         current_user = User.objects.all().filter(id=token)[0].account
@@ -140,6 +147,17 @@ class DeleteMessage(ObtainAuthToken):
 
 
 class GetUserMessages(APIView):
+    """
+    @ function
+        Given a studygroup_id, first_name, last_name, and email, retrieve all messages related to the person
+    @ request Params
+        studygroup id: request.data['studygroup_id']
+        first_name: request.data['first_name']
+        last_name: request.data['last_name']
+        email: request.data['email']
+    @ Return    
+        All messages related to a user
+    """
     def post(self, request, *args, **kwargs):
         studygroup = StudyGroup.objects.get(studygroup_id = request.data['studygroup_id'])
         chat = studygroup.id
@@ -157,6 +175,15 @@ class GetUserMessages(APIView):
         return Response(queryset)
 
 class GetCurrentUserMessages(ObtainAuthToken):
+    """
+    @ function
+        Given a user token, studygroup_id, retrieve all messages from the current logged in user
+    @ request Params
+        user token: request.data['token']
+        message id: request.data['message_id']
+    @ Return    
+        All messages related to current user
+    """
     def post(self, request, *args, **kwargs):
         token = Token.objects.get(key=request.data['token']).user_id
         current_user = User.objects.all().filter(id=token)[0].account

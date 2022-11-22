@@ -1,11 +1,7 @@
 import React from 'react';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route
-} from "react-router-dom";
+import {Form, FormControl } from 'react-bootstrap';
 
-import {Button, Form, FormControl } from 'react-bootstrap';
+import styles from "./Componenets/css/createStudyGroup.module.css";
 
 const CreateStudyGroup = (props) => {
 
@@ -34,12 +30,12 @@ const CreateStudyGroup = (props) => {
 
     return (
         <body>  
-            <div className="container">
-                <div className="info-box">
-                    <h1 className="center">Create Study Group</h1>
-                    <div className="info">
-                        <p>Study Group Name:</p>
-                        <div className="elements">
+            <div className={styles.container}>
+                <div className={styles.infoBox}>
+                    <h1 className={styles.center}>Create Study Group</h1>
+                    <div className={styles.info}>
+                        <div className={styles.p}>Study Group Name:</div>
+                        <div className={styles.elements}>
                             <Form onSubmit={handleSubmit}>
                             <FormControl
                                 type="text"
@@ -49,8 +45,8 @@ const CreateStudyGroup = (props) => {
                                 autoComplete="Studygroupname"
                             />
                             {['radio'].map((type) => (
-                            <div key={`inline-${type}`} className="mb-3">
-                            <p>Invite Only:</p>
+                            <div key={`inline-${type}`} className={styles.inviteBox}>
+                            <p className={styles.p}>Invite Only:</p>
                               <Form.Check
                                 inline
                                 label="Open"
@@ -58,6 +54,7 @@ const CreateStudyGroup = (props) => {
                                 value="Open"
                                 type={type}
                                 id={`inline-${type}-1`}
+                                className={styles.label}
                               />
                               <Form.Check
                                 inline
@@ -66,11 +63,12 @@ const CreateStudyGroup = (props) => {
                                 type={type}
                                 value="Closed"
                                 id={`inline-${type}-2`}
+                                className={styles.label}
                               />
                             </div>
                             ))}
-                            <div className="elements">
-                                <p>Study Group Description</p>
+                            <div className={styles.elements}>
+                                <p className={styles.p}>Study Group Description</p>
                                 <Form.Control 
                                     as="textarea" 
                                     aria-label="With textarea" 
@@ -78,8 +76,8 @@ const CreateStudyGroup = (props) => {
                                     name="Studygroupdescription"
                                 />
                             </div>
-                            <div class="elements">
-             					<button class="full-btn" type="submit">Create</button>
+                            <div className={styles.elements}>
+             					<button className={styles.button} type="submit">Create</button>
              				</div>
                           </Form>
                         </div>

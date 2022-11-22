@@ -1,8 +1,8 @@
-import React, { Component,useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as actions from '../../store/actions/auth';
-import {Button, Form, FormControl } from 'react-bootstrap';
+import * as authActions from '../../store/actions/auth';
+import {Form, FormControl } from 'react-bootstrap';
 import Loading from "../Loadings/Login/Loading";
 import styles from "./Componenets/css/login.module.css";
 
@@ -10,8 +10,13 @@ const Login = (props) => {
     const [error, setError] = useState(null);
     const [load, setLoad] = useState(false);
 
-    useEffect(()=>{
-      setError(props.error)
+    useEffect(() => {
+      if(!load && props.error != null){
+        setError(!error)
+        console.log(props.error)
+      }else if (!load && props.error == null){
+        props.isAuthenticated ? props.history.push('/') : null
+      }
     }, [load])
 
     const handleSubmit = (event) => {
@@ -19,17 +24,13 @@ const Login = (props) => {
       const data = new FormData(event.currentTarget);
       props.onAuth(data.get('username'), data.get('password'));
       setLoad(true);
-      console.log(props)
+
       setTimeout(()=>{
-        setLoad(false); 
-        if(props.error != null){
-          setLoad(false); 
-          setError(true);
-        }else{
-          props.isAuthenticated ? props.history.push('/') : setError(true);
-        }
+        setLoad(false);
+        props.error != null ? setError(true): null
       }, 3000)
     }
+
     return (
       <div>
       {
@@ -77,7 +78,7 @@ const Login = (props) => {
                 </div>
               </div>
               <div className={styles.elements}>
-               <Link to = '/CreateAccount'>
+               <Link to = '/CreateAccount' className={styles.buttonOutter}>
                   <div className={styles.button}>
                       Sign up
                   </div>
@@ -95,14 +96,15 @@ const Login = (props) => {
 const mapStateToProps = (state) => {
   return{
     loading: state.auth.loading,
-    isAuthenticated: state.auth.token != null,
+    isAuthenticated: state.auth.token !== null,
     error: state.auth.error,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAuth: (username, password) => dispatch(actions.authLogin(username, password))
+    onAuth: (username, password) => dispatch(authActions.authLogin(username, password)),
+    AutoTrySignUp: () => dispatch(authActions.isValid()),
   }
 }
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login))

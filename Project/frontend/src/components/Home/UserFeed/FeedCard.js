@@ -37,13 +37,24 @@ const FeedCard = (props) =>{
             <Card style={{marginBottom: "5px", height: "200px"}}>
                 <Card.Body className={styles.Feed}>
                   <Card.Title className={styles.FeedHeader}>
-                  <Image
-                        src="https://cdn-icons-png.flaticon.com/512/2102/2102647.png"
-                        roundedCircle
-                        width={50}
-                        height={50}
-                        style={{marginRight: "10px"}}
-                      />
+                    {
+                        info.Body.Users.Sender.Info.profile_pic != null ?
+                        <Image
+                            src={info.Body.Users.Sender.Info.profile_pic}
+                            roundedCircle
+                            width={50}
+                            height={50}
+                            style={{marginRight: "10px"}}
+                        />
+                        :
+                        <Image
+                            src="https://cdn-icons-png.flaticon.com/512/2102/2102647.png"
+                            roundedCircle
+                            width={50}
+                            height={50}
+                            style={{marginRight: "10px"}}
+                        />
+                    }
                     {`${info.Body.Users.Sender.Info.first_name} ${info.Body.Users.Sender.Info.last_name}`}
                 </Card.Title>
                   <Card.Text className={styles.FeedText}>      

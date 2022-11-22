@@ -1,12 +1,26 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect, useRef } from 'react';
 import {Link,  withRouter} from 'react-router-dom';
 import * as actions from '../../store/actions/auth';
 import {Button, Form, FormControl } from 'react-bootstrap';
 import AccountCreated from './AccountCreated';
 import { connect } from 'react-redux';
 
+import Overlay from 'react-bootstrap/Overlay';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
+
+import styles from "../Login/Componenets/css/login.module.css"
+import Loading from '../Loadings/Login/Loading';
+
 const CreateAccount = (props) => {
-    const [load, setLoad] = React.useState(false)
+    const [load, setLoad] = useState(false);
+    const [error, setError] = useState(false);
+    const [update, setUpdate] = useState(null);
+
+    const username = useRef(null);
+    const password1 = useRef(null);
+    const password2 = useRef(null);
+    const email = useRef(null);
 
     const infoCheck = (email, password1, password2) =>{
         if(password1 != password2){
@@ -15,6 +29,15 @@ const CreateAccount = (props) => {
         //Check Other info
         return true
     }
+
+    useEffect(() => {
+      if(!load && props.error != null){
+        setError(!error)
+        setUpdate(props.error)
+      }else if (!load && props.error == null){
+        // props.isAuthenticated ? props.history.push('/') : null
+      }
+    }, [load])
 
     const handleSubmit = (event) => {
       event.preventDefault()
@@ -27,8 +50,11 @@ const CreateAccount = (props) => {
         data.get('password2'),
       );
       setLoad(true)
-      
+
       setTimeout(() =>{
+          setLoad(false)
+          props.error != null ? setError(true)
+          :
           fetch("api/AccountCreation/" , {
             method: "POST",
             headers:{
@@ -46,73 +72,120 @@ const CreateAccount = (props) => {
           .then(response => {
             if(response = 200){
               //Success
+              // props.history.push('/')
             }else if(response > 200){
-              //Error
+              setError(!error)
             }
           })
-          setLoad(false)
-          props.history.push('/')
+
+          // props.history.push('/')
       }, 3000)
     }
     return(
       <div>
       {
         load ?
-        <div>
-          {/* Pass in correct info */}
-          <AccountCreated/>
-          {console.log("loading")}
-          <></>
-        </div>
+          <Loading/>
         :
         <body>
-          <div className="container">
-            <div className="info-box">
-              <Form clasName="info" onSubmit={handleSubmit}>
-                <div className="elements">
+          <div className={styles.container}>
+            <div className={styles.loginBox}>
+              <Form clasName={styles.login} onSubmit={handleSubmit}>
+                <div className={styles.elements}>
                   <h1>Create your account</h1>
+                  {update != null && update.response.data.non_field_errors != null  ? 
+                    <div><p>Two passwords did not match</p></div>: null
+                  }
                 </div>
-                <div className="elements">
+                <div className={styles.elements}>
                   <FormControl
                     type="text"
                     placeholder="Username"
                     id="username"
                     name="username"
                     autoComplete="username"
+                    ref={username}
                     // className="inputBoxes"
                   />
+                    {
+                      update != null && update.response.data.username != null ?
+                      <Overlay target={username.current} show={true} placement="right-end">
+                        {(props) => (
+                            <Tooltip id="overlay-example" {...props}>
+                              {`${update.response.data.username}`}
+                            </Tooltip>
+                          )}
+                      </Overlay>
+                      : null
+                    }
                 </div>
-                <div className="elements">
+                <div className={styles.elements}>
                   <FormControl
                     type="password"
                     placeholder="Password"
                     id="password1"
                     name="password1"
                     autoComplete="new-password"
+                    ref={password1}
                     // className="inputBoxes"
                   />
+                  {
+                      update != null && update.response.data.password1 != null ?
+                      <Overlay target={password1.current} show={true} placement="right-end">
+                        {(props) => (
+                            <Tooltip id="overlay-example" {...props}>
+                              {`${update.response.data.password1}`}
+                            </Tooltip>
+                          )}
+                      </Overlay>
+                      : null
+                    }
                   </div>
-                  <div className="elements">
-                  <FormControl
-                    type="password"
-                    placeholder="Confirm Password"
-                    id="password2"
-                    name="password2"
-                    autoComplete="new-password"
-                    // className="inputBoxes"
-                  />
+                  <div className={styles.elements}>
+                    <FormControl
+                      type="password"
+                      placeholder="Confirm Password"
+                      id="password2"
+                      name="password2"
+                      autoComplete="new-password"
+                      ref={password2}
+                      // className="inputBoxes"
+                    />
+                    {
+                      update != null && update.response.data.password2 != null ?
+                      <Overlay target={password2.current} show={true} placement="right-end">
+                        {(props) => (
+                            <Tooltip id="overlay-example" {...props}>
+                              {`${update.response.data.password2}`}
+                            </Tooltip>
+                          )}
+                      </Overlay>
+                      : null
+                    }
                   </div>
-                  <div className="elements">
-                  <FormControl
-                    type="email"
-                    placeholder="email"
-                    id="email"
-                    name="email"
-                    autoComplete="email"
-                    // className="inputBoxes"
-                  />
+                  <div className={styles.elements}>
+                    <FormControl
+                      type="email"
+                      placeholder="email"
+                      id="email"
+                      name="email"
+                      autoComplete="email"
+                      ref={email}
+                      // className="inputBoxes"
+                    />
+                    {
+                      update != null && update.response.data.email != null ?
+                      <Overlay target={email.current} show={true} placement="right-end">
+                        {(props) => (
+                            <Tooltip id="overlay-example" {...props}>
+                              {`${update.response.data.email}`}
+                            </Tooltip>
+                          )}
+                      </Overlay>
+                      : null
+                    }
                   </div>
-                  <div className="elements">
+                  <div className={styles.elements}>
                   <FormControl
                     type="text"
                     placeholder="Phone Number"
@@ -121,7 +194,7 @@ const CreateAccount = (props) => {
                     // className="inputBoxes"
                   />
                 </div>
-                <div className="elements">
+                <div className={styles.elements}>
                   <FormControl
                     type="text"
                     placeholder="First Name"
@@ -131,7 +204,7 @@ const CreateAccount = (props) => {
                     // className="inputBoxes"
                   />
                 </div>
-                <div className="elements">
+                <div className={styles.elements}>
                   <FormControl
                     type="text"
                     placeholder="Last Name"
@@ -141,8 +214,8 @@ const CreateAccount = (props) => {
                     // className="inputBoxes"
                   />
                 </div>
-                <div className="elements">
-                  <button type="submit">
+                <div className={styles.elements}>
+                  <button className={styles.button} type="submit">
                       Create Account
                   </button>
                 </div>
@@ -156,8 +229,9 @@ const CreateAccount = (props) => {
 }
 const mapStateToProps = (state) =>{
   return{
-      loading: state.loading,
-      error: state.error,
+      loading: state.auth.loading,
+      error: state.auth.error,
+      isAuthenticated: state.auth.token !== null,
   }
 }
 const mapDispatchToProps = dispatch => {

@@ -15,7 +15,7 @@ class AccountSerilizer(serializers.ModelSerializer):
             'role',
             'bio',
             # SEE MODELS COMMENT
-            # 'profile_pic',
+            'profile_pic',
         )
 
 class FriendsSerilizer(serializers.ModelSerializer):

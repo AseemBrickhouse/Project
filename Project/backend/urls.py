@@ -9,6 +9,7 @@ from backend.AllViews.MeetingViews import *
 from backend.AllViews.InviteViews import *
 from backend.AllViews.AnnouncementViews import *
 from backend.AllViews.ChatroomViews import *
+from backend.AllViews.FriendsViews import *
 
 urlpatterns = [
     path('rest-auth/', include('rest_auth.urls')),
@@ -31,6 +32,8 @@ urlpatterns = [
     path('GetUsersInGroup/', GetUsersInGroup.as_view()),
     path('LeaveStudyGroup/', LeaveStudyGroup.as_view()),
     path('GetGroupModules/', GetGroupModules.as_view()),
+    path('GetStudyGroup/', GetStudyGroup.as_view()),
+
 
     #MODULE VIWES
     path('CreateModule/', CreateModule.as_view()),
@@ -74,5 +77,6 @@ urlpatterns = [
     path('UpdateMessage/', UpdateMessage.as_view()),
 
     #FRIENDS VIEW
-    
+    path('SendFriendRequest/', SendFriendRequest.as_view()),
+    path('GetAllFriends/', GetAllFriends.as_view()),
 ]

@@ -8,7 +8,7 @@ const StudyGroupHome = (props) =>{
 
     useEffect(() =>{
         if(!load){
-            fetch("http://127.0.0.1:8000/api/GetAllStudyGroups/", {
+            fetch("http://127.0.0.1:8000/api/GetAllUserStudyGroups/", {
                 method: "POST",
                 headers: {
                     'Accept':'application/json',
@@ -24,7 +24,6 @@ const StudyGroupHome = (props) =>{
             .then(data =>{
                 setLoad(true)
                 setData(data)
-                console.log(data)
             })
         }
     },[load])

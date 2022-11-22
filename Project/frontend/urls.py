@@ -11,6 +11,7 @@ urlpatterns = [
     path('RecoveryMessage', index),
     path('CreateAccount', index),
     path('StudyGroupHome', index),
+    path('EnrolledStudyGroups', index),
     path('ScholarshipInformation', index),
     path('CreateStudyGroup', index),
 ]
