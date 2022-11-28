@@ -25,6 +25,7 @@ const mapStateToProps = (state) =>{
     return{
         account: state.auth.account,
         isAuthenticated: state.auth.token !== null,
+        // tz: Intl.DateTimeFormat().resolvedOptions().timeZone,
     }
 }
 

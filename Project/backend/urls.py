@@ -52,6 +52,7 @@ urlpatterns = [
     path('CreateMeeting/', CreateMeeting.as_view()),
     path('GetUserMeetings/', GetUserMeetings.as_view()),
     path('DeleteMeeting/', DeleteMeeting.as_view()),
+    path('GetOpenMeetingTimes/', GetOpenMeetingTimes.as_view()),
 
     #INVITE VIEWS
     path('CreateInvite/', CreateInvite.as_view()),
