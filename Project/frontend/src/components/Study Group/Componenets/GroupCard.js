@@ -1,5 +1,6 @@
 import React, { Component, useState, useEffect } from 'react';
 import styles from "./css/group.module.css";
+import {Link} from 'react-router-dom'
 
 const GroupCard = (props) =>{
 	const[group, setGroup] = useState(props);
@@ -80,7 +81,21 @@ const GroupCard = (props) =>{
         				<p className={styles.center}>{group.studygroup_description}</p>
         			</div>
         			<div className={styles.footer}>
-        				<div className={styles.button} style={{backgroundColor: "#A7916D"}}>View</div>
+        				<Link
+							style={{
+							textDecoration: "none",
+							color: "black",
+							underline: "none",
+							}}
+							to={{
+							pathname: '/StudyGroupHome/' + group.studygroup_id + '/',
+								state: { 
+							  		studygroup_id: group.studygroup_id,
+							  		group: group,
+								},
+							}}>
+							<div className={styles.button} style={{backgroundColor: "#A7916D"}}>View</div>
+						</Link>
 						{
 							group.is_enrolled ? 
 								<div className={styles.button} style={{backgroundColor: "#A04848"}} onClick={() => handleLeave(group)}>Leave</div>

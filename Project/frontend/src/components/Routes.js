@@ -12,10 +12,11 @@ import AccountCreated from '../components/SignUp/AccountCreated';
 import RecoveryMessage from '../components/Login/RecoveryMessage';
 import RecoveryPassword from './Login/RecoveryPassword';
 import Navbar from './Navbar/Navbar';
-import StudyGroupHome from './Study Group/StudyGroupHome';
 import ScholarShipInformation from './Scholarship/ScholarshipInformation';
 import CreateStudyGroup from './Study Group/CreateStudyGroup';
 import EnrolledStudyGroups from './Study Group/EnrolledStudyGroups';
+import AllStudyGroups from './Study Group/AllStudyGroups';
+import StudyGroupHome from './Study Group/StudyGroupHome';
 
 const Routes = (props) => {
     return (
@@ -37,10 +38,10 @@ const Routes = (props) => {
                     <Route exact path = "/CreateAccount" component={CreateAccount}/>
 
                     {/* Studygroup */}
-                    <Route exact path = "/StudyGroupHome" component={StudyGroupHome}/>
+                    <Route exact path = "/AllStudyGroups" component={AllStudyGroups}/>
                     <Route exact path = "/EnrolledStudyGroups" component={EnrolledStudyGroups}/>
                     <Route exact path = "/CreateStudyGroup" component={CreateStudyGroup}/>
-
+                    <Route exact path = {'/StudyGroupHome/:id'} component={StudyGroupHome}/>
 
                     {/* Scholarship */}
                     <Route exact path = "/ScholarshipInformation" component={ScholarShipInformation}/>

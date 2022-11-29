@@ -2,13 +2,13 @@ import React, { Component, useEffect, useState } from 'react';
 import GroupCard from './Componenets/GroupCard';
 import styles from "./Componenets/css/StudyGroupHome.module.css";
 
-const EnrolledStudyGroups = (props) =>{
+const AllStudyGroups = (props) =>{
     const [data, setData] = React.useState(null)
     const [load, setLoad] = useState(false)
 
     useEffect(() =>{
         if(!load){
-            fetch("http://127.0.0.1:8000/api/GetAllUserStudyGroups/", {
+            fetch("http://127.0.0.1:8000/api/GetAllStudyGroups/", {
                 method: "POST",
                 headers: {
                     'Accept':'application/json',
@@ -24,6 +24,7 @@ const EnrolledStudyGroups = (props) =>{
             .then(data =>{
                 setLoad(true)
                 setData(data)
+                console.log(data)
             })
         }
     },[load])
@@ -47,4 +48,4 @@ const EnrolledStudyGroups = (props) =>{
     )
 }
 
-export default EnrolledStudyGroups;
+export default AllStudyGroups;

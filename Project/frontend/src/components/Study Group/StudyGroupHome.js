@@ -1,21 +1,29 @@
 import React, { Component, useEffect, useState } from 'react';
 import GroupCard from './Componenets/GroupCard';
-import styles from "./Componenets/css/StudyGroupHome.module.css";
+import styles from "./Componenets/css/StudyGroupLayout.module.css";
+import StudyGroupLeft from './Componenets/StudyGroupLeft';
+import StudyGroupMiddle from './Componenets/StudyGroupMiddle';
+import StudyGroupRight from './Componenets/StudyGroupRight';
 
 const StudyGroupHome = (props) =>{
-    const [data, setData] = React.useState(null)
+    const [modules, setModules] = React.useState(null)
     const [load, setLoad] = useState(false)
+    const info = {
+        modules: modules, 
+        group: props.location.state.group,
+    }
+    const group_id = props.location.state.studygroup_id
 
-    useEffect(() =>{
-        if(!load){
-            fetch("http://127.0.0.1:8000/api/GetAllStudyGroups/", {
+    useEffect(()=>{
+        if (!load){
+            fetch("http://127.0.0.1:8000/api/GetGroupModules/", {
                 method: "POST",
                 headers: {
                     'Accept':'application/json',
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    token: localStorage.getItem('token')
+                    studygroup_id: group_id
                 })
             })
             .then(response => {
@@ -23,26 +31,24 @@ const StudyGroupHome = (props) =>{
             })
             .then(data =>{
                 setLoad(true)
-                setData(data)
-                console.log(data)
+                setModules(data)
             })
         }
-    },[load])
-    
+    },[load]) 
+
+    console.log(info)
     return(
-        <div className={styles.studyGroupContainer}>
-            <div className={styles.studyGroupLayout}>
-                {
-                    data != null ?
-                        Object.entries(data).map(([_, studygroup]) => {
-                            return(
-                                <div className={styles.groupCardContainer}>
-                                    <GroupCard {...studygroup}/>
-                                </div>                        
-                            )
-                        })
-                    : null
-                }
+        <div className={styles.mainContainer}>
+            <div className={styles.container}>
+                <div className={styles.leftPanel}>
+                    <StudyGroupLeft {...info}/>
+                </div>
+                <div className={styles.middlePanel}>
+                    <StudyGroupMiddle {...info}/>
+                </div>
+                <div className={styles.rightPanel}>
+                    <StudyGroupRight {...info}/>
+                </div>
             </div>
         </div>
     )

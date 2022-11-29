@@ -54,6 +54,11 @@ class GetAllUserStudyGroups(ObtainAuthToken):
             # is_enrolled = StudyEnroll.objects.filter(account = current_user, studygroup=)
             queryset[group_json['studygroup_id']]['is_enrolled'] = True
 
+            host = Account.objects.all().get(id=group_json['studygroup_host'])
+            host_json = AccountSerializer(host).data
+            queryset[group_json['studygroup_id']]['studygroup_host'] = host_json
+
+            queryset[group_json['studygroup_id']]['invites_out'] = len(Invite.objects.all().filter(studygroup_id=group_json['id']))
         return Response(queryset)
         
 class GetAllStudyGroups(ObtainAuthToken):
@@ -79,6 +84,12 @@ class GetAllStudyGroups(ObtainAuthToken):
             queryset[group_json['studygroup_id']] = group_json
             is_enrolled = StudyEnroll.objects.all().filter(account=current_user, studygroup_id=group)
             queryset[group_json['studygroup_id']]['is_enrolled'] = False if not is_enrolled else True
+
+            host = Account.objects.all().get(id=group_json['studygroup_host'])
+            host_json = AccountSerializer(host).data
+            queryset[group_json['studygroup_id']]['studygroup_host'] = host_json
+
+            queryset[group_json['studygroup_id']]['invites_out'] = len(Invite.objects.all().filter(studygroup_id=group_json['id']))
 
         return Response(queryset)
 
@@ -400,6 +411,10 @@ class GetGroupModules(APIView):
                 entry_json = MaterialSerlizer(entry).data
                 queryset[entry_json['material_id']] = entry_json
 
+                # account = Account.objects.get(id=entry_json['account'])
+                # account_json = AccountSerializer(account).data
+                # queryset[account_json['key']] = account_json
+
             return queryset
 
         studygroup = StudyGroup.objects.all().get(studygroup_id=request.data['studygroup_id'])
@@ -414,4 +429,8 @@ class GetGroupModules(APIView):
             queryset[module_json['module_id']] = module_json
             queryset[module_json['module_id']]['content'] = getContent(module)
 
+            account = Account.objects.get(id=module_json['module_owner'])
+            account_json = AccountSerializer(account).data
+            queryset[module_json['module_id']]['module_owner'] = account_json
+            
         return Response(queryset)

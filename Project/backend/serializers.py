@@ -103,6 +103,7 @@ class ModuleSerializer(serializers.ModelSerializer):
             'id',
             'module_id',
             'creation_date',
+            'module_owner',
             'studygroup_id',
         )
 
@@ -151,7 +152,7 @@ class MaterialSerlizer(serializers.ModelSerializer):
             'account',
             'module_id',
             'content',
-            'file_content',
+            'file_content_upload',
         )
 
 class InviteSerlizer(serializers.ModelSerializer):

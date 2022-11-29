@@ -1,0 +1,109 @@
+* {
+	margin: 0;
+	padding: 0;
+	font-family: 'Montserrat', sans-serif;
+}
+
+body {
+	height: 100vh;
+	width: 100%;
+	background: #6A6C6E;
+}
+
+.container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	/* align-items: center; */
+	height: 100%;
+	width: 1000px;
+	margin-top: 5%;
+	/* margin-left: 15%; */
+}
+
+.infoBox {
+	background: #2B2827;
+	/* padding: 30px 100px 0px 100px; */
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	height: calc(250px + 5%);
+	/* width: 500px; */
+	font-size: 12px;
+	border-radius: 5px;
+	/* padding-bottom: 100px; */
+}
+
+.header{
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 10px;
+}
+
+.tittle{
+	font-size: 25px;
+	margin-left: 5%;
+	margin-top: 1%;
+	float : right;
+	color: white;
+}
+
+.uploadDate{
+	font-size: 25px;
+	margin-right: 5%;
+	margin-top: 1%;
+	float: left;
+	color: white;
+
+}
+.example {
+	border: 1px solid #000;
+	height: 0px;
+	width: 100%;
+	position: relative;
+	box-sizing: border-box;
+	justify-content: space-between;
+  }
+  .example::after {
+	content: " ";
+	display: block;
+	position: absolute;
+	background: black;
+	
+  }
+  .materialGroup{
+	flex-direction: column;
+	display: flex;
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+	padding-bottom: 10px;
+  }
+
+  .button {
+	/* margin-top: 10px;
+	display: inline-block;
+	flex-direction: column;
+	justify-content: center;
+	outline: none;
+	position:relative;
+	width: 100%;
+	padding: 16px;
+	border: none;
+	text-transform: uppercase;
+	font-size: 16px;
+	cursor: pointer;
+	transition: all 0.3s ease; */
+	border-radius: 15px;
+	margin-top: 1%;
+	display: inline-block;
+	flex-direction: column;
+	justify-content: center;
+	outline: none;
+	position:relative;
+	width: 100%;
+}
+
+.button:hover {
+	box-shadow: 5px 5px 5px #242112;
+}
