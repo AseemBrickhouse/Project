@@ -1,4 +1,4 @@
-from ...serilizers import *
+from ...serializers import *
 from ...models import *
 
 
@@ -14,7 +14,7 @@ def StudyGroupFeed(current_user):
     queryset = []
     enrolled_studygroups = {}
     for enroll in StudyEnroll.objects.all().filter(account=current_user):
-        studygroup_json = StudyGroupSerilizer(enroll.studygroup_id).data
+        studygroup_json = StudyGroupSerializer(enroll.studygroup_id).data
         enrolled_studygroups[studygroup_json['studygroup_id']] = studygroup_json
 
     for group in enrolled_studygroups:
@@ -69,17 +69,17 @@ def Content_Type_Date(model_obj):
 
         #Study group
         case "Announcements":
-            return AnnouncementSerilizer(model_obj).data['creation_date']
+            return AnnouncementSerializer(model_obj).data['creation_date']
         case "Invite":
             return InviteSerlizer(model_obj).data['creation_date']
         case "Module":
-            return ModuleSerilizer(model_obj).data['creation_date']
+            return ModuleSerializer(model_obj).data['creation_date']
         case "Material":
             pass
 
         #Meeting
         case "Meeting":
-            return MeetingSerilizer(model_obj).data['creation_date']
+            return MeetingSerializer(model_obj).data['creation_date']
 
         #Course
         case "Course_Module":
@@ -134,13 +134,13 @@ def Content_Type_Info(model_obj):
     match model_name:
         #Study group
         case "Announcements":
-            announcement_json = AnnouncementSerilizer(model_obj).data
+            announcement_json = AnnouncementSerializer(model_obj).data
 
             studygroup = StudyGroup.objects.all().get(id=announcement_json['studygroup_id'])
-            studygroup_json = StudyGroupSerilizer(studygroup).data
+            studygroup_json = StudyGroupSerializer(studygroup).data
             
             user = Account.objects.all().get(id=announcement_json['announcement_creator'])
-            user_json = AccountSerilizer(user).data
+            user_json = AccountSerializer(user).data
             user_name = user_json['first_name'] + user_json['last_name']
 
             header = (
@@ -160,14 +160,14 @@ def Content_Type_Info(model_obj):
             invite_json = InviteSerlizer(model_obj).data
 
             studygroup = StudyGroup.objects.all().get(id=invite_json['studygroup_id'])
-            studygroup_json = StudyGroupSerilizer(studygroup).data
+            studygroup_json = StudyGroupSerializer(studygroup).data
 
             sender_obj = Account.objects.all().filter(id=invite_json['sender'])[0]
-            sender_info = AccountSerilizer(sender_obj).data
+            sender_info = AccountSerializer(sender_obj).data
             sender = sender_info['first_name'] + sender_info['last_name']
 
             recipient_obj = Account.objects.all().filter(id=invite_json['recipient'])[0]
-            recipient_info = AccountSerilizer(recipient_obj).data
+            recipient_info = AccountSerializer(recipient_obj).data
             recipient = recipient_info['first_name'] + recipient_info['last_name']
 
             description = "Studygroup invite to " + studygroup_json['studygroup_name']
@@ -189,7 +189,7 @@ def Content_Type_Info(model_obj):
             #TODO:
             # When Module is more developed
             # Get all material objects given the Module id -> parse data -> format in description
-            return ModuleSerilizer(model_obj).data
+            return ModuleSerializer(model_obj).data
 
         #Prob no need for Material seeing its part of modules
         case "Material":
@@ -197,14 +197,14 @@ def Content_Type_Info(model_obj):
         
         #Meeting
         case "Meeting":
-            meeting_json = MeetingSerilizer(model_obj).data
+            meeting_json = MeetingSerializer(model_obj).data
 
             sender_obj = Account.objects.all().filter(id=meeting_json['user1'])[0]
-            sender_info = AccountSerilizer(sender_obj).data
+            sender_info = AccountSerializer(sender_obj).data
             sender = sender_info['first_name'] + sender_info['last_name']
 
             recipient_obj = Account.objects.all().filter(id=meeting_json['user2'])[0]
-            recipient_info = AccountSerilizer(recipient_obj).data
+            recipient_info = AccountSerializer(recipient_obj).data
             recipient = recipient_info['first_name'] + recipient_info['last_name']
 
             header = (
@@ -230,10 +230,10 @@ def Content_Type_View(sub_type, id):
         #Study group
         case "Announcements" | "Announcement":
             announcement = Announcements.objects.all().get(announcement_id=id)
-            announcement_json = AnnouncementSerilizer(announcement).data
+            announcement_json = AnnouncementSerializer(announcement).data
 
             studygroup = StudyGroup.objects.all().get(id=announcement_json['studygroup_id'])
-            studygroup_json = StudyGroupSerilizer(studygroup).data
+            studygroup_json = StudyGroupSerializer(studygroup).data
 
             queryset = {
                 studygroup_json['studygroup_id']: studygroup_json,
@@ -246,7 +246,7 @@ def Content_Type_View(sub_type, id):
             invite_json = InviteSerlizer(invite).data
 
             studygroup = StudyGroup.objects.all().get(id=invite_json['studygroup_id'])
-            studygroup_json = StudyGroupSerilizer(studygroup).data
+            studygroup_json = StudyGroupSerializer(studygroup).data
 
             queryset = {
                 studygroup_json['studygroup_id']: studygroup_json,
@@ -263,13 +263,13 @@ def Content_Type_View(sub_type, id):
         #Meeting
         case "Meeting":
             meeting = Meeting.objects.all().get(meeting_code=id)
-            meeting_json = MeetingSerilizer(meeting).data
+            meeting_json = MeetingSerializer(meeting).data
 
             user1 = Account.objects.all().get(id=meeting_json['user1'])
-            user1_json = AccountSerilizer(user1).data
+            user1_json = AccountSerializer(user1).data
 
             user2 = Account.objects.all().get(id=meeting_json['user2'])
-            user2_json = AccountSerilizer(user2).data
+            user2_json = AccountSerializer(user2).data
 
             queryset = {
                 meeting_json['meeting_code']: meeting_json,

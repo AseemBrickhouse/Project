@@ -1,4 +1,4 @@
-from ..serilizers import *
+from ..serializers import *
 from ..models import *
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token

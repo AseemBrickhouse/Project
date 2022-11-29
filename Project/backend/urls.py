@@ -3,6 +3,7 @@ from django.conf.urls import url
 from backend.AllViews.AccountViews import *
 from backend.AllViews.StudyGroupViews import *
 from backend.AllViews.ModuleViews import *
+from backend.AllViews.MaterialViews import *
 from backend.AllViews.CourseViews import *
 from backend.AllViews.UserFeedViews import *
 from backend.AllViews.MeetingViews import *
@@ -34,10 +35,15 @@ urlpatterns = [
     path('GetGroupModules/', GetGroupModules.as_view()),
     path('GetStudyGroup/', GetStudyGroup.as_view()),
 
-
     #MODULE VIWES
     path('CreateModule/', CreateModule.as_view()),
     path('GetAllModules/', GetAllModules.as_view()),
+    
+    #MATERIALVIEWS
+    path('GetModuleMaterial/', GetModuleMaterial.as_view()),
+    path('DeleteMaterial/', DeleteMaterial.as_view()),
+    path('UpdateMaterial/', UpdateMaterial.as_view()),
+    path('CreateMaterial/', CreateMaterial.as_view()),
 
     #COURSE VIEWS
     path('GetAllCourses/', GetAllCourses.as_view()),
@@ -60,7 +66,6 @@ urlpatterns = [
     path('GetOutboundInvites/', GetOutboundInvites.as_view()),
     path('GetGroupInvites/', GetGroupInvites.as_view()),
     path('DeleteInvite/', DeleteInvite.as_view()),
-
 
     #ANNOUNCEMENT VIEWS
     path('EnrolledGroupAnnouncements/', EnrolledGroupAnnouncements.as_view()),

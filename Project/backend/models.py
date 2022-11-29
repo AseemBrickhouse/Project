@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.conf import settings
+import os
 # Create your models here.
 
 class roles(models.TextChoices): 
@@ -102,13 +103,18 @@ class StudyEnroll(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
 
 class Material(models.Model):
+    #FIX IN FUTURE
+    # def path():
+    #     return os.path.join(settings.MEDIA_ROOT_STUDYGROUP)
     material_id = models.CharField(max_length=20)
     material_type = models.CharField(max_length=20,choices=type.choices, null = True)
     creation_date = models.DateTimeField(auto_now_add=True, blank = True, null=True)
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     module_id = models.ForeignKey(Module, on_delete=models.CASCADE, null=True)
     content = models.TextField(null = True, blank = True)
-    file_content = models.FileField(upload_to='images/', blank=True, null=True)
+    #Change upload_to -> FIX TO PLACE FILES IN DIFFERENT FOLDERS RATHER THAN 1 FOLDER
+    # file_content = models.FilePathField(path=' ', blank=True, null=True)
+    file_content_upload = models.FileField(upload_to='images/', blank=True, null=True)
 
 class Invite(models.Model):
     invite_id = models.CharField(max_length=20, blank=True, null=True)

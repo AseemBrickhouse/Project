@@ -1,4 +1,4 @@
-from ..serilizers import *
+from ..serializers import *
 from ..models import *
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
@@ -29,11 +29,11 @@ class GetAllMessages(APIView):
         queryset = {}
 
         for message in Message.objects.all().filter(chatroom_id=chat):
-            message_json = MessageSerilizer(message).data
+            message_json = MessageSerializer(message).data
             queryset[message_json['message_id']] = message_json
 
             account = Account.objects.all().get(key=message.account.key)
-            account_json = AccountSerilizer(account).data
+            account_json = AccountSerializer(account).data
 
             queryset[message_json['message_id']]['account'] = account_json
             queryset[message_json['message_id']]['studygroup_id'] = studygroup.studygroup_id
@@ -165,10 +165,10 @@ class GetUserMessages(APIView):
         queryset = {}
         messagees = Message.objects.all().filter(account=account, chatroom_id=chat)
         for message in messagees:
-            message_json = MessageSerilizer(message).data
+            message_json = MessageSerializer(message).data
             queryset[message_json['message_id']] = message_json
 
-            account_json = AccountSerilizer(account).data
+            account_json = AccountSerializer(account).data
 
             queryset[message_json['message_id']]['account'] = account_json
 
@@ -194,10 +194,10 @@ class GetCurrentUserMessages(ObtainAuthToken):
         chat = studygroup.chat_id
         print(chat)
         for message in Message.objects.all().filter(account=current_user, chatroom_id=chat):
-            message_json = MessageSerilizer(message).data
+            message_json = MessageSerializer(message).data
             queryset[message_json['message_id']] = message_json
 
-            account_json = AccountSerilizer(current_user).data
+            account_json = AccountSerializer(current_user).data
 
             queryset[message_json['message_id']]['account'] = account_json
 

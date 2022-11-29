@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import *
 
-class AccountSerilizer(serializers.ModelSerializer):
+class AccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
         fields=(
@@ -18,7 +18,7 @@ class AccountSerilizer(serializers.ModelSerializer):
             'profile_pic',
         )
 
-class FriendsSerilizer(serializers.ModelSerializer):
+class FriendsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Friends
         fields = (
@@ -29,7 +29,7 @@ class FriendsSerilizer(serializers.ModelSerializer):
         )
 
 
-class FriendsRequestSerilizer(serializers.ModelSerializer):
+class FriendsRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = FriendRequest
         fields = (
@@ -39,7 +39,7 @@ class FriendsRequestSerilizer(serializers.ModelSerializer):
             'creation_date'
         )
 
-class MeetingSerilizer(serializers.ModelSerializer):
+class MeetingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Meeting
         fields = (
@@ -53,7 +53,7 @@ class MeetingSerilizer(serializers.ModelSerializer):
             'user2',
         )
 
-class CourseSerilizer(serializers.ModelSerializer):
+class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = (
@@ -67,7 +67,7 @@ class CourseSerilizer(serializers.ModelSerializer):
             'course_description',
         )
 
-class CourseEnrollSerilizer(serializers.ModelSerializer):
+class CourseEnrollSerializer(serializers.ModelSerializer):
     class Meta:
         model = CourseEnroll
         fields = (
@@ -76,7 +76,7 @@ class CourseEnrollSerilizer(serializers.ModelSerializer):
             'course',
         )
 
-class MessageSerilizer(serializers.ModelSerializer):
+class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
         fields = (
@@ -88,7 +88,7 @@ class MessageSerilizer(serializers.ModelSerializer):
             'content',
         )
 
-class ChatRoomSerilizer(serializers.ModelSerializer):
+class ChatRoomSerializer(serializers.ModelSerializer):
     class Meta:
         model = ChatRoom
         fields = (
@@ -96,7 +96,7 @@ class ChatRoomSerilizer(serializers.ModelSerializer):
             'chatroom_host',
         )
 
-class ModuleSerilizer(serializers.ModelSerializer):
+class ModuleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Module
         fields = (
@@ -106,7 +106,7 @@ class ModuleSerilizer(serializers.ModelSerializer):
             'studygroup_id',
         )
 
-class AnnouncementSerilizer(serializers.ModelSerializer):
+class AnnouncementSerializer(serializers.ModelSerializer):
     class Meta:
         model = Announcements
         fields = (
@@ -118,7 +118,7 @@ class AnnouncementSerilizer(serializers.ModelSerializer):
             'announcement_description',
         )
 
-class StudyGroupSerilizer(serializers.ModelSerializer):
+class StudyGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = StudyGroup
         fields = ( 

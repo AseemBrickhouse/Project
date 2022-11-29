@@ -50,7 +50,17 @@ def init(group_key, person, chatroom_key):
         if not os.path.exists(path):
             os.makedirs(path)
             file_path = os.path.join(path, group_key)
-                    
+
+            FILE_PATH_PDF = os.path.join(path, "Content", "PDF")
+            FILE_PATH_IMG_FOLDER = os.path.join(path, "Content", "IMAGES")
+            FILE_PATH_IMG_FOLDER_PNG = os.path.join(path, "Content", "IMAGES", "PNG")
+            FILE_PATH_IMG_FOLDER_JPG = os.path.join(path, "Content", "IMAGES", "JPG")
+
+            os.makedirs(FILE_PATH_PDF)
+            os.makedirs(FILE_PATH_IMG_FOLDER)
+            os.makedirs(FILE_PATH_IMG_FOLDER_PNG)
+            os.makedirs(FILE_PATH_IMG_FOLDER_JPG)
+
             file_path = os.path.join(path, chatroom_key)
             write(file_path, "a", "Init", group_key, person, "Chatgroup Created")
             

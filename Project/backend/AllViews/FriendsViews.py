@@ -1,4 +1,4 @@
-from ..serilizers import *
+from ..serializers import *
 from ..models import *
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
@@ -56,11 +56,11 @@ class GetAllRequest(ObtainAuthToken):
         current_request = {}
         for request in queryset:
             to_user = Account.objects.all().get(key=to_user.key)
-            to_user_json = AccountSerilizer(to_user).data
+            to_user_json = AccountSerializer(to_user).data
 
-            current_user_json = AccountSerilizer(current_user).data
+            current_user_json = AccountSerializer(current_user).data
 
-            request_json = FriendsRequestSerilizer(request).data
+            request_json = FriendsRequestSerializer(request).data
 
             current_request[request_json['id']] = request_json
             current_request[request_json['id']]['from_user'] = current_user_json
@@ -85,7 +85,7 @@ class GetAllFriends(ObtainAuthToken):
         queryset = {}
 
         for account in obj.friends.all():
-            account_json = AccountSerilizer(account).data
+            account_json = AccountSerializer(account).data
             queryset[account_json['key']] = account_json
             queryset[account_json['key']]['is_friend'] = True
 

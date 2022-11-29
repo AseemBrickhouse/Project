@@ -1,4 +1,4 @@
-from ..serilizers import *
+from ..serializers import *
 from ..models import *
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
@@ -136,12 +136,12 @@ class GetGroupAnnouncements(APIView):
         studygroup_announcements = Announcements.objects.all().filter(studygroup_id=studygroup)
 
         for announcement in studygroup_announcements:
-            announcement_json = AnnouncementSerilizer(announcement).data
+            announcement_json = AnnouncementSerializer(announcement).data
             queryset[announcement_json['announcement_id']] = announcement_json
-            queryset[announcement_json['announcement_id']]['studygroup_id'] = StudyGroupSerilizer(studygroup).data
+            queryset[announcement_json['announcement_id']]['studygroup_id'] = StudyGroupSerializer(studygroup).data
 
             announcement_creator = Account.objects.all().get(key=announcement.announcement_creator.key)
-            announcement_creator_json = AccountSerilizer(announcement_creator).data
+            announcement_creator_json = AccountSerializer(announcement_creator).data
             queryset[announcement_json['announcement_id']]['announcement_creator'] = announcement_creator_json
 
         return Response(queryset)
@@ -165,7 +165,7 @@ class EnrolledGroupAnnouncements(ObtainAuthToken):
 
         for enroll in study_enroll:
             studygroup = StudyGroup.objects.all().get(studygroup_id=enroll.studygroup_id.studygroup_id)
-            studygroup_json = StudyGroupSerilizer(studygroup).data
+            studygroup_json = StudyGroupSerializer(studygroup).data
             
             studygroup_announcements = Announcements.objects.all().filter(studygroup_id=studygroup)
 
@@ -173,13 +173,13 @@ class EnrolledGroupAnnouncements(ObtainAuthToken):
 
             if studygroup_announcements:
                 for announcement in studygroup_announcements:
-                    announcement_json = AnnouncementSerilizer(announcement).data
+                    announcement_json = AnnouncementSerializer(announcement).data
                     queryset[studygroup_json['studygroup_id']][announcement_json['announcement_id']] = announcement_json
 
                     queryset[studygroup_json['studygroup_id']][announcement_json['announcement_id']]['studygroup_id'] = studygroup_json
 
                     announcement_creator = Account.objects.all().get(key=announcement.announcement_creator.key)
-                    announcement_creator_json = AccountSerilizer(announcement_creator).data
+                    announcement_creator_json = AccountSerializer(announcement_creator).data
                     queryset[studygroup_json['studygroup_id']][announcement_json['announcement_id']]['announcement_creator'] = announcement_creator_json
 
         return Response(queryset)

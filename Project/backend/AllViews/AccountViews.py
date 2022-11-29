@@ -1,4 +1,4 @@
-from ..serilizers import *
+from ..serializers import *
 from ..models import *
 from rest_framework.response import Response
 from rest_framework.response import Response
@@ -29,7 +29,7 @@ class CurrentUser(ObtainAuthToken):
             return Response({
                 "Error": "Return some error"
             })
-        accountJson = AccountSerilizer(account).data
+        accountJson = AccountSerializer(account).data
         return Response(accountJson)
         
 class AccountCreation(ObtainAuthToken):
@@ -121,7 +121,7 @@ class GetPerson(APIView):
             last_name = request.data['last_name'],
             email = request.data['email'],
         )[0]
-        person_json = AccountSerilizer(person_object).data
+        person_json = AccountSerializer(person_object).data
         if request.data['token'] != None:
             #TODO:
             #Implement for friends later
@@ -141,7 +141,7 @@ class AllAccounts(APIView):
     def get(self, request, *args, **kwargs):
         queryset = {}
         for account in Account.objects.all():
-            account_json = AccountSerilizer(account).data
+            account_json = AccountSerializer(account).data
             queryset[account_json['key']] = account_json
 
         return Response(queryset)

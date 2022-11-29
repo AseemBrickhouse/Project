@@ -1,4 +1,4 @@
-from ..serilizers import *
+from ..serializers import *
 from ..models import *
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
@@ -122,14 +122,14 @@ class GetOutboundInvites(ObtainAuthToken):
             queryset[invite_json['invite_id']] = invite_json
 
             sender =  Account.objects.all().get(id=invite_json['sender'])
-            sender_json = AccountSerilizer(sender).data
+            sender_json = AccountSerializer(sender).data
             queryset[invite_json['invite_id']]['sender'] = sender_json
 
-            recipient_json = AccountSerilizer(current_user).data
+            recipient_json = AccountSerializer(current_user).data
             queryset[invite_json['invite_id']]['recipient'] = recipient_json
             
             studygroup = StudyGroup.objects.all().get(id=invite_json['studygroup_id'])
-            studygroup_json = StudyGroupSerilizer(studygroup).data
+            studygroup_json = StudyGroupSerializer(studygroup).data
             queryset[invite_json['invite_id']]['studygroup_info'] = studygroup_json
         
         return Response(queryset)
@@ -151,14 +151,14 @@ class GetInboundInvites(ObtainAuthToken):
             queryset[invite_json['invite_id']] = invite_json
 
             sender =  Account.objects.all().get(id=invite_json['sender'])
-            sender_json = AccountSerilizer(sender).data
+            sender_json = AccountSerializer(sender).data
             queryset[invite_json['invite_id']]['sender'] = sender_json
 
-            recipient_json = AccountSerilizer(current_user).data
+            recipient_json = AccountSerializer(current_user).data
             queryset[invite_json['invite_id']]['recipient'] = recipient_json
             
             studygroup = StudyGroup.objects.all().get(id=invite_json['studygroup_id'])
-            studygroup_json = StudyGroupSerilizer(studygroup).data
+            studygroup_json = StudyGroupSerializer(studygroup).data
             queryset[invite_json['invite_id']]['studygroup_info'] = studygroup_json
         
         return Response(queryset)
@@ -182,15 +182,15 @@ class GetGroupInvites(APIView):
             queryset[invite_json['invite_id']] = invite_json
 
             sender =  Account.objects.all().get(id=invite_json['sender'])
-            sender_json = AccountSerilizer(sender).data
+            sender_json = AccountSerializer(sender).data
             queryset[invite_json['invite_id']]['sender'] = sender_json
 
             recipient = Account.objects.all().get(id=invite_json['recipient'])
-            recipient_json = AccountSerilizer(recipient).data
+            recipient_json = AccountSerializer(recipient).data
             queryset[invite_json['invite_id']]['recipient'] = recipient_json
             
             studygroup = StudyGroup.objects.all().get(id=invite_json['studygroup_id'])
-            studygroup_json = StudyGroupSerilizer(studygroup).data
+            studygroup_json = StudyGroupSerializer(studygroup).data
             queryset[invite_json['invite_id']]['studygroup_info'] = studygroup_json
         
         return Response(queryset)

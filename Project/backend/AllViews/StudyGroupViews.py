@@ -1,4 +1,4 @@
-from ..serilizers import *
+from ..serializers import *
 from ..models import *
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
@@ -21,7 +21,7 @@ class GetStudyGroup(ObtainAuthToken):
             return Response({
                 "Message": "Error"
             })
-        queryset = StudyGroupSerilizer(studygroup).data
+        queryset = StudyGroupSerializer(studygroup).data
         is_enrolled = StudyEnroll.objects.all().filter(studygroup_id=studygroup.id, account=current_user)
         queryset['is_enrolled'] = False if not is_enrolled else True
 
@@ -49,7 +49,7 @@ class GetAllUserStudyGroups(ObtainAuthToken):
 
         for enroll in StudyEnroll.objects.all().filter(account=current_user):
             studygroup = enroll.studygroup_id
-            group_json = StudyGroupSerilizer(studygroup).data
+            group_json = StudyGroupSerializer(studygroup).data
             queryset[group_json['studygroup_id']] = group_json
             # is_enrolled = StudyEnroll.objects.filter(account = current_user, studygroup=)
             queryset[group_json['studygroup_id']]['is_enrolled'] = True
@@ -75,7 +75,7 @@ class GetAllStudyGroups(ObtainAuthToken):
                 "Message": "No availible study gorups"
             })
         for group in StudyGroup.objects.all():
-            group_json= StudyGroupSerilizer(group).data
+            group_json= StudyGroupSerializer(group).data
             queryset[group_json['studygroup_id']] = group_json
             is_enrolled = StudyEnroll.objects.all().filter(account=current_user, studygroup_id=group)
             queryset[group_json['studygroup_id']]['is_enrolled'] = False if not is_enrolled else True
@@ -158,7 +158,7 @@ class CreateStudyGroup(ObtainAuthToken):
         
         createStudyGroupEnroll(StudyGroup_to_create, current_user)
 
-        StudyGroup_to_create_json = StudyGroupSerilizer(StudyGroup_to_create).data
+        StudyGroup_to_create_json = StudyGroupSerializer(StudyGroup_to_create).data
 
         studygroup_host_name = current_user.first_name + " " + current_user.last_name
 
@@ -186,7 +186,7 @@ class JoinStudyGroup(ObtainAuthToken):
         #Implement functionality later on to have more people to create invites and not just the host
         def StudyEnrollCheck(studygroup, current_user):
             #Do more chekcing
-            studygroup_json = StudyGroupSerilizer(studygroup).data
+            studygroup_json = StudyGroupSerializer(studygroup).data
             try:
                 studygroup_to_enroll = StudyEnroll.objects.all().get(studygroup_id=studygroup, account=current_user)
                 return({
@@ -269,7 +269,7 @@ class GetUserHostedGroups(ObtainAuthToken):
         queryset = {}
 
         for group in all_user_hosted_groups:
-            group_json = StudyGroupSerilizer(group).data
+            group_json = StudyGroupSerializer(group).data
             queryset[group_json['studygroup_id']] = group_json
 
         return Response(queryset)
@@ -323,7 +323,7 @@ class GetUsersInGroup(APIView):
         queryset = {}
 
         for user in user_list:
-            user_json = AccountSerilizer(user.account).data
+            user_json = AccountSerializer(user.account).data
             queryset[user_json['key']] = user_json
 
         return Response(queryset)
@@ -403,14 +403,14 @@ class GetGroupModules(APIView):
             return queryset
 
         studygroup = StudyGroup.objects.all().get(studygroup_id=request.data['studygroup_id'])
-        studygroup_json = StudyGroupSerilizer(studygroup).data
+        studygroup_json = StudyGroupSerializer(studygroup).data
 
         studygroup_modules = Module.objects.all().filter(studygroup_id=studygroup_json['id'])
 
         queryset = {}
 
         for module in studygroup_modules:
-            module_json = ModuleSerilizer(module).data
+            module_json = ModuleSerializer(module).data
             queryset[module_json['module_id']] = module_json
             queryset[module_json['module_id']]['content'] = getContent(module)
 

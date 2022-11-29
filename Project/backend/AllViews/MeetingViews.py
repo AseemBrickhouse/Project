@@ -1,50 +1,28 @@
-from rest_framework import viewsets
-from ..serilizers import *
+from ..serializers import *
 from ..models import *
-from rest_framework.response import Response
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.views import APIView
-from datetime import datetime
-from datetime import date
-from datetime import timedelta
+from datetime import datetime, timedelta, time
 import random
 import string
 
-DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
-
-def CheckMeeting(all_meetings, to_add_start, to_add_end):
-    today = datetime.now()
-    format_date_today = today.strftime(DATE_FORMAT)
-
-    for meeting in all_meetings:
-        meeting_end = datetime.strftime(meeting.end_time, DATE_FORMAT)
-        if meeting_end < format_date_today:
-            meeting.delete()
-
-
-    # format_end_time = meeting_obj.end_time.strftime(DATE_FORMAT)
-
-    # if format_end_time < format_date_today:
-    #     meeting_obj.delete()
-    #     return Response({
-    #         "Meeting": "Meeting end time expired"
-    #     })
-    # else:
-    #     return
+DATE_FORMAT_FULL = "%Y-%m-%d %H:%M:%S"
+DATE_FORMAT_DATE = "%Y-%m-%d"
+DATE_FORMAT_TIME = "%H:%M"
 
 class CreateMeeting(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         def CheckMeetingTimes(meetings, to_add_start, to_add_end):
-            today = datetime.now().strftime(DATE_FORMAT)
-            format_date_today = datetime.strptime(today, DATE_FORMAT)
+            today = datetime.now().strftime(DATE_FORMAT_FULL)
+            format_date_today = datetime.strptime(today, DATE_FORMAT_FULL)
             #loop through each entry, if such meeting exists that overlaps with the one to create, then return
             for meeting in meetings:
-                meeting_end = meeting.end_time.strftime(DATE_FORMAT)
-                meeting_start = meeting.start_time.strftime(DATE_FORMAT)
-                format_meeting_start = datetime.strptime(meeting_start, DATE_FORMAT)
-                format_meeting_end = datetime.strptime(meeting_end, DATE_FORMAT)
+                meeting_end = meeting.end_time.strftime(DATE_FORMAT_FULL)
+                meeting_start = meeting.start_time.strftime(DATE_FORMAT_FULL)
+                format_meeting_start = datetime.strptime(meeting_start, DATE_FORMAT_FULL)
+                format_meeting_end = datetime.strptime(meeting_end, DATE_FORMAT_FULL)
                 if format_meeting_end < format_date_today:
                       meeting.delete()
                 else:
@@ -67,8 +45,8 @@ class CreateMeeting(ObtainAuthToken):
             })
 
         #Get all the the current user meetings at that time
-        start_time = datetime.strptime(request.data['start_time'], DATE_FORMAT)
-        end_time = datetime.strptime(request.data['end_time'], DATE_FORMAT)
+        start_time = datetime.strptime(request.data['start_time'], DATE_FORMAT_FULL)
+        end_time = datetime.strptime(request.data['end_time'], DATE_FORMAT_FULL)
 
 
 
@@ -120,7 +98,7 @@ class GetUserMeetings(ObtainAuthToken):
 
         queryset = {}
         for meeting in all_meetings:
-            meeting_json = MeetingSerilizer(meeting).data
+            meeting_json = MeetingSerializer(meeting).data
             queryset[meeting_json['meeting_code']] = meeting_json
 
         return Response(queryset)
@@ -152,30 +130,74 @@ class DeleteMeeting(ObtainAuthToken):
 
 class GetOpenMeetingTimes(APIView):
     def post(self, request, *args, **kwargs):
-        format_date = datetime.strptime(request.data['date'], "%Y-%m-%d")
+        
+        def GetTimeSlots(account_meetings, query_date):
+            start_end = [u'08:00', u'17:00']
+            time_slots = {}
+            queryset = {}
+            start_end_convert = sorted(datetime.strptime(x, '%H:%M') for x in start_end)
+            res = [ (time(t,0,0,0).strftime("%H:%M"), time(t,30,0,0).strftime("%H:%M")) for t in range(min(start_end_convert).hour, max(start_end_convert).hour)]
+            res += [ (time(t,30,0,0).strftime("%H:%M"), time(t+1,0,0,0).strftime("%H:%M")) for t in range(min(start_end_convert).hour, max(start_end_convert).hour)]
+
+            for meeting in account_meetings:
+                meeting_end = meeting.end_time.strftime(DATE_FORMAT_FULL)
+                meeting_start = meeting.start_time.strftime(DATE_FORMAT_FULL)
+                format_meeting_start = datetime.strptime(meeting_start, DATE_FORMAT_FULL)
+                format_meeting_end = datetime.strptime(meeting_end, DATE_FORMAT_FULL)
+
+                meeting_date = meeting.start_time.strftime(DATE_FORMAT_DATE)
+                format_meeting_date = datetime.strptime(meeting_date, DATE_FORMAT_DATE)
+
+                if format_meeting_date == query_date:    
+                    queryset[meeting.meeting_code] = {
+                        "start_time" : format_meeting_start,
+                        "end_time" : format_meeting_end
+                    }
+            
+            start_index = 0
+            i = 0
+            res = sorted(res)
+            print(res)
+            for key in sorted(queryset):
+                start = queryset[key]['start_time'].strftime(DATE_FORMAT_TIME)
+                end = queryset[key]['end_time'].strftime(DATE_FORMAT_TIME)
+                index = res.index((start, end))
+                for x in range(start_index, index):
+                    time_slots[i] = {
+                            "start_time": res[x][0],
+                            "end_time": res[x][1]
+                            }
+                    i += 1
+                time_slots[i] = {
+                            "start_time": "Taken",
+                            "end_time": "Taken"
+                            }
+                i += 1
+                start_index = index + 1
+            for x in range(start_index, len(res)):
+                print(x, start_index, len(res))
+                print(x, res[x])
+                time_slots[i] = {
+                    "start_time": res[x][0],
+                    "end_time": res[x][1]
+                }
+                i+= 1
+            
+            return time_slots
+
+
+        format_query_date = datetime.strptime(request.data['date'], "%Y-%m-%d")
         try:
             account = Account.objects.all().get(
                 first_name=request.data['first_name'],
                 last_name=request.data['last_name'],
                 email=request.data['email'],
             )
-            account_meetings = Meeting.objects.all().filter(user1=account) 
-            account_meetings | Meeting.objects.all().filter(user2=account)
- 
-            var = {}
-            for meeting in Meeting.objects.all().filter(user1=account) | Meeting.objects.all().filter(user2=account):
-                print(meeting)
-                meeting_end = meeting.end_time.strftime("%Y-%m-%d")
-                meeting_start = meeting.start_time.strftime("%Y-%m-%d")
-                format_meeting_start = datetime.strptime(meeting_start,"%Y-%m-%d")
-                format_meeting_end = datetime.strptime(meeting_end, "%Y-%m-%d")
-                var[meeting.meeting_code] = {
-                    "start_time" : format_meeting_start,
-                    "end_time" : format_meeting_end
-                }
-            #[<[9-9:30],[9:30-10:00]>]
-                
-                return Response(var)
+            account_meetings = Meeting.objects.all().filter(user1=account) | Meeting.objects.all().filter(user2=account)
+            queryset = GetTimeSlots(account_meetings, format_query_date)
+            
+            return Response(queryset)
+        
         except Account.DoesNotExist:
             return Response({
                 "Message": "User to get is not a valid user."

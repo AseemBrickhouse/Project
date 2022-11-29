@@ -168,3 +168,6 @@ ACCOUNT_EMAIL_REQUIRED = 'false'
 
 MEDIA_URL = "/images/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'frontend/static/images')
+
+MEDIA_URL_STUDYGROUP = "/Logs/"
+MEDIA_ROOT_STUDYGROUP = os.path.join(BASE_DIR, 'Project/Chatroom/Logs')

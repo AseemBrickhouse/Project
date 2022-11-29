@@ -1,4 +1,4 @@
-from ..serilizers import *
+from ..serializers import *
 from ..models import *
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
@@ -15,7 +15,7 @@ class GetAllCourses(APIView):
         queryset = {}
 
         for course in Course.objects.all():
-            courseJSON = CourseSerilizer(course).data
+            courseJSON = CourseSerializer(course).data
             queryset[courseJSON['course_id']] = courseJSON
 
         return Response(queryset)
@@ -29,7 +29,7 @@ class GetUsersInCourse(APIView):
 
         for enroll in CourseEnroll.objects.all().filter(course=course):
             user = enroll.account
-            user_json = AccountSerilizer(user).data
+            user_json = AccountSerializer(user).data
             queryset[user_json['key']] = user_json
 
         return Response(queryset)
