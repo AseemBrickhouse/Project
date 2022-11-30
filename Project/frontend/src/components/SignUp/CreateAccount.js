@@ -87,7 +87,7 @@ const CreateAccount = (props) => {
         load ?
           <Loading/>
         :
-        <body>
+        // <body>
           <div className={styles.container}>
             <div className={styles.loginBox}>
               <Form clasName={styles.login} onSubmit={handleSubmit}>
@@ -222,7 +222,7 @@ const CreateAccount = (props) => {
               </Form>
             </div>
           </div>
-        </body>
+        // </body>
       }
       </div>
     )

@@ -52,6 +52,7 @@ const Navbar = (props) => {
                   >
                     <NavDropdown.Item href="/AllStudyGroups">View All Group</NavDropdown.Item>
                     <NavDropdown.Item href="/EnrolledStudyGroups">View Enrolled Group</NavDropdown.Item>
+                    <NavDropdown.Item href="/HostedStudyGroups">View Hosted Group</NavDropdown.Item>
                     <NavDropdown.Divider />
                     <NavDropdown.Item href="/CreateStudyGroup">Create Group</NavDropdown.Item>
                   </NavDropdown>

@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 
 const AccountCreated = (props) =>{
     return (
-        <body>
+        // <body>
           <div class="container">
             <div class="login-box">
               <form class="login">
@@ -24,7 +24,7 @@ const AccountCreated = (props) =>{
               </form>
             </div>
           </div>
-        </body>
+        // </body>
     )
 }
 export default AccountCreated;

@@ -84,7 +84,7 @@
 }
 
 .button{
-	margin: auto;
+	/* margin: auto;
 	justify-content: center;
 	padding: 16px;
 	border-radius: 5px;
@@ -94,7 +94,12 @@
 	font-size: 16px;
 	cursor: pointer;
 	transition: all 0.3s ease;
+	color: white; */
+	/* margin-left: 5%; */
 	color: white;
+	border: none;
+	text-transform: uppercase;
+	border-radius: 5px;
 }
 .inputBoxes{
 	font-size: 16px;

@@ -29,7 +29,7 @@ const CreateStudyGroup = (props) => {
     }
 
     return (
-        <body>  
+        // <body>  
             <div className={styles.container}>
                 <div className={styles.infoBox}>
                     <h1 className={styles.center}>Create Study Group</h1>
@@ -84,7 +84,7 @@ const CreateStudyGroup = (props) => {
                     </div>
                 </div>
             </div>
-        </body>
+        // </body>
     );
 }
 

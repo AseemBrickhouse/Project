@@ -86,6 +86,7 @@ const GroupCard = (props) =>{
 							textDecoration: "none",
 							color: "black",
 							underline: "none",
+							marginLeft: "10%"
 							}}
 							to={{
 							pathname: '/StudyGroupHome/' + group.studygroup_id + '/',
@@ -98,9 +99,9 @@ const GroupCard = (props) =>{
 						</Link>
 						{
 							group.is_enrolled ? 
-								<div className={styles.button} style={{backgroundColor: "#A04848"}} onClick={() => handleLeave(group)}>Leave</div>
+								<div className={styles.button} style={{backgroundColor: "#A04848", marginRight: "10%"}} onClick={() => handleLeave(group)}>Leave</div>
 							:
-								<div className={styles.button} style={{backgroundColor: "#A7916D"}} onClick={() => handleJoin(group)}>Join</div>
+								<div className={styles.button} style={{backgroundColor: "#A7916D", marginRight: "10%"}} onClick={() => handleJoin(group)}>Join</div>
 						}
         			</div>
         		</form>

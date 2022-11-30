@@ -46,13 +46,6 @@ const FeedCard = (props) =>{
                             height={50}
                             style={{marginRight: "10px"}}
                         />
-                        // <img
-                        //     src={info.Body.Users.Sender.Info.profile_pic}
-                        //     width="50"
-                        //     height="50"
-                        //     style={{borderRadius: "50%"}}
-                        // >
-                        // </img>
                         :
                         <Image
                             src="https://cdn-icons-png.flaticon.com/512/2102/2102647.png"

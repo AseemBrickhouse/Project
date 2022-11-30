@@ -282,6 +282,8 @@ class GetUserHostedGroups(ObtainAuthToken):
         for group in all_user_hosted_groups:
             group_json = StudyGroupSerializer(group).data
             queryset[group_json['studygroup_id']] = group_json
+            # is_enrolled = StudyEnroll.objects.all().filter(studygroup_id=studygroup.id, account=current_user)
+            queryset[group_json['studygroup_id']]['is_enrolled'] = True
 
         return Response(queryset)
 

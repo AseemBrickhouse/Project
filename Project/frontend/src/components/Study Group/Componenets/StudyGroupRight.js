@@ -31,9 +31,8 @@ const StudyGroupRight = (props) =>{
         }
     },[load]) 
 
-    console.log(users)
     return(
-        <body>
+        // <body>
             <div className={styles.container}>
                 <div className={styles.infoBox}>
                     <div className={styles.tittle}>{`Users in ${group.studygroup_name}`}</div>
@@ -75,29 +74,9 @@ const StudyGroupRight = (props) =>{
                         : null
                     }
                     </div>
-                        {/* <table>
-                            <tr>
-                                <td><div class="image-cropper">
-                                    <img src="https://sf1.autojournal.fr/wp-content/uploads/autojournal/2012/07/4503003e3c38bc818d635f5a52330d.jpg"  />
-                                 </div></td><td>abcdefghijklmnopqrstuvwxyz abcdefghijklmnopqrstuvwxyz</td>
-                            </tr>
-                            <tr>
-                                <td><div class="image-cropper">
-                                    <img src="https://sf1.autojournal.fr/wp-content/uploads/autojournal/2012/07/4503003e3c38bc818d635f5a52330d.jpg"  />
-                                 </div></td><td>User 2</td>
-                            </tr>
-                            <tr>
-                                <td><div class="image-cropper">
-                                    <img src="https://sf1.autojournal.fr/wp-content/uploads/autojournal/2012/07/4503003e3c38bc818d635f5a52330d.jpg"  />
-                                 </div></td><td>User 3</td>
-                            </tr>
-                        </table> */}
-                        {
-
-                        }
                 </div>
             </div>
-        </body>
+        // </body>
     )
 }
 

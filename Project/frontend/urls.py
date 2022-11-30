@@ -14,8 +14,12 @@ urlpatterns = [
     path('CreateAccount', index),
     path('AllStudyGroups', index),
     path('EnrolledStudyGroups', index),
+    path('HostedStudyGroups', index),
     path('ScholarshipInformation', index),
     path('CreateStudyGroup', index),
     path('CreateStudyGroup', index),
     url(r'StudyGroupHome/(?P<key>[a-zA-Z0-9]+.*)', index),
+    url(r'StudyGroupHome/(?P<key>[a-zA-Z0-9]+.*)/Modules', index),
+    url(r'StudyGroupHome/(?P<key>[a-zA-Z0-9]+.*)/Announcements', index),
+    url(r'StudyGroupHome/(?P<key>[a-zA-Z0-9]+.*)/ChatRoom', index),
 ]

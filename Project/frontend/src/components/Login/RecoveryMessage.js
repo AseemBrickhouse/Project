@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 
 const RecoveryMessage = (props) =>{
     return (
-        <body>
+        // <body>
           <div class="container">
             <div class="login-box">
               <form class="login">
@@ -19,7 +19,7 @@ const RecoveryMessage = (props) =>{
               </form>
             </div>
           </div>
-        </body>
+        // </body>
     )
 }
 export default RecoveryMessage;

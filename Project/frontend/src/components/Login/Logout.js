@@ -9,7 +9,7 @@ import styles from "./Componenets/css/login.module.css";
 const Logout = (props) =>{
   const account = props.account
     return (
-      <body>
+      // <body>
         <div className={styles.container}>
           <div className={styles.loginBox}>
             <div className={styles.title}>
@@ -39,7 +39,7 @@ const Logout = (props) =>{
             </form>
           </div>
         </div>
-      </body>
+      // </body>
     )
 }
 const mapStateToProps = (state) => {

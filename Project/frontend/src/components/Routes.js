@@ -17,6 +17,7 @@ import CreateStudyGroup from './Study Group/CreateStudyGroup';
 import EnrolledStudyGroups from './Study Group/EnrolledStudyGroups';
 import AllStudyGroups from './Study Group/AllStudyGroups';
 import StudyGroupHome from './Study Group/StudyGroupHome';
+import StudyGroupsHosted from './Study Group/StudyGroupsHosted';
 
 const Routes = (props) => {
     return (
@@ -40,6 +41,7 @@ const Routes = (props) => {
                     {/* Studygroup */}
                     <Route exact path = "/AllStudyGroups" component={AllStudyGroups}/>
                     <Route exact path = "/EnrolledStudyGroups" component={EnrolledStudyGroups}/>
+                    <Route exact path = "/HostedStudyGroups" component={StudyGroupsHosted}/>
                     <Route exact path = "/CreateStudyGroup" component={CreateStudyGroup}/>
                     <Route exact path = {'/StudyGroupHome/:id'} component={StudyGroupHome}/>
 
