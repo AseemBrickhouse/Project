@@ -1,0 +1,99 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    height: 100vh;
+    width: 100%;
+    background: #8C7064;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* height: 100%; */
+    width: 100%;
+}
+.userBox{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+.example {
+	margin-bottom: 10%;
+	border: 1px solid #000;
+	height: 0px;
+	width: 100%;
+	position: relative;
+	box-sizing: border-box;
+	justify-content: space-between;
+  }
+  .example::after {
+	content: " ";
+	display: block;
+	position: absolute;
+	background: black;
+	
+  }
+.user{
+    margin-left: 3%;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: auto;
+    vertical-align:middle;
+    font-size: 20px;
+    font-weight: 500;
+    color: white;
+}
+.infoBox {
+    background: #2B2827;
+    /* padding: 100px 30px 50px 30px; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: 80vh;
+    font-size: 12px;
+    border-radius: 5px;
+}
+
+
+.tittle{
+    position: relative;
+    top: 0%;
+    /* transform: translateY(-50%); */
+    color: white;
+    font-size: 20px;
+    margin-top: 3%;
+    margin-bottom: 3%;
+}
+
+td {
+    padding: 5px;
+    color: white;
+    font-size: 10px;
+  }
+
+.imageCropper {
+    margin-bottom: 10%;
+    width: 40px;
+    height: 40px;
+    position: relative;
+    overflow: hidden;
+    /* border-radius: 50%; */
+  }
+
+  /* img {
+    display: inline;
+    margin: 0 auto;
+    height: 40px;
+    width: 40px;
+    margin-right: 10px; 
+  } */

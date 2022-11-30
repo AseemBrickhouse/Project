@@ -1,0 +1,80 @@
+.containerhome {
+	background: #9F8170;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 70%;
+	width: 100%;
+}
+
+.bodyhome {
+	height: 100vh;
+	width: 100%;
+	background: #9F8170;
+}
+
+
+.login {
+	width: 100%;
+}
+
+.loginBox {
+	background: #9F8170;
+	padding: 100px 100px 50px 100px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	width: 60%;
+	font-size: 14px;
+	border-radius: 5px;
+}
+
+.feedbody{
+    width: 70%;
+    position: absolute;
+    left: 15%;
+    top: -100%;
+    overflow-y: scroll;
+    flex: 1;
+    height: 81vh;
+    
+}::-webkit-scrollbar {
+        display:none;
+    }
+
+.Feed{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.FeedHeader{
+    display: flex;
+    flex-direction: row;
+    /* width: 100%; */
+    height: 25%;
+    margin-bottom: 5vh;
+}
+.FeedText{
+    margin-top: -10%;
+    width: 100%;
+    margin-left: 60px;
+    font-size: 16px;
+    white-space: pre;
+}
+.FeedCardDescription{
+    margin-top: -10%;
+    width: 100%;
+    margin-left: 60px;
+    font-size: 20px;
+
+}
+/* img {
+    display: inline;
+    margin: 0 auto;
+    height: 30px;
+    width: 30px; 
+    margin-right: 10px; 
+} */

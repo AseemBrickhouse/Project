@@ -1,0 +1,120 @@
+/* * {
+	margin: 0;
+	padding: 0;
+	font-family: 'Montserrat', sans-serif;
+}
+
+body {
+	height: 90vh;
+	width: 100vw;
+} */
+.back{
+	height: 100vh;
+	width: 100vw;
+	background: #6A6C6E;
+	justify-content: center;
+	overflow: hidden;
+}
+.container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	
+	/* height: 125%;
+	width: 100%; */
+	/* margin-top: -5%; */
+}
+
+.infoBox {
+	background: #9F8170;
+	padding: 100px 100px 50px 100px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	width: 1000px;
+	font-size: 12px;
+	border-radius: 5px;
+	margin-top: 25%;
+	transform: translate(0, -50%);
+}
+
+
+.tittle{
+	padding-bottom: 5%;
+}
+
+
+.info {
+	width: 100%;
+}
+
+.elements {
+	margin-bottom: 20px;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.elements p{
+	font-size: 20px;
+}
+.inputBoxes{
+	font-size: 16px;
+	outline: none;
+	width: calc(100% - 36px);
+	border: 2px solid #CCC;
+	padding: 16px;
+	border-radius: 2px;
+	transition: all 0.3s ease;
+	height: 75%;
+}
+
+.inputBoxes:hover{
+	border: 2px solid #242112;
+}
+
+.button {
+	outline: none;
+	background: #242124;
+	color: #FFF;
+	padding: 16px;
+	display: block;
+	width: 100%;
+	border: none;
+	text-transform: uppercase;
+	font-size: 16px;
+	cursor: pointer;
+	transition: all 0.3s ease;
+}
+
+.button:hover {
+	box-shadow: 5px 5px 5px #242112;
+}
+/* Style the button that is used to open and close the collapsible content */
+.collapsible {
+	background-color: #eee;
+	color: #444;
+	cursor: pointer;
+	padding: 18px;
+	width: 100%;
+	border: none;
+	text-align: left;
+	outline: none;
+	font-size: 15px;
+  }
+  
+  /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+  .active, .collapsible:hover {
+	background-color: #ccc;
+  }
+  
+  /* Style the collapsible content. Note: hidden by default */
+  .content {
+	padding: 0 18px;
+	display: none;
+	overflow: hidden;
+	background-color: #f1f1f1;
+  }

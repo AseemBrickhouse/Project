@@ -1,0 +1,28 @@
+.navbar-default {
+    background-color:#000000;    
+}
+.colorNav{
+    z-index: 10;
+    background-color: #2B2827;
+}
+.colorNavItem{
+    color: white;   
+    /* background-color: #2B2827; */
+
+}
+
+.navbar-default .navbar-nav .open .dropdown-menu>li>a, .navbar-default .navbar-nav .open .dropdown-menu {
+    background-color: white;
+    color:black;
+  }
+
+.navbar .dropdown-menu:after {
+  content: '';
+  display: inline-block;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid white; /* change color here, modified for a black arrow */
+  position: absolute;
+  top: -6px;
+  left: 10px;
+}
