@@ -283,7 +283,11 @@ class GetUserHostedGroups(ObtainAuthToken):
             group_json = StudyGroupSerializer(group).data
             queryset[group_json['studygroup_id']] = group_json
             # is_enrolled = StudyEnroll.objects.all().filter(studygroup_id=studygroup.id, account=current_user)
+            host = Account.objects.all().get(id=group_json['studygroup_host'])
+            host_json = AccountSerializer(host).data
+            queryset[group_json['studygroup_id']]['studygroup_host'] = host_json
             queryset[group_json['studygroup_id']]['is_enrolled'] = True
+            queryset[group_json['studygroup_id']]['invites_out'] = len(Invite.objects.all().filter(studygroup_id=group_json['id']))
 
         return Response(queryset)
 

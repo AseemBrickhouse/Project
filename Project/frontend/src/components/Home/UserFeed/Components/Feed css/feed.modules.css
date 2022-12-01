@@ -1,17 +1,42 @@
 .containerhome {
-	background: #9F8170;
+	/* background: #9F8170; */
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	justify-content: center;
-	align-items: center;
+	align-items: flex-start;
 	height: 70%;
 	width: 100%;
 }
-
+.containerLeft{
+    /* background-color: antiquewhite; */
+    height: 100%;
+    width: 15%;
+    margin-top: 5%;
+    margin-left: 3%;
+    /* transform: translateY(-50%); */
+}
+.containerMiddle{
+    margin-top: 5%;
+    /* transform: translateY(-50%); */
+    height: 130%;
+    width: 70%;
+    display: flex;
+	flex-direction: column;
+	position: relative;
+    font-size: 14px;
+	border-radius: 5px;
+}
+.containerRight{
+    /* background-color: blue; */
+    height: 100%;
+    width: 15%;
+    margin-top: 50%;
+    transform: translateY(-50%);
+}
 .bodyhome {
-	height: 100vh;
+	height: 90vh;
 	width: 100%;
-	background: #9F8170;
+	/* background: #9F8170; */
 }
 
 
@@ -20,7 +45,7 @@
 }
 
 .loginBox {
-	background: #9F8170;
+	/* background: #9F8170; */
 	padding: 100px 100px 50px 100px;
 	display: flex;
 	flex-direction: column;
@@ -34,17 +59,28 @@
 
 .feedbody{
     width: 70%;
-    position: absolute;
-    left: 15%;
-    top: -100%;
+    /* position: absolute; */
+    margin: auto;
+    /* top: -100%; */
     overflow-y: scroll;
     flex: 1;
-    height: 81vh;
+    /* height: 90vh; */
     
 }::-webkit-scrollbar {
         display:none;
     }
-
+.feedbodyAlt{
+    width: 70%;
+    position: absolute;
+    margin: auto;
+    left: 50%;
+    top: 50%;
+    transform: translate(-25%, -25%);
+    /* top: -100%; */
+    overflow-y: scroll;
+    flex: 1;
+    /* height: 90vh; */
+}
 .Feed{
     display: flex;
     flex-direction: row;

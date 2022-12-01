@@ -1,0 +1,181 @@
+* {
+	margin: 0;
+	padding: 0;
+	font-family: 'Montserrat', sans-serif;
+}
+
+
+.container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	margin-left: 45%;
+	margin-top: 1%;
+	transform: translateX(-50%);
+
+}
+
+.loginBox {
+	background: #2B2827;
+	padding: 50px 50px 50px 50px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	width: 150%;
+	font-size: 14px;
+	border-radius: 5px;
+	margin: auto;
+}
+
+.icon {
+
+	display: grid;
+	place-items: center;
+	justify-content: center;
+	position: relative;
+	outline: 0px;
+	flex-direction: column;
+	padding-bottom: 3%;
+
+	
+}
+
+.icon-text{
+	text-align: center;
+	justify-content: center;
+	position: relative;
+	outline: 0px;
+	flex-direction: column;
+	padding-bottom: 5%;
+
+}
+
+.tittle{
+	padding-bottom: 5%;
+}
+
+.user-icon i {
+	font-size: 40px;
+	color: #FFF;
+}
+
+.login {
+	width: 100%;
+
+}
+
+.elements {
+	margin-bottom: 20px;
+	display: fle;
+	flex-direction: column;
+	width: 100%;
+}
+
+.inputBoxes{
+	font-size: 16px;
+	outline: none;
+	width: calc(100% - 36px);
+	border: 2px solid #CCC;
+	padding: 16px;
+	border-radius: 2px;
+	transition: all 0.3s ease;
+}
+
+.inputBoxes:hover{
+	border: 2px solid #242112;
+}
+
+
+.elements {
+	margin-bottom: 20px;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	overflow-wrap: break-word;
+}
+.label{
+	width: 100%;
+	text-align: left;
+}
+.label-group{
+	display: grid;
+	place-items: center;
+}
+
+.inputBoxes{
+	font-size: 16px;
+	outline: none;
+	width: calc(100% - 36px);
+	border: 2px solid #CCC;
+	padding: 16px;
+	border-radius: 2px;
+	transition: all 0.3s ease;
+}
+
+.inputBoxes:hover{
+	border: 2px solid #242112;
+}
+
+.button {
+	text-align: left;
+	outline: none;
+	background: #A7916D;
+	color: #FFF;
+	padding: 16px;
+	display: block;
+	width: 100%;
+	border:#928A84;
+	text-transform: uppercase;
+	font-size: 16px;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	margin-bottom: 1%;
+}
+.buttonGroup {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 5%;
+}
+.smallButton {
+	text-align: left;
+	outline: none;
+	background: #242124;
+	color: #FFF;
+	padding: 16px;
+	display: block;
+	width: 49%;
+	border:#242112;
+	text-transform: uppercase;
+	font-size: 16px;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	margin-bottom: 1%;
+}
+.centeredLink{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+button:hover {
+	box-shadow: 5px 5px 5px #928A84;
+}
+
+a {
+	color: #242124;
+}
+
+a:hover {
+	color: #FFF;
+}
+
+.radio{
+	display: flex;
+	flex: row;
+	color: white;
+	justify-content: space-between;
+}

@@ -12,7 +12,7 @@ import styles from "./Componenets/css/Navbar.module.css";
 const Navbar = (props) => { 
     const isAuthenticated = props.isAuthenticated
     return (
-        props.location.pathname != '/Logout' && props.location.pathname != '/Login' ?
+        props.location.pathname != '/Logout' && props.location.pathname != '/Login' && props.location.pathname != '/CreateAccount'?
             <div style={{backgroundColor: "#2B2827"}}>
               {
                 !isAuthenticated ? 
@@ -40,9 +40,9 @@ const Navbar = (props) => {
                     }
                     id="nav-dropdown"
                   >
-                    <NavDropdown.Item href="/CreateStudyGroup">Students</NavDropdown.Item>
-                    <NavDropdown.Item href="/CreateStudyGroup">Instructors</NavDropdown.Item>
-                    <NavDropdown.Item href="/CreateStudyGroup">Tutors</NavDropdown.Item>
+                    <NavDropdown.Item href="/PeopleHome/Students">Students</NavDropdown.Item>
+                    <NavDropdown.Item href="/PeopleHome/Instructors">Instructors</NavDropdown.Item>
+                    <NavDropdown.Item href="/PeopleHome/Tutors">Tutors</NavDropdown.Item>
                   </NavDropdown>
                   <NavDropdown
                     title={
@@ -62,8 +62,8 @@ const Navbar = (props) => {
                       }
                       id="nav-dropdown"
                   >
-                      <NavDropdown.Item >View Profile</NavDropdown.Item>
-                      <NavDropdown.Item >Edit Profile</NavDropdown.Item>
+                      <NavDropdown.Item href="/ViewProfile">View Profile</NavDropdown.Item>
+                      <NavDropdown.Item href="/EditProfile">Edit Profile</NavDropdown.Item>
                       <NavDropdown.Item >View Friends</NavDropdown.Item>
                       <NavDropdown.Divider />
                       <NavDropdown.Item href="/Logout">Logout</NavDropdown.Item>

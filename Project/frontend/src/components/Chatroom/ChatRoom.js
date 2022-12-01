@@ -9,7 +9,7 @@ import Form from 'react-bootstrap/Form';
 const ChatRoom = (props) =>{
     console.log(props)
     const group = props.group
-    const reload = false
+    const reload = true
     const [messages, setMessages] = useState(null);
     const [load, setLoad] = useState(true);
     const bottomRef = useRef(null);

@@ -5,9 +5,10 @@ import { connect } from 'react-redux';
 import FeedCard from './UserFeed/FeedCard';
 import * as actions from "../../store/actions/auth";
 import styles from "./UserFeed/Components/Feed css/feed.modules.css";
+import { Info } from 'react-bootstrap-icons';
+import SideBar from './Components/HomeSideBarLeft';
 
 const Home = (props) => {
-    console.log(props)
     const isAuthenticated = props.isAuthenticated
     const [load, setLoad] = useState(false)
     const [feed, setFeed] = useState(null)
@@ -32,33 +33,40 @@ const Home = (props) => {
             })
         }
     },[load])
-    
+    console.log(feed)
     return (
         <div className={styles.containerhome}>
             <body className={styles.bodyhome}>
                 <div className={styles.containerhome}>
-                    <div className={styles.loginBox} >
-                        <div className={styles.login}>
-                            {
-                                isAuthenticated ?
-                                    feed != null ?
-                                        <div className={styles.feedbody}>
-                                        {
-                                            Object.entries(feed).map(([id, content]) => {
-                                                return (
-                                                    <FeedCard {...content}/>
-                                                )
-                                            })
-                                        }
-                                        </div>
-                                    : null
-                                : 
-                                <div>
-                                    <h1>Name</h1>
-                                    <p>Providing connections to the things that matter.</p>
+                    <div className={styles.containerLeft}>
+                        <SideBar/>
+                    </div>
+                    <div className={styles.containerMiddle}>
+                    {
+                        isAuthenticated ?
+                            feed != null ?
+                                <div className={styles.feedbody}>
+                                {
+                                    Object.entries(feed).map(([_, content]) => {
+                                        return (
+                                            <FeedCard {...content}/>
+                                        )
+                                    })
+                                }
                                 </div>
-                            }
+                            :
+                            <div className={styles.feedbodyAlt}>
+                                You have no current activity. Enroll in study groups, and meeetings to utilize this system!
+                            </div>
+                        : 
+                        <div className={styles.feedbodyAlt}>
+                            <h1>Name</h1>
+                            <p>Providing connections to the things that matter.</p>
                         </div>
+                    }
+                    </div>
+                    <div className={styles.containerRight}>
+
                     </div>
                 </div>
             </body>

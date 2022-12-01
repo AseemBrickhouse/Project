@@ -68,7 +68,7 @@ class AccountCreation(ObtainAuthToken):
                 first_name=request.data['first_name'],
                 last_name=request.data['last_name'],
                 email=request.data['email'],
-                phone_number= request.data['phone'] if  request.data['phone'] != '' else None
+                phone_number= request.data['phone'] if request.data['phone'] != '' else 4444444444
             )
             account.save()
 
@@ -95,13 +95,14 @@ class EditAccount(ObtainAuthToken):
         Account.objects.filter(user=current_user).update(
             first_name=request.data['first_name'] if request.data['first_name'] != "" else current_user.account.first_name,
             last_name=request.data['last_name'] if request.data['last_name'] != "" else current_user.account.last_name,
-            phone=request.data['phone'] if request.data['phone'] != "" else current_user.account.phone,
+            phone_number=request.data['phone'] if request.data['phone'] != "" else current_user.account.phone_number,
             bio=request.data['bio'] if request.data['bio'] != "" else current_user.account.bio,
             email=request.data['email'] if request.data['email'] != "" else current_user.account.email,
+            role=request.data['role'] if request.data['role'] != "" else current_user.account.role,
         )
 
         return Response({
-            "Message": "Account information pdated succesfully"
+            "Message": "Account information updated succesfully"
             })
 
 class GetPerson(APIView):
@@ -122,11 +123,7 @@ class GetPerson(APIView):
             email = request.data['email'],
         )[0]
         person_json = AccountSerializer(person_object).data
-        if request.data['token'] != None:
-            #TODO:
-            #Implement for friends later
-            pass
-
+ 
         return Response(person_json)
 
 class AllAccounts(APIView):
@@ -144,4 +141,32 @@ class AllAccounts(APIView):
             account_json = AccountSerializer(account).data
             queryset[account_json['key']] = account_json
 
+        return Response(queryset)
+
+
+class GetPeopleRole(ObtainAuthToken):
+    """
+    @ function
+        Retrive all selected user given the role
+    @ request Params
+        role: request.data['role]
+    @ Return 
+        The persons info in json format if they exists
+    """
+    def post(self, request, *args, **kwargs):
+        token_id = Token.objects.get(key=request.data['token']).user_id
+        current_user = User.objects.all().filter(id=token_id)[0].account
+        queryset = {}
+        person_objects = Account.objects.all().exclude(key=current_user.key).filter(role=request.data['role'])
+        print(person_objects)
+        for person in person_objects:
+            person_json = AccountSerializer(person).data
+            queryset[person_json['key']] = person_json
+            # queryset[person_json['key']]['key'] = person_json['key']
+        # person_json = AccountSerializer(person_object).data
+        # if request.data['token'] != None:
+        #     #TODO:
+        #     #Implement for friends later
+        #     pass
+        print(queryset)
         return Response(queryset)
