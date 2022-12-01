@@ -22,6 +22,7 @@ urlpatterns = [
     path('EditAccount/', EditAccount.as_view()),
     path('GetPerson/', GetPerson.as_view()),
     path('AllAccounts/', AllAccounts.as_view()),
+    path('GetPeopleRole/', GetPeopleRole.as_view()),
 
     #STUDYGROUP VIEWS
     path('GetAllStudyGroups/', GetAllStudyGroups.as_view()),

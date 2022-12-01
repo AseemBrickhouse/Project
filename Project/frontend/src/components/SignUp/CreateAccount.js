@@ -35,7 +35,7 @@ const CreateAccount = (props) => {
         setError(!error)
         setUpdate(props.error)
       }else if (!load && props.error == null){
-        // props.isAuthenticated ? props.history.push('/') : null
+        props.isAuthenticated ? props.history.push('/') : null
       }
     }, [load])
 
@@ -70,10 +70,7 @@ const CreateAccount = (props) => {
             })
           })
           .then(response => {
-            if(response = 200){
-              //Success
-              // props.history.push('/')
-            }else if(response > 200){
+            if(response > 200){
               setError(!error)
             }
           })

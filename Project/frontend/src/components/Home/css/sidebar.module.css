@@ -7,40 +7,7 @@
 body {
 	height: 100vh;
 	width: 100%;
-	background: #8C7064;
-}
-.bodyhome {
-	height: 100vh;
-	width: 100%;
-	background: #9F8170;
-}
-.navContainer {
-    position: center;
-    height: auto;
-    width: 100%;
-}
-
-.navigation {
-    list-style-type: none;
-    background-color: #333;
-    position: sticky;
-    width: 100%;
-    overflow: auto;
-}
-
-.navigation li a {
-    float: left;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-    background-color: #333;
-}
-
-.navigation li:hover a:not(.active) {
-    background-color: #D3D3D3;
-    color: #000;
+	background: #6A6C6E;
 }
 
 .container {
@@ -48,38 +15,21 @@ body {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%,-50%);
 	/* height: 100%;
 	width: 100%; */
 }
 
-.containerhome {
-	background: #9F8170;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	height: 70%;
-	width: 100%;
-}
-
-
 .loginBox {
-	margin: auto;	
 	background: #9F8170;
-	padding: 100px 100px 50px 100px;
+	padding: 50px 50px 50px 50px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	position: relative;
-	/* width: 30%; */
+	width: 400px;
 	font-size: 14px;
 	border-radius: 5px;
-	/* transform: translateY(-100%); */
 }
 
 .icon {
@@ -95,7 +45,7 @@ body {
 	
 }
 
-.iconText{
+.icon-text{
 	text-align: center;
 	justify-content: center;
 	position: relative;
@@ -105,26 +55,55 @@ body {
 
 }
 
-.title{
+.tittle{
 	padding-bottom: 5%;
 }
 
-.i {
+.user-icon i {
 	font-size: 40px;
 	color: #FFF;
 }
 
 .login {
 	width: 100%;
+
 }
+
+.elements {
+	margin-bottom: 20px;
+	display: fle;
+	flex-direction: column;
+	width: 100%;
+}
+
+.inputBoxes{
+	font-size: 16px;
+	outline: none;
+	width: calc(100% - 36px);
+	border: 2px solid #CCC;
+	padding: 16px;
+	border-radius: 2px;
+	transition: all 0.3s ease;
+}
+
+.inputBoxes:hover{
+	border: 2px solid #242112;
+}
+
 
 .elements {
 	margin-bottom: 20px;
 	display: flex;
 	flex-direction: column;
 	width: 100%;
-	text-decoration: none;
-
+}
+.label{
+	width: 100%;
+	text-align: left;
+}
+.label-group{
+	display: grid;
+	place-items: center;
 }
 
 .inputBoxes{
@@ -142,47 +121,54 @@ body {
 }
 
 .button {
+	text-align: left;
 	outline: none;
 	background: #242124;
 	color: #FFF;
 	padding: 16px;
 	display: block;
 	width: 100%;
-	border: none;
+	border:#242112;
 	text-transform: uppercase;
 	font-size: 16px;
 	cursor: pointer;
 	transition: all 0.3s ease;
-	text-align: center;
-	text-decoration: none;
-
+	margin-bottom: 1%;
 }
-.buttonOutter {
-	text-decoration: none;
-	color: #242124;
+.buttonGroup {
+	bottom: 0%;
+	margin-top: 50%;
+	margin-bottom: 5%;
 }
-.buttonOutter:-webkit-any-link {
-	text-decoration: none;
-	color: inherit;
-  }
-.centeredLink{
+.smallButton {
+	text-align: left;
+	outline: none;
+	background: #242124;
+	color: #FFF;
+	padding: 16px;
+	display: block;
+	width: 100%;
+	border:#242112;
+	text-transform: uppercase;
+	font-size: 16px;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	margin-bottom: 1%;
+}
+.centered-link{
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	color: #242124
 }
 
-.button:hover {
+button:hover {
 	box-shadow: 5px 5px 5px #242112;
 }
 
-.a {
-	text-decoration: none;
+a {
 	color: #242124;
 }
 
-.a:hover {
-	text-decoration: none;
-
+a:hover {
 	color: #FFF;
 }

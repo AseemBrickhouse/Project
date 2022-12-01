@@ -82,7 +82,11 @@ class GetUserFeed(ObtainAuthToken):
             }
             Implenemt some type of prio fo meetings and stuff
         """
- 
+
+        if request.data['token'] == None:
+            return Response({
+                "Error" : "No token provided"
+            })
         token = Token.objects.get(key=request.data['token']).user_id
         current_user = User.objects.all().filter(id=token)[0].account
         
