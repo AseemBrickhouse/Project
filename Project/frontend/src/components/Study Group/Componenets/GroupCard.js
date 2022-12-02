@@ -3,8 +3,9 @@ import styles from "./css/group.module.css";
 import {Link} from 'react-router-dom'
 
 const GroupCard = (props) =>{
-	const[group, setGroup] = useState(props);
-    const[load, setLoad] = useState(false);
+	const [group, setGroup] = useState(props);
+    const [load, setLoad] = useState(false);
+	const [error, setError] = useState(false);
 
 	useEffect(() => {
 		if(load){
@@ -23,9 +24,12 @@ const GroupCard = (props) =>{
 				return response.json();
 			})
 			.then(data=>{
-				// console.log(data)
+				if(data.Message != null){
+					setError(true)
+				}else{
+					setGroup(data)
+				}
 				setLoad(false)
-				setGroup(data)
 			})
 		}
     },[load]);
@@ -72,41 +76,47 @@ const GroupCard = (props) =>{
 	}
 
     return(
-        <div className={styles.containergroupcard}>
-        	<div className={styles.infoboxgroupcard}>
-        		<form className={styles.info}>
-        			<div className={styles.Imgplaceholder}></div>
-        			<h1 className={styles.center} style={{fontSize: "24px"}}>{group.studygroup_name}</h1>
-        			<div className={styles.elements}>
-        				<p className={styles.center}>{group.studygroup_description}</p>
-        			</div>
-        			<div className={styles.footer}>
-        				<Link
-							style={{
-							textDecoration: "none",
-							color: "black",
-							underline: "none",
-							marginLeft: "10%"
-							}}
-							to={{
-							pathname: '/StudyGroupHome/' + group.studygroup_id + '/',
-								state: { 
-							  		studygroup_id: group.studygroup_id,
-							  		group: group,
-								},
-							}}>
-							<div className={styles.button} style={{backgroundColor: "#A7916D"}}>View</div>
-						</Link>
-						{
-							group.is_enrolled ? 
-								<div className={styles.button} style={{backgroundColor: "#A04848", marginRight: "10%"}} onClick={() => handleLeave(group)}>Leave</div>
-							:
-								<div className={styles.button} style={{backgroundColor: "#A7916D", marginRight: "10%"}} onClick={() => handleJoin(group)}>Join</div>
-						}
-        			</div>
-        		</form>
-        	</div>
-        </div>
+		<div>
+			{
+				!error ? 
+				<div className={styles.containergroupcard}>
+					<div className={styles.infoboxgroupcard}>
+						<form className={styles.info}>
+							<div className={styles.Imgplaceholder}></div>
+							<h1 className={styles.center} style={{fontSize: "24px"}}>{group.studygroup_name}</h1>
+							<div className={styles.elements}>
+								<p className={styles.center}>{group.studygroup_description}</p>
+							</div>
+							<div className={styles.footer}>
+								<Link
+									style={{
+									textDecoration: "none",
+									color: "black",
+									underline: "none",
+									marginLeft: "10%"
+									}}
+									to={{
+									pathname: '/StudyGroupHome/' + group.studygroup_id + '/',
+										state: { 
+											  studygroup_id: group.studygroup_id,
+											  group: group,
+										},
+									}}>
+									<div className={styles.button} style={{backgroundColor: "#A7916D"}}>View</div>
+								</Link>
+								{
+									group.is_enrolled ? 
+										<div className={styles.button} style={{backgroundColor: "#A04848", marginRight: "10%"}} onClick={() => handleLeave(group)}>Leave</div>
+									:
+										<div className={styles.button} style={{backgroundColor: "#A7916D", marginRight: "10%"}} onClick={() => handleJoin(group)}>Join</div>
+								}
+							</div>
+						</form>
+					</div>
+				</div>
+				: null
+			}
+		</div>
     )
 }
 
