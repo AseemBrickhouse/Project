@@ -18,7 +18,7 @@ const CreateStudyGroup = (props) => {
             body: JSON.stringify({
                 token: localStorage.getItem('token'),
                 studygroup_name: data.get('Studygroupname'),
-                invite_only: data.get('Open') == "Open" ? "False" : "True",
+                invite_only: data.get('InviteOnly') == "Open" ? "False" : "True",
                 studygroup_description: data.get('Studygroupdescription'),
             })
           })
