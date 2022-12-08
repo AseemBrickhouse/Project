@@ -35,9 +35,9 @@ const CreateAccount = (props) => {
         setError(!error)
         setUpdate(props.error)
       }else if (!load && props.error == null){
-        props.isAuthenticated ? props.history.push('/') : null
+        // props.isAuthenticated ? props.history.push('/') : null
       }
-    }, [load])
+    })
 
     const handleSubmit = (event) => {
       event.preventDefault()
@@ -75,7 +75,7 @@ const CreateAccount = (props) => {
             }
           })
 
-          // props.history.push('/')
+          props.history.push('/')
       }, 3000)
     }
     return(

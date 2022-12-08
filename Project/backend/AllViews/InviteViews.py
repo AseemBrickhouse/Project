@@ -106,91 +106,113 @@ class DeleteInvite(ObtainAuthToken):
             })
     
 
+
+def GetTypeQuery(type):
+    queryset = {}
+    for invite in type:
+        invite_json = InviteSerlizer(invite).data
+        queryset[invite_json['invite_id']] = invite_json
+
+        sender =  Account.objects.all().get(id=invite_json['sender'])
+        sender_json = AccountSerializer(sender).data
+        queryset[invite_json['invite_id']]['sender'] = sender_json
+
+        recipient = Account.objects.get(id=invite_json['recipient'])
+        recipient_json = AccountSerializer(recipient).data
+        queryset[invite_json['invite_id']]['recipient'] = recipient_json
+            
+        studygroup = StudyGroup.objects.all().get(id=invite_json['studygroup_id'])
+        studygroup_json = StudyGroupSerializer(studygroup).data
+        queryset[invite_json['invite_id']]['studygroup_info'] = studygroup_json
+
+    return queryset
+
 class GetOutboundInvites(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         token = Token.objects.get(key=request.data['token']).user_id
         current_user = User.objects.all().filter(id=token)[0].account
 
-        outbound_invites = Invite.objects.all().filter(sender=current_user)
-        queryset = {}
-        if not outbound_invites:
+        type = Invite.objects.all().filter(sender=current_user)
+        
+        # queryset = {}
+        if not type:
             return Response({
                 "Message": "No current sent invites"
             })
-        for invite in outbound_invites:
-            invite_json = InviteSerlizer(invite).data
-            queryset[invite_json['invite_id']] = invite_json
+        # for invite in outbound_invites:
+        #     invite_json = InviteSerlizer(invite).data
+        #     queryset[invite_json['invite_id']] = invite_json
 
-            sender =  Account.objects.all().get(id=invite_json['sender'])
-            sender_json = AccountSerializer(sender).data
-            queryset[invite_json['invite_id']]['sender'] = sender_json
+        #     sender =  Account.objects.all().get(id=invite_json['sender'])
+        #     sender_json = AccountSerializer(sender).data
+        #     queryset[invite_json['invite_id']]['sender'] = sender_json
 
-            recipient_json = AccountSerializer(current_user).data
-            queryset[invite_json['invite_id']]['recipient'] = recipient_json
+        #     recipient_json = AccountSerializer(current_user).data
+        #     queryset[invite_json['invite_id']]['recipient'] = recipient_json
             
-            studygroup = StudyGroup.objects.all().get(id=invite_json['studygroup_id'])
-            studygroup_json = StudyGroupSerializer(studygroup).data
-            queryset[invite_json['invite_id']]['studygroup_info'] = studygroup_json
+        #     studygroup = StudyGroup.objects.all().get(id=invite_json['studygroup_id'])
+        #     studygroup_json = StudyGroupSerializer(studygroup).data
+        #     queryset[invite_json['invite_id']]['studygroup_info'] = studygroup_json
         
-        return Response(queryset)
+        return Response(GetTypeQuery(type))
 
 class GetInboundInvites(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         token = Token.objects.get(key=request.data['token']).user_id
         current_user = User.objects.all().filter(id=token)[0].account
 
-        inbound_invites = Invite.objects.all().filter(recipient=current_user)
-        queryset = {}
-        if not inbound_invites:
+        type = Invite.objects.all().filter(recipient=current_user)
+        # queryset = {}
+        if not type:
             return Response({
                 "Message": "No current invites"
             })
 
-        for invite in inbound_invites:
-            invite_json = InviteSerlizer(invite).data
-            queryset[invite_json['invite_id']] = invite_json
+        # for invite in inbound_invites:
+        #     invite_json = InviteSerlizer(invite).data
+        #     queryset[invite_json['invite_id']] = invite_json
 
-            sender =  Account.objects.all().get(id=invite_json['sender'])
-            sender_json = AccountSerializer(sender).data
-            queryset[invite_json['invite_id']]['sender'] = sender_json
+        #     sender =  Account.objects.all().get(id=invite_json['sender'])
+        #     sender_json = AccountSerializer(sender).data
+        #     queryset[invite_json['invite_id']]['sender'] = sender_json
 
-            recipient_json = AccountSerializer(current_user).data
-            queryset[invite_json['invite_id']]['recipient'] = recipient_json
+        #     recipient_json = AccountSerializer(current_user).data
+        #     queryset[invite_json['invite_id']]['recipient'] = recipient_json
             
-            studygroup = StudyGroup.objects.all().get(id=invite_json['studygroup_id'])
-            studygroup_json = StudyGroupSerializer(studygroup).data
-            queryset[invite_json['invite_id']]['studygroup_info'] = studygroup_json
+        #     studygroup = StudyGroup.objects.all().get(id=invite_json['studygroup_id'])
+        #     studygroup_json = StudyGroupSerializer(studygroup).data
+        #     queryset[invite_json['invite_id']]['studygroup_info'] = studygroup_json
         
-        return Response(queryset)
+        return Response(GetTypeQuery(type))
 
 class GetGroupInvites(APIView):
     def post(self, request, *args, **kwargs):
         #Do I need an Account???? not sure
 
         studygroup = StudyGroup.objects.all().get(studygroup_id=request.data['studygroup_id'])
-        group_invites = Invite.objects.all().filter(studygroup_id=studygroup)
+        type = Invite.objects.all().filter(studygroup_id=studygroup)
         
         queryset = {}
 
-        if not group_invites:
+        if not type:
             return Response({
                 "Message": "No current outgoing group invites"
             })
         
-        for invite in group_invites:
-            invite_json = InviteSerlizer(invite).data
-            queryset[invite_json['invite_id']] = invite_json
+        # for invite in group_invites:
+        #     invite_json = InviteSerlizer(invite).data
+        #     queryset[invite_json['invite_id']] = invite_json
 
-            sender =  Account.objects.all().get(id=invite_json['sender'])
-            sender_json = AccountSerializer(sender).data
-            queryset[invite_json['invite_id']]['sender'] = sender_json
+        #     sender =  Account.objects.all().get(id=invite_json['sender'])
+        #     sender_json = AccountSerializer(sender).data
+        #     queryset[invite_json['invite_id']]['sender'] = sender_json
 
-            recipient = Account.objects.all().get(id=invite_json['recipient'])
-            recipient_json = AccountSerializer(recipient).data
-            queryset[invite_json['invite_id']]['recipient'] = recipient_json
+        #     recipient = Account.objects.all().get(id=invite_json['recipient'])
+        #     recipient_json = AccountSerializer(recipient).data
+        #     queryset[invite_json['invite_id']]['recipient'] = recipient_json
             
-            studygroup = StudyGroup.objects.all().get(id=invite_json['studygroup_id'])
-            studygroup_json = StudyGroupSerializer(studygroup).data
-            queryset[invite_json['invite_id']]['studygroup_info'] = studygroup_json
+        #     studygroup = StudyGroup.objects.all().get(id=invite_json['studygroup_id'])
+        #     studygroup_json = StudyGroupSerializer(studygroup).data
+        #     queryset[invite_json['invite_id']]['studygroup_info'] = studygroup_json
         
-        return Response(queryset)
+        return Response(GetTypeQuery(type))

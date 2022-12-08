@@ -16,3 +16,21 @@ def getDir(group_key):
 
 def FILE_HANDLE():
     pass
+
+
+def FILE_EXTENSION(key, file, ext):
+    path = getDir(key)
+    print(path)
+    match ext:
+        case "txt":
+            content_path = os.path.join(path, "TXT", file)
+            create = open(content_path, "x")
+        case "pdf":
+            content_path = os.path.join(path, "PDF", file)
+            create = open(content_path, "x")
+        case "mp3":
+            pass
+        case "docx":
+            pass
+        case "mp4":
+            pass

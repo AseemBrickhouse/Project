@@ -52,11 +52,13 @@ def init(group_key, person, chatroom_key):
             file_path = os.path.join(path, group_key)
 
             FILE_PATH_PDF = os.path.join(path, "Content", "PDF")
+            FILE_PATH_TXT = os.path.join(path, "Content", "TXT")
             FILE_PATH_IMG_FOLDER = os.path.join(path, "Content", "IMAGES")
             FILE_PATH_IMG_FOLDER_PNG = os.path.join(path, "Content", "IMAGES", "PNG")
             FILE_PATH_IMG_FOLDER_JPG = os.path.join(path, "Content", "IMAGES", "JPG")
 
             os.makedirs(FILE_PATH_PDF)
+            os.makedirs(FILE_PATH_TXT)
             os.makedirs(FILE_PATH_IMG_FOLDER)
             os.makedirs(FILE_PATH_IMG_FOLDER_PNG)
             os.makedirs(FILE_PATH_IMG_FOLDER_JPG)
