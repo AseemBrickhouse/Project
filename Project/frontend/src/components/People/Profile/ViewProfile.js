@@ -1,11 +1,17 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import {Image} from 'react-bootstrap';
 import styles from '../css/profile.module.css';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 const ViewProfile = (props) => {
-    const account = props.account
+    let account = null
+      if (props.location.state != null){
+        account = props.location.state.person
+      }else{
+        account = props.account
+      }
+  
     console.log(account)
     return (
         <div className={styles.container}>
@@ -41,15 +47,23 @@ const ViewProfile = (props) => {
                 <button className={styles.button}>{`${account.phone_number}`}</button>
                 <button className={styles.button} href="/EnrolledStudyGroups">Study Groups</button>
                 <button className={styles.button}>Meetings</button>
-                <div className={styles.buttonGroup}>
+                {
+                  props.location.state == null ?
+                  <div className={styles.buttonGroup}>
+                    <button className={styles.smallButton} href="/EditProfile/">Edit Profile</button>
+                    <button className={styles.smallButton}>Close</button>
+                  </div>
+                  : null
+                }
+                {/* <div className={styles.buttonGroup}>
                   <button className={styles.smallButton}>Edit Profile</button>
                   <button className={styles.smallButton}>Close</button>
-                </div>
+                </div> */}
             </section>
     
-            <div className="elements">
+            {/* <div className="elements">
               <a href = "/Project/frontend/templates/frontend/login/login.html" className={styles.centeredLink}>Sign into another account</a>
-            </div>
+            </div> */}
           </form>
         </div>
       </div>

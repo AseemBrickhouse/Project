@@ -86,4 +86,5 @@ urlpatterns = [
     #FRIENDS VIEW
     path('SendFriendRequest/', SendFriendRequest.as_view()),
     path('GetAllFriends/', GetAllFriends.as_view()),
+    path('AcceptFriendRequest/', AcceptFriendRequest.as_view()),
 ]
