@@ -114,7 +114,7 @@ class Material(models.Model):
     content = models.TextField(null = True, blank = True)
     #Change upload_to -> FIX TO PLACE FILES IN DIFFERENT FOLDERS RATHER THAN 1 FOLDER
     # file_content = models.FilePathField(path=' ', blank=True, null=True)
-    file_content_upload = models.FileField(upload_to='images/', blank=True, null=True)
+    file_content_upload = models.FileField(upload_to='content/', blank=True, null=True)
 
 class Invite(models.Model):
     invite_id = models.CharField(max_length=20, blank=True, null=True)
