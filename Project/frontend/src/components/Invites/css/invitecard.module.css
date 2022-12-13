@@ -1,0 +1,51 @@
+.cardContainer{
+    background-color: aqua;
+    width: fit-content;
+    height: 200px;
+}
+.header{
+
+}
+.body{
+
+}
+.footer{
+
+}
+.buttonDecline{
+    width: auto;
+    border-radius: 25px;
+    background-color: #A04848;
+    border-color: #A04848;
+    color: white;
+}
+.buttonDecline:hover{
+    background-color: #A04848;
+    border-color: #A04848;
+}
+.buttonAccept{
+    border-radius: 25px;
+    background-color: #A7916D;
+    color: white;
+    width: auto;
+    border-color: #A7916D;
+}
+.buttonAccept:hover{
+    background-color: #A7916D;
+    border-color: #A7916D;
+}
+.buttonAccepted{
+    border-radius: 25px;
+    background-color: #249761;
+    color: white;
+    width: auto;
+    border-color: #249761;
+}
+.buttonAccepted:hover{
+    background-color: #249761;
+    border-color: #249761;
+}
+.buttonAccepted:after{
+    background-color: #249761;
+    border-color: #249761;
+}

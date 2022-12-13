@@ -1,5 +1,6 @@
 import React, { Component, useEffect, useState } from 'react';
 import styles from "../css/sidebar.module.css"
+import { Link } from 'react-router-dom';
 
 const SideBar = (props) => {
     return(
@@ -16,9 +17,13 @@ const SideBar = (props) => {
               <button className={styles.button}>Link 4</button>
         
               <div className={styles.buttonGroup}>
-                <button className={styles.smallButton}>Active Scholarships</button>
-                <button className={styles.smallButton}>Active Study Groups</button>
-    			  <button className={styles.smallButton}>Archive</button>
+                <Link to='/ScholarshipInformation'>
+                  <button className={styles.smallButton}>Active Scholarships</button>
+                </Link>
+                <Link to='/EnrolledStudyGroups'>
+                  <button className={styles.smallButton}>Active Study Groups</button>
+                </Link>
+    			  {/* <button className={styles.smallButton}>Archive</button> */}
               </div>
           </section>
         </form>

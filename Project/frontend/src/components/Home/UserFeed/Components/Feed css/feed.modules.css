@@ -114,3 +114,8 @@
     width: 30px; 
     margin-right: 10px; 
 } */
+.name{
+	font-size: 50px;
+	font-weight: bolder;
+    font-style: italic;
+}

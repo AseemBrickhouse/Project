@@ -5,6 +5,7 @@ import * as authActions from '../../store/actions/auth';
 import {Form, FormControl } from 'react-bootstrap';
 import Loading from "../Loadings/Login/Loading";
 import styles from "./Componenets/css/login.module.css";
+import Alert from 'react-bootstrap/Alert';
 
 const Login = (props) => {
     const [error, setError] = useState(null);
@@ -46,7 +47,7 @@ const Login = (props) => {
               <div className={styles.elements}>
                 <h1>Login to your account</h1>
                 {error ? <div>
-                <p>Invalid Username and/or password</p>
+                <Alert variant='danger'><p className={styles.alert}>Invalid Username and/or password</p></Alert>
                 </div> : null}
               </div>
               <div className={styles.elements}>
@@ -71,7 +72,7 @@ const Login = (props) => {
                 </Link>
               </div>
               <div className={styles.elements}>
-                <div component="form">
+                <div component="form" className={styles.buttonOutter}>
                   <button className={styles.button} type="submit">
                     Login
                   </button>
@@ -79,9 +80,9 @@ const Login = (props) => {
               </div>
               <div className={styles.elements}>
                <Link to = '/CreateAccount' className={styles.buttonOutter}>
-                  <div className={styles.button}>
+                  <button className={styles.button}>
                       Sign up
-                  </div>
+                  </button>
                </Link>
               </div>
             </Form>

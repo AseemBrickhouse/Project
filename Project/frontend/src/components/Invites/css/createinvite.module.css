@@ -1,0 +1,52 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    background-color: #2B2827;
+    width: 500px;
+    height: 400px;
+    margin-left: 50%;
+    margin-top: 5vh;
+    transform: translate(-50%);
+    border-radius: 25px;
+    /* padding: 50px; */
+}
+.header{
+    margin-top: 10px;
+    text-align: center;
+    color: white;
+}
+.headerText{
+    font-size: 26px;
+}
+.drop{
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15px;
+}
+.footer{
+    position: relative;
+    bottom: 0;
+    flex-grow: 1;
+}
+.button{
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15px;
+    text-align: center;
+    margin-bottom: 10px;
+    background-color: #A7916D;
+    border-color: #A7916D;
+}
+.button:hover{
+    background-color: #A7916D;
+    border-color: #A7916D;
+}
+.message{
+    width: 500px;
+    margin-left: 50%;
+    margin-top: 3vh;
+    transform: translate(-50%);
+    text-align: center;
+}

@@ -24,7 +24,8 @@ import PeopleHome from './People/PeopleHome';
 import PeopleStudents from './People/PeopleStudents';
 import PeopleTutors from './People/PeopleTutors';
 import PeopleInstructors from './People/PeopleInstructors';
-
+import ViewInvites from './Invites/ViewInvites';
+import CreateInvite from './Invites/CreateInvite';
 const Routes = (props) => {
     return (
         <React.Fragment>
@@ -60,6 +61,13 @@ const Routes = (props) => {
                         <ViewProfile {...props}/>
                     </Route>
                     <Route exact path = "/EditProfile" component={EditProfile}/>
+
+                    {/* Invite */}
+                    <Route exact path = "/CreateInvite" component={CreateInvite}/>
+                    <Route exact path = "/ViewInvite" component={ViewInvites}/>
+                    <Route exact path = {'/ViewInvite/:key'}>
+                        <ViewInvites {...props}/>
+                    </Route>
 
                     {/* People */}
                     <Route exact path = "/PeopleHome" component={PeopleHome}/>

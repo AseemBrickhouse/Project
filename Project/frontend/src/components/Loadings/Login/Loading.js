@@ -8,17 +8,17 @@ export const Loading = () => {
           <div className={styles.subcontainer}>
             <div style={{marginLeft: "3vw"}}>
               <div className={styles.header}>
-                Place holder
+                Learncate
               </div>
             </div>
             <div style={{marginLeft: "5vw"}}>
               <div className={styles.body}>
-                Quote
+                Learning that
               </div>
             </div>
             <div style={{textAlign: "right", marginRight: "5vw"}}>
               <div className={styles.footer}>
-                Word
+              Empowers
               </div>
             </div>
             <div style={{marginLeft: "3vw"}}>

@@ -60,8 +60,8 @@ const Home = (props) => {
                             </div>
                         : 
                         <div className={styles.feedbodyAlt}>
-                            <h1>Name</h1>
-                            <p>Providing connections to the things that matter.</p>
+                            <div className={styles.name}>Learncate</div>
+                            <p style={{marginLeft: "10px"}}>Providing connections to the things that matter.</p>
                         </div>
                     }
                     </div>

@@ -186,3 +186,7 @@ body {
 
 	color: #FFF;
 }
+.alert{
+	font-size: 16px;
+	text-align: center;
+}

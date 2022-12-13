@@ -1,0 +1,29 @@
+.inviteContainer{
+    height: 100vh;
+	width: 100%;
+    /* background: #8C7064; */
+}
+
+.inviteLayout{
+    /* height: 100vh;
+	width: 80%; */
+	/* background: #8C7064; */
+    width: 80%;
+    margin-left: 15%;
+    margin-top: 5%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+}
+.invitecardContainer{
+    margin-right: 5%;
+}
+
+.message{
+    margin-left: 35%;
+    width: 300px;
+    font-size: 20px;
+    transform: translate(-35%,0);
+    text-align: center;
+}

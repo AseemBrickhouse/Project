@@ -2,12 +2,11 @@ import React, { Component, useState, useEffect, useRef } from 'react';
 import {Link,  withRouter} from 'react-router-dom';
 import * as actions from '../../store/actions/auth';
 import {Button, Form, FormControl } from 'react-bootstrap';
-import AccountCreated from './AccountCreated';
 import { connect } from 'react-redux';
 
 import Overlay from 'react-bootstrap/Overlay';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
+import Alert from 'react-bootstrap/Alert';
 
 import styles from "../Login/Componenets/css/login.module.css"
 import Loading from '../Loadings/Login/Loading';
@@ -91,7 +90,7 @@ const CreateAccount = (props) => {
                 <div className={styles.elements}>
                   <h1>Create your account</h1>
                   {update != null && update.response.data.non_field_errors != null  ? 
-                    <div><p>Two passwords did not match</p></div>: null
+                    <Alert variant='danger'><div><p>Two passwords did not match</p></div></Alert>: null
                   }
                 </div>
                 <div className={styles.elements}>

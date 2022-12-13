@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import * as actions from "../../store/actions/auth";
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Container from 'react-bootstrap/Container';
-
+import Image from 'react-bootstrap/Image';
 import styles from "./Componenets/css/Navbar.module.css";
 
 const Navbar = (props) => { 
@@ -18,7 +18,14 @@ const Navbar = (props) => {
                 !isAuthenticated ? 
                     <Nav inverse collapseOnSelect className={styles.colorNav}>
                         <Nav.Item>
-                          <Nav.Link href="/" className={styles.colorNavItem} >Some random icon</Nav.Link>
+                          <Nav.Link href="/" className={styles.colorNavItem} >
+                            <Image
+                            src="../../../static/logos/headerLogo.png"
+                            width={100}
+                            height={30}
+                            style={{marginRight: "10px"}}
+                          />
+                        </Nav.Link>
                         </Nav.Item>
                         <Nav.Link href="/Login" className={styles.colorNavItem}>Login</Nav.Link>
                         <Nav.Link href="/CreateAccount" className={styles.colorNavItem}>Sign up</Nav.Link>
@@ -53,6 +60,9 @@ const Navbar = (props) => {
                     <NavDropdown.Item href="/AllStudyGroups">View All Group</NavDropdown.Item>
                     <NavDropdown.Item href="/EnrolledStudyGroups">View Enrolled Group</NavDropdown.Item>
                     <NavDropdown.Item href="/HostedStudyGroups">View Hosted Group</NavDropdown.Item>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item href="/CreateInvite">Create Invite</NavDropdown.Item>
+                    <NavDropdown.Item href="/ViewInvite">View Invites</NavDropdown.Item>
                     <NavDropdown.Divider />
                     <NavDropdown.Item href="/CreateStudyGroup">Create Group</NavDropdown.Item>
                   </NavDropdown>

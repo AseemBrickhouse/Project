@@ -3,7 +3,7 @@ import {Button} from 'react-bootstrap';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from "../../store/actions/auth";
-
+import Image from "react-bootstrap/Image";
 import styles from "./Componenets/css/login.module.css";
 
 const Logout = (props) =>{
@@ -18,7 +18,24 @@ const Logout = (props) =>{
             <form class={styles.login}>
               <section>
                 <span className={styles.icon}>
-                  <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png" />
+                {
+                  account.profile_pic != null ?
+                  <Image
+                      src={account.profile_pic}
+                      roundedCircle
+                      width={300}
+                      height={300}
+                      style={{marginRight: "10px"}}
+                  />
+                  :
+                  <Image
+                      src="https://cdn-icons-png.flaticon.com/512/2102/2102647.png"
+                      roundedCircle
+                      width={300}
+                      height={300}
+                      style={{marginRight: "10px"}}
+                  />
+                }
                 </span>
                 <section className={styles.iconText}>
                   <h2>{`${account.first_name} ${account.last_name}`}</h2>
@@ -31,7 +48,6 @@ const Logout = (props) =>{
                       Logout
                   </div>
                 </Link>
-                {/* <button onclick = "location.href='/Project/frontend/templates/frontend/login/login.html'" type="button">Logout</button> */}
               </div>
               <div className={styles.elements}>
                 <div className = {styles.centerLink} href = "/Project/frontend/templates/frontend/login/login.html">Sign into another account</div>

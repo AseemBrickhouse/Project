@@ -200,6 +200,15 @@ class JoinStudyGroup(ObtainAuthToken):
             studygroup_json = StudyGroupSerializer(studygroup).data
             try:
                 studygroup_to_enroll = StudyEnroll.objects.all().get(studygroup_id=studygroup, account=current_user)
+                has_invite = Invite.objects.all().filter(
+                            recipient=current_user,
+                            studygroup_id=studygroup,
+                        )
+                print(has_invite)
+                if has_invite:
+                    has_invite = has_invite[0]
+                    has_invite.delete()
+
                 return({
                     "Message": "Account is already enrolled in this study group"
                 })

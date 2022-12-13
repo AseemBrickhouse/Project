@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.views import APIView
-from datetime import datetime
+from datetime import datetime, timedelta
 import random
 import string
 
@@ -25,8 +25,14 @@ class CreateInvite(ObtainAuthToken):
         
         token = Token.objects.get(key=request.data['token']).user_id
         current_user = User.objects.all().filter(id=token)[0].account
-
-        recipient = Account.objects.all().get(key=request.data['key'])
+        print(request.data)
+        try:
+            recipient = Account.objects.all().get(email=request.data['email'])
+        except Account.DoesNotExist:
+            return Response({
+                "Message": "Not a valid email"
+            })
+            
         if not recipient:
             return Response({
                 "Message": "Person to invite does not exist"
@@ -64,7 +70,7 @@ class CreateInvite(ObtainAuthToken):
                     sender=current_user,
                     recipient = recipient,
                     studygroup_id=studygroup[0],
-                    expiration_date = datetime().now + datetime.timedelta(days = 3),
+                    expiration_date = datetime.today() + timedelta(days = 3),
                 )
                 invite.save()
 
