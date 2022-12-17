@@ -39,7 +39,7 @@ const Home = (props) => {
             <body className={styles.bodyhome}>
                 <div className={styles.containerhome}>
                     <div className={styles.containerLeft}>
-                        <SideBar/>
+                        {isAuthenticated ? <SideBar/> : null}
                     </div>
                     <div className={styles.containerMiddle}>
                     {

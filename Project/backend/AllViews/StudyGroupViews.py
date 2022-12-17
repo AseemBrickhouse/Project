@@ -243,7 +243,7 @@ class JoinStudyGroup(ObtainAuthToken):
                                     "Message": "Invite expired!"
                                 })
 
-                            has_invite.delete()
+                        has_invite.delete()
                 #After all checks are passed its safe to enroll the user in the group
                 studygroup_to_enroll = StudyEnroll.objects.create(
                     studygroup_id = studygroup,

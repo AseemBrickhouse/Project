@@ -2,7 +2,7 @@ import React, { Component, useEffect, useState } from 'react';
 import styles from "../Componenets/css/StudyGroupInfoComponent.module.css";
 import {Envelope} from "react-bootstrap-icons";
 const StudyGroupLeft = (props) =>{
-    console.log(props)
+    // console.log(props)
     const group = props.group
     return(
         	<div className={styles.container}>

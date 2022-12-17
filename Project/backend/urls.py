@@ -39,6 +39,7 @@ urlpatterns = [
     #MODULE VIWES
     path('CreateModule/', CreateModule.as_view()),
     path('GetAllModules/', GetAllModules.as_view()),
+    path('GetModule/', GetModule.as_view()),
     
     #MATERIALVIEWS
     path('GetModuleMaterial/', GetModuleMaterial.as_view()),

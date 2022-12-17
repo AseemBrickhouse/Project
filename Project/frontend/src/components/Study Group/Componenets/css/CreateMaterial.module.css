@@ -1,0 +1,68 @@
+.form{
+    /* width: 300%; */
+    margin-left: auto;
+}
+.select{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.selectOption{
+
+}
+.description{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.submit{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    background-color: #A7916D;
+    border-color: #A7916D;
+}
+.submit:hover{
+    background-color: #A7916D;
+    color: white;
+    border-color: #A7916D;
+}
+.contentContainer{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.content{
+    flex-direction: row;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* width: 300%; */
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: #928A84;
+    color: white;
+    border-radius: 15px;
+    padding: 10px;
+}
+.contentLeft{
+
+}
+.contentMiddle{
+
+}
+.contentRight{
+
+}
+.divContainer{
+    background-color: #2B2827;
+    width: 90%;
+    margin-top: 10px;
+    /* margin-left: -52%; */
+    padding: 25px;
+}
+.delete{
+    background-color: rgb(160, 72, 72);
+    border-color: rgb(160, 72, 72);
+}
+.delete:hover{
+    background-color: rgb(160, 72, 72);
+    color: white;
+    border-color: rgb(160, 72, 72);
+}

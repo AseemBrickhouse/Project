@@ -7,9 +7,8 @@ import {
 import StudyGroupNav from './StudyGroupNav';
 import StudyGroupModules from './StudyGroupModules';
 import ChatRoom from '../../Chatroom/ChatRoom';
-
+import CreateModule from './CreateModule';
 const StudyGroupMiddle = (props) =>{
-    const group = props
 
     return(
         <React.Fragment>
@@ -21,6 +20,9 @@ const StudyGroupMiddle = (props) =>{
                     </Route>
                     <Route exact path = {'/StudyGroupHome/:key/ChatRoom'}>
                         <ChatRoom {...props}/>
+                    </Route>
+                    <Route exact path = {'/StudyGroupHome/:key/CreateModule'}>
+                        <CreateModule {...props}/>
                     </Route>
                 </Switch>
             </Router>

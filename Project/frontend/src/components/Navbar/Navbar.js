@@ -33,7 +33,14 @@ const Navbar = (props) => {
                 :
                 <Nav inverse collapseOnSelect  className="color-nav" sticky="top">
                   <Nav.Item>
-                    <Nav.Link href="/" className={styles.colorNavItem}>Some random icon</Nav.Link>
+                    <Nav.Link href="/" className={styles.colorNavItem}>
+                      <Image
+                        src="../../../static/logos/headerLogo.png"
+                        width={100}
+                        height={30}
+                        style={{marginRight: "10px"}}
+                      />
+                    </Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
                     <Nav.Link eventKey="link-1" className={styles.colorNavItem}>Meeting</Nav.Link>
@@ -74,7 +81,9 @@ const Navbar = (props) => {
                   >
                       <NavDropdown.Item href="/ViewProfile">View Profile</NavDropdown.Item>
                       <NavDropdown.Item href="/EditProfile">Edit Profile</NavDropdown.Item>
-                      <NavDropdown.Item >View Friends</NavDropdown.Item>
+                      <NavDropdown.Divider />
+                      <NavDropdown.Item >Sent Request</NavDropdown.Item>
+                        <NavDropdown.Item >View Friends</NavDropdown.Item>
                       <NavDropdown.Divider />
                       <NavDropdown.Item href="/Logout">Logout</NavDropdown.Item>
                   </NavDropdown>

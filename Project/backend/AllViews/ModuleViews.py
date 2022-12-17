@@ -33,7 +33,43 @@ class CreateModule(ObtainAuthToken):
         )
 
         module_toCreate.save()
+        module_json = ModuleSerializer(module_toCreate).data
+        queryset = {}
+        queryset['module'] = module_json
+        queryset['message'] = "Module succesfully created for study group " +  studygroupJSON['studygroup_id']
+        print(queryset)
+        
+        return Response(queryset)
 
-        return Response({
-            "Message": "Module succesfully created for study group " +  studygroupJSON['studygroup_id']
-        })
+class GetModule(APIView):
+    def post(self, request, *args, **kwargs):
+        def getContent(module):
+            queryset = {}
+
+            for entry in Material.objects.all().filter(module_id=module):
+                entry_json = MaterialSerlizer(entry).data
+                queryset[entry_json['material_id']] = entry_json
+
+            return queryset
+
+        queryset = {}
+
+        module = Module.objects.get(module_id=request.data['module_id'])
+        print(module)
+
+        module_json = ModuleSerializer(module).data
+        queryset = module_json
+        queryset['content'] = getContent(module)
+        account = Account.objects.get(id=module_json['module_owner'])
+        account_json = AccountSerializer(account).data
+        queryset['module_owner'] = account_json
+        # for module in studygroup_modules:
+        #     module_json = ModuleSerializer(module).data
+        #     queryset[module_json['module_id']] = module_json
+        #     queryset[module_json['module_id']]['content'] = getContent(module)
+
+        #     account = Account.objects.get(id=module_json['module_owner'])
+        #     account_json = AccountSerializer(account).data
+        #     queryset[module_json['module_id']]['module_owner'] = account_json
+
+        return Response(queryset)

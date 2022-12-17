@@ -8,7 +8,7 @@ import {
 import styles from "../Componenets/css/buttonGroupComponent.module.css";
 
 const StudyGroupNav = (props) =>{
-	console.log(props)
+	// console.log(props)
 	const group = props.group
     return(
 	    <div className={styles.container}>

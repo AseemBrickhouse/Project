@@ -26,6 +26,8 @@ import PeopleTutors from './People/PeopleTutors';
 import PeopleInstructors from './People/PeopleInstructors';
 import ViewInvites from './Invites/ViewInvites';
 import CreateInvite from './Invites/CreateInvite';
+import CreateModule
+ from './Study Group/Componenets/CreateModule';
 const Routes = (props) => {
     return (
         <React.Fragment>
@@ -51,6 +53,7 @@ const Routes = (props) => {
                     <Route exact path = "/HostedStudyGroups" component={StudyGroupsHosted}/>
                     <Route exact path = "/CreateStudyGroup" component={CreateStudyGroup}/>
                     <Route exact path = {'/StudyGroupHome/:id'} component={StudyGroupHome}/>
+                    {/* <Route exact path = "/CreateModule" component={CreateModule}/> */}
 
                     {/* Scholarship */}
                     <Route exact path = "/ScholarshipInformation" component={ScholarShipInformation}/>
@@ -74,6 +77,9 @@ const Routes = (props) => {
                     <Route exact path = "/PeopleHome/Students" component={PeopleStudents}/>
                     <Route exact path = "/PeopleHome/Instructors" component={PeopleInstructors}/>
                     <Route exact path = "/PeopleHome/Tutors" component={PeopleTutors}/>
+
+                    <Route exact path = "/test" component={CreateModule}/>
+
 
                 </Switch>
             </Router>

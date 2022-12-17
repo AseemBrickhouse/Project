@@ -64,7 +64,11 @@ class GetModuleMaterial(APIView):
 
 class DeleteMaterial(APIView):
     def delete(self, request, *args, **kwargs):
-        pass
+        print(request.data)
+        material = Material.objects.all().get(material_id=request.data['module_id'])
+        material.delete()
+
+        return Response({"Message": "Module deleted"})
 
 class UpdateMaterial(APIView):
     def put(self, request, *args, **kwargs):

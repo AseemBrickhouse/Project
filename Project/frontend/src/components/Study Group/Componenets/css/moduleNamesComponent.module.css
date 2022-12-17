@@ -4,30 +4,33 @@
 	font-family: 'Montserrat', sans-serif;
 }
 
-body {
+/* body {
 	height: 100vh;
 	width: 100%;
 	background: #6A6C6E;
-}
+} */
 
 .container {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	/* align-items: center; */
-	height: 100%;
+	/* height: 64vh; */
 	width: 1000px;
 	margin-top: 5%;
 	/* margin-left: 15%; */
+	overflow-y: scroll;
+}::-webkit-scrollbar {
+	display:none;
 }
 
 .infoBox {
-	background: #2B2827;
-	/* padding: 30px 100px 0px 100px; */
+	/* background: #2B2827; */
+	padding: 30px 100px 0px 100px;
 	display: flex;
 	flex-direction: column;
 	position: relative;
-	height: calc(250px + 5%);
+	height: 64vh;
 	/* width: 500px; */
 	font-size: 12px;
 	border-radius: 5px;
@@ -51,6 +54,7 @@ body {
 .uploadDate{
 	font-size: 25px;
 	margin-right: 5%;
+	margin-left: 5%;
 	margin-top: 1%;
 	float: left;
 	color: white;
@@ -80,20 +84,29 @@ body {
 	padding-bottom: 10px;
   }
 
+.buttonContainer{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+
+}
+.buttonContainerTextType{
+	color: white;
+	width: fit-content;
+	width: 15%;
+	font-size: 12px;
+}
+.buttonContainerTextDesc{
+	color: white;
+	width: fit-content;
+	flex-grow: 1;
+	font-size: 14px;
+
+}
+
+
   .button {
-	/* margin-top: 10px;
-	display: inline-block;
-	flex-direction: column;
-	justify-content: center;
-	outline: none;
-	position:relative;
-	width: 100%;
-	padding: 16px;
-	border: none;
-	text-transform: uppercase;
-	font-size: 16px;
-	cursor: pointer;
-	transition: all 0.3s ease; */
+
 	border-radius: 15px;
 	margin-top: 1%;
 	display: inline-block;
@@ -101,9 +114,30 @@ body {
 	justify-content: center;
 	outline: none;
 	position:relative;
-	width: 100%;
+	width: fit-content;
+	background-color: #A7916D;
+	border-color: #A7916D;
+}
+.button:hover {
+	background-color: #A7916D;
+	border-color: #A7916D;
+	box-shadow: 5px 5px 5px #242112;
+}
+.moduleContainer{
+	margin-top: 5px;
+	margin-bottom: 5px;
+	background-color: #2B2827;
+	border-radius: 15px;
 }
 
-.button:hover {
-	box-shadow: 5px 5px 5px #242112;
+.create{
+	margin-left: 33%;
+	width: 33%;
+	height: auto;
+	background-color: #A7916D;
+	border-color: #A7916D;
+	border-radius: 15px;
+}::hover{
+	background-color: #A7916D;
+	border-color: #A7916D;
 }
