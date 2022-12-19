@@ -89,23 +89,26 @@
 .FeedHeader{
     display: flex;
     flex-direction: row;
-    /* width: 100%; */
-    height: 25%;
-    margin-bottom: 5vh;
+    width: 100%;
+    height: 10%;
+    /* margin-bottom: 5vh; */
 }
 .FeedText{
-    margin-top: -10%;
+    /* margin-top: -10%; */
     width: 100%;
     margin-left: 60px;
     font-size: 16px;
     white-space: pre;
+    height: 5%;
 }
 .FeedCardDescription{
-    margin-top: -10%;
+    /* margin-top: -10%; */
     width: 100%;
     margin-left: 60px;
-    font-size: 20px;
-
+    margin-right: 60px;
+    font-weight: 500px;
+    /* font-size: 12px; */
+    height: 75%;
 }
 /* img {
     display: inline;

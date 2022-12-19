@@ -34,7 +34,7 @@ const FeedCard = (props) =>{
     }
     return(
         <div>
-            <Card style={{marginBottom: "5px", height: "200px"}}>
+            <Card style={{marginBottom: "5px", height: "200px", overflowY: "hidden"}}>
                 <Card.Body className={styles.Feed}>
                   <Card.Title className={styles.FeedHeader}>
                     {
@@ -61,6 +61,9 @@ const FeedCard = (props) =>{
                     {info.Body.Sub_Type.Type == "Announcement" ?
                         `Announcement from group ${info.Header.Name}`
                     : null}
+                    {info.Body.Sub_Type.Type == "Module/Material" ?
+                        `Module/Material upload from group ${info.Header.Name}`
+                    : null}
                     {info.Header.Type == "Meeting" ?
                         `Scheduled meeting on ${meetingDate}            ${start} - ${end}`
                     : null}
@@ -69,9 +72,19 @@ const FeedCard = (props) =>{
                     : null} 
                   </Card.Text>
                   <Card.Text className={styles.FeedCardDescription}>
-                    {info.Body.Info.Description != null ?
-                        `${info.Body.Info.Description}`
-                    : null}
+                    {
+                        info.Body.Sub_Type.Type == "Module/Material" ? 
+                        <div style={{whiteSpace: "pre"}}>
+                            {`${info.Body.Info.Description}`}
+                        </div>
+                        :
+                        info.Body.Info.Description != null ?
+                        <div style={{whiteSpace: "normal"}}>
+                            {`${info.Body.Info.Description}`}
+                        </div>
+                        : null
+                    }
+
                   </Card.Text>
                 </Card.Body>
             </Card>

@@ -1,0 +1,7 @@
+copy game to diff dir
+in mods folder put (seamless and param random(with seed))
+unpack game using uxm
+in item/enemy randomzier select the usual settings and then hit output to uxm
+hit random make sure same enemy seed is there
+then copy files from output/rel .bin/ oo2core into main game
+launch er

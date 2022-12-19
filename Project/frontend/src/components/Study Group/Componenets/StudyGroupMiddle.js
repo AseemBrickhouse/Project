@@ -8,6 +8,7 @@ import StudyGroupNav from './StudyGroupNav';
 import StudyGroupModules from './StudyGroupModules';
 import ChatRoom from '../../Chatroom/ChatRoom';
 import CreateModule from './CreateModule';
+import Announcements from './Announcemnet';
 const StudyGroupMiddle = (props) =>{
 
     return(
@@ -23,6 +24,9 @@ const StudyGroupMiddle = (props) =>{
                     </Route>
                     <Route exact path = {'/StudyGroupHome/:key/CreateModule'}>
                         <CreateModule {...props}/>
+                    </Route>
+                    <Route exact path = {'/StudyGroupHome/:key/Announcements'}>
+                        <Announcements {...props}/>
                     </Route>
                 </Switch>
             </Router>

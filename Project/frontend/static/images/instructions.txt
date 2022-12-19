@@ -1,0 +1,227 @@
+Create folder [filename]
+
+pip install django==3.2
+pip install django djangorestframework
+pip install django-allauth
+pip install django-rest-auth
+
+django-admin startproject [filename]
+in [filename/urls] put the following:
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('api/', include('api.urls')),
+    path('', include('frontend.urls')),
+]
+then in [filename/settings] put the following under installed APPs:
+    'api.apps.ApiConfig',
+    'rest_framework',
+    'frontend.apps.FrontendConfig',
+
+cd into [filename]
+then django-admin startapp [backend] or [api]
+cd into [backend] or [api]
+create file AllViews to handle all the views in seperate files
+
+create serializers.py in file
+in [serializers.py] add the following:
+    from rest_framework import serializers
+    from .models import *
+
+in urls import all views example: from api.allviews import [file]
+cd out of [api] or [backend]
+
+then django-admin startapp [frontend]
+cd into [frontend]
+//Handle all the frontend Links
+//example: 127.0.0.8000/Classes
+create [urls.py] in [frontend] folder and put the following:
+    from django.urls import path
+    from django.conf.urls import url
+    from .views import index
+    urlpatterns = [
+        path('', index),
+    ]
+
+create folders [static] [src] [templates] in frontend folder
+create folders [css] [frontend] [images] in the static folder
+create [components] in src folder
+create [frontend] in templates folder
+
+//Used for refreshing and complaig React JS code
+create [babel.config.json] in main frontend file
+	copy and paste from https://github.com/techwithtim/Music-Controller-Web-App-Tutorial/blob/main/Tutorial%201%20-%204/frontend/babel.config.json into [babel.config.json]
+
+create [webpack.config.js]
+	copy and paste from https://github.com/techwithtim/Music-Controller-Web-App-Tutorial/blob/main/Tutorial%201%20-%204/frontend/webpack.config.js into [webpack.config.json]
+
+Go into package.json and add the 2 scripts
+	"dev": "webpack --mode development --watch",
+    	"build": "webpack --mode production"
+Do the list of commands
+	npm init -y
+	npm i webpack webpack-cli --save-dev
+	npm i @babel/core babel-loader @babel/preset-env @babel/preset-react --save-dev
+	npm i react react-dom --save-dev
+	npm i bootstrap@3
+	npm install @babel/plugin-proposal-class-properties
+	npm i bootstrap-icons 
+	npm install react-redux     
+	npm install axios
+    npm uninstall react-router-dom
+    npm install react-router-dom@5.2.0
+
+in [src] file create index.js file
+in [templates/frontend] folder create index.html
+	in index.html place the following:
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <meta http-equiv="X-UA-Compatible" content="ie=edge">
+            <title>Temp Name</title>
+            {% load static %}
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            //Change to what ever font we want
+            <link
+                rel="stylesheet"
+                href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+            />
+            //This is where to import all the css just change the file location
+            <link rel="stylesheet" type="text/css" href="{% static "css/index.css" %}"/>
+        </head>
+        <body>
+            <div id="main">
+                <div id='app'></div>
+            </div> 
+            <script src="{% static "frontend/main.js" %}"></script>
+        </body>
+    </html>
+
+in [frontend/views] put the following:
+    def index(request, *args, **kwargs):
+    return render(request, 'frontend/index.html')
+
+in [src/components] create [App.js]
+in [App.js] put the following:
+    import React, { Component }  from 'react';
+    import { BrowserRouter as Router } from "react-router-dom";
+    import Routes from './Routes';
+
+    class App extends Component{
+        render(){
+            return( 
+                <React.Fragment>
+                    <Router>
+                        <Routes {...this.props}/>
+                    </Router>
+                </React.Fragment>
+            );
+        }
+    }
+    export default App;
+
+in [frontend/src/components] create Routes.js
+in [Routes.js] put the following
+    import React from 'react';
+    import {
+        BrowserRouter as Router,
+        Switch,
+        Route
+    } from "react-router-dom";
+    import Home from './Home/Home';
+
+    class Routes extends React.Component{
+        render(){
+            return(
+            <React.Fragment>
+                <Router>
+                    <Switch>
+                        <Route exact path="/">
+                            <Home {...this.props}/>
+                        </Route>
+                    </Switch>
+                </Router>
+            </React.Fragment>
+            )
+        }
+    }
+
+in [src/components] create the folder Home
+//This can change later. This is just to get everything working.
+then in [Home] creat the file Home.js and add the following:
+    import React, { Component } from 'react';
+
+    const Home = (props) => { 
+        console.log(props)
+        return (
+            <h1>
+                Testing some code
+            </h1>
+        );
+    }
+    export default Home;
+in [frontend/src/index] put the following:
+    import App from './components/App';
+    import React from 'react';
+    import ReactDOM from 'react-dom';
+//    import rootReducer from './store/reducers';                           Commmented out stuff is for react Store so we can store information in the browser and not constantly make api calls unless needed
+//   import { configureStore, compose, applyMiddleware} from 'redux';       Could be usefull if we use the login system just for this
+    import thunk from 'redux-thunk';
+    import { Provider } from 'react-redux';
+
+
+//    const composeEnhances = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+//   const store = configureStore(rootReducer, composeEnhances(
+//       applyMiddleware(thunk)
+//   ));
+
+    const app = (
+           // <Provider store = {store}>
+           //     <App/>
+           // </Provider>
+            <div>
+                <App/>
+            </div>
+    )
+
+    ReactDOM.render(app, document.getElementById('app'));
+
+Addtional Notes:
+    Frontend team usually just works in the frontend file 
+        {could just make fake data for testing untill api points are ready to be called}
+        -Updating urls goes in frontend/urls.py this wil require you to set another route in src/components/Routes
+        -css/images go in static/css or static/images
+            If an additional file is needed for css just put it in the css folder with a .css extension
+            Then import it on the file located at frontend/templates/index.html
+            an example is already there just replace the index.css with the name of the file
+        -Main pages, buttons, and components are in src/components
+
+    Backend team focuses on the api file
+        Building out api end points for the frontend to calls
+        Urls are only for the api endpoints not the frontend urls
+        Serializers are used to essentially put data into json form for frontend
+        Views are seperated into AllViews folder to avoid having a long views.py    
+            just helps keep everything together 
+
+    Testing team wold also focus on api files
+        Making sure that the correct response are given in data is entered
+
+    Make sure the right version of django is install: version 4.06
+    Installing the right version of Django:
+        Make sure the file path is [filename]:
+            then type    pip install django==4.06
+			 pip install django djangorestframework
+			 pip install django-rest-auth
+
+    Make sure Node.js is installed Link: https://nodejs.org/en/download/
+
+When Running the server
+    make sure the file directory is [filename/filename]
+    Then do py manage.p runserver
+
+When refreshing the js on frontend 
+    Make sure you are in the file directory [filename/filename/frontend]
+    then do npm run dev
+

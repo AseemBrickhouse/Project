@@ -21,8 +21,8 @@ def StudyGroupFeed(current_user):
         group_info = enrolled_studygroups[group]
         for announcement in Announcements.objects.all().filter(studygroup_id=group_info['id']):
             queryset.append(announcement)
-        # for module in Module.objects.all().filter(studygroup_id=group_info['id']):
-        #     queryset.append(module)
+        for module in Module.objects.all().filter(studygroup_id=group_info['id']):
+            queryset.append(module)
 
     for invite in Invite.objects.all().filter(recipient=current_user):
         queryset.append(invite)
@@ -189,7 +189,52 @@ def Content_Type_Info(model_obj):
             #TODO:
             # When Module is more developed
             # Get all material objects given the Module id -> parse data -> format in description
-            return ModuleSerializer(model_obj).data
+            module = model_obj
+            module_json = ModuleSerializer(model_obj).data
+            set = {
+                "QUIZ": 0,
+                "HOMEWORK": 0,
+                "STUDYGUIDE": 0,
+                "EXAM": 0,
+            }
+            for material in Material.objects.all().filter(module_id=model_obj):
+                material_json = MaterialSerlizer(material).data
+                set[material_json['material_type']] = set[material_json['material_type']] + 1
+            
+            del_k = []
+            for k,v in set.items():
+                if v == 0:
+                    del_k.append(k)
+            for k in del_k:
+                set.pop(k)
+            
+            studygroup = StudyGroup.objects.get(id=module_json['studygroup_id'])
+            studygroup_json = StudyGroupSerializer(studygroup).data
+
+            desc = str()
+            for k in set:
+                if set[k] > 1:
+                    desc += "{} {}'s was uploaded.".format(set[k], k.lower()) + "\n"
+                else:
+                    desc += "{} {} was uploaded.".format(set[k], k.lower())
+            
+            print(desc)
+            account = Account.objects.get(id=module_json['module_owner'])
+            account_json = AccountSerializer(account).data
+            account_name = account_json['first_name'] + account_json['last_name']
+            header = (
+                module_json['id'],
+                "StudyGroup",
+                module_json['module_id'],
+                studygroup_json['studygroup_name']
+            )
+            body = (
+                ("Module/Material"),
+                (desc),
+                (module_json['creation_date'], None, None),
+                (account_name, account_json, None, None),
+            )
+            return Format_data(header, body)
 
         #Prob no need for Material seeing its part of modules
         case "Material":
