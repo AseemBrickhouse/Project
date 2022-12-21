@@ -11,10 +11,10 @@ const SideBar = (props) => {
         </div>
         <form className={styles.login}>
           <section>
-              <button className={styles.button}>Link 1</button>
+              {/* <button className={styles.button}>Link 1</button>
               <button className={styles.button}>Link 2</button>
               <button className={styles.button}>Link 3</button>
-              <button className={styles.button}>Link 4</button>
+              <button className={styles.button}>Link 4</button> */}
         
               <div className={styles.buttonGroup}>
                 <Link to='/ScholarshipInformation'>

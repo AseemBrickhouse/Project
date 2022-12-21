@@ -26,8 +26,10 @@ import PeopleTutors from './People/PeopleTutors';
 import PeopleInstructors from './People/PeopleInstructors';
 import ViewInvites from './Invites/ViewInvites';
 import CreateInvite from './Invites/CreateInvite';
-import CreateModule
- from './Study Group/Componenets/CreateModule';
+import CreateModule from './Study Group/Componenets/CreateModule';
+import SentRequest from './People/SentRequest';
+import ViewRequest from './People/ViewRequest';
+import ViewFriends from './People/ViewFriends';
 const Routes = (props) => {
     return (
         <React.Fragment>
@@ -77,6 +79,9 @@ const Routes = (props) => {
                     <Route exact path = "/PeopleHome/Students" component={PeopleStudents}/>
                     <Route exact path = "/PeopleHome/Instructors" component={PeopleInstructors}/>
                     <Route exact path = "/PeopleHome/Tutors" component={PeopleTutors}/>
+                    <Route exact path = "/SentRequest" component={SentRequest}/>
+                    <Route exact path = "/ViewRequest" component={ViewRequest}/>
+                    <Route exact path = "/ViewFriends" component={ViewFriends}/>
 
                     <Route exact path = "/test" component={CreateModule}/>
 

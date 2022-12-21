@@ -82,8 +82,9 @@ const Navbar = (props) => {
                       <NavDropdown.Item href="/ViewProfile">View Profile</NavDropdown.Item>
                       <NavDropdown.Item href="/EditProfile">Edit Profile</NavDropdown.Item>
                       <NavDropdown.Divider />
-                      <NavDropdown.Item >Sent Request</NavDropdown.Item>
-                        <NavDropdown.Item >View Friends</NavDropdown.Item>
+                      <NavDropdown.Item href="/SentRequest">Sent Request</NavDropdown.Item>
+                      <NavDropdown.Item href="/ViewRequest">View Request</NavDropdown.Item>
+                      <NavDropdown.Item href="/ViewFriends">View Friends</NavDropdown.Item>
                       <NavDropdown.Divider />
                       <NavDropdown.Item href="/Logout">Logout</NavDropdown.Item>
                   </NavDropdown>

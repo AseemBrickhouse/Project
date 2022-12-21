@@ -105,7 +105,7 @@ class EditAccount(ObtainAuthToken):
             "Message": "Account information updated succesfully"
             })
 
-class GetPerson(APIView):
+class GetPerson(ObtainAuthToken):
     """
     @ function
         Retrive a selected user given the first,last, and email /// Can change to key later
@@ -117,6 +117,8 @@ class GetPerson(APIView):
         The persons info in json format if they exists
     """
     def post(self, request, *args, **kwargs):
+        token = Token.objects.get(key=request.data['token']).user_id
+        current_user = User.objects.all().filter(id=token)[0].account
         person_object = Account.objects.filter(
             first_name = request.data['first_name'],
             last_name = request.data['last_name'],
@@ -124,6 +126,24 @@ class GetPerson(APIView):
         )[0]
         person_json = AccountSerializer(person_object).data
  
+        request = FriendRequest.objects.all().filter(from_user=current_user, to_user=person_object)
+
+        if request:
+            request = request[0]
+            person_json['is_friend'] = "Waiting"
+        else:
+            try: 
+                list_obj = Friends.objects.get(account = current_user)
+                # print(list_obj.friends.all())
+                for account in list_obj.friends.all():
+                    print(account)
+                    if account == person_object:
+                        person_json['is_friend'] = "True"
+                    # else:
+                    #     person_json['is_friend'] = "False"
+            except Friends.DoesNotExist:
+                person_json['is_friend'] = "False"
+
         return Response(person_json)
 
 class AllAccounts(APIView):

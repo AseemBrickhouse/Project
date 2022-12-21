@@ -33,15 +33,15 @@ class SendFriendRequest(ObtainAuthToken):
                 to_user=to_user,
             )
             request.save()
-            return Response({
-                "Message": "Request succesfully sent"
-            })
+            to_user_json = AccountSerializer(to_user).data
+            to_user_json['is_friend'] = "Waiting"
+            return Response(to_user_json)
         else:
             return Response({
                 "Message": "Request already exists"
             })
 
-class GetAllRequest(ObtainAuthToken):
+class GetAllRequestIn(ObtainAuthToken):
      def post(self, request, *args, **kwargs):
         token = Token.objects.get(key=request.data['token']).user_id
         current_user = User.objects.all().filter(id=token)[0].account
@@ -55,19 +55,63 @@ class GetAllRequest(ObtainAuthToken):
         
         current_request = {}
         for request in queryset:
-            to_user = Account.objects.all().get(key=to_user.key)
-            to_user_json = AccountSerializer(to_user).data
+            from_user = Account.objects.get(key=request.from_user.key)
+            from_user_json = AccountSerializer(from_user).data
+            current_request[from_user_json['key']] = from_user_json
+            current_request[from_user_json['key']]['is_friend'] = "False"
+            # to_user = Account.objects.all().get(key=to_user.key)
+            # to_user_json = AccountSerializer(to_user).data
 
-            current_user_json = AccountSerializer(current_user).data
+            # current_user_json = AccountSerializer(current_user).data
 
-            request_json = FriendsRequestSerializer(request).data
+            # request_json = FriendsRequestSerializer(request).data
 
-            current_request[request_json['id']] = request_json
-            current_request[request_json['id']]['from_user'] = current_user_json
-            current_request[request_json['id']]['to_user'] = to_user_json
+            # current_request[request_json['key']] = request_json
+            # current_request[request_json['key']]['from_user'] = current_user_json
+            # current_request[request_json['key']]['to_user'] = to_user_json
 
         return Response(current_request)
 
+class GetAllRequestOut(ObtainAuthToken):
+     def post(self, request, *args, **kwargs):
+        token = Token.objects.get(key=request.data['token']).user_id
+        current_user = User.objects.all().filter(id=token)[0].account
+
+        queryset = FriendRequest.objects.all().filter(from_user=current_user)
+
+        if not queryset:
+            return Response({
+                "Message": "You currently have no sent friend requests"
+            })
+        
+        current_request = {}
+        for request in queryset:
+            
+            to_user = Account.objects.all().get(key=request.to_user.key)
+            to_user_json = AccountSerializer(to_user).data
+            to_user_json['is_friend'] = "Waiting"
+
+
+            current_request[to_user_json['key']] = to_user_json
+            current_request[to_user_json['key']]['is_friend'] = "Waiting"
+
+
+        return Response(current_request)
+
+class DeclineFriendRequest(ObtainAuthToken):
+    def delete(self, request, *args, **kwargs):
+        token = Token.objects.get(key=request.data['token']).user_id
+        current_user = User.objects.all().filter(id=token)[0].account
+        person = Account.objects.all().get(key=request.data['key'])
+        try:
+            request = FriendRequest.objects.get(from_user=current_user, to_user=person)
+            request.delete()
+        except FriendRequest.DoesNotExist:
+            return Response({
+                "Message": "Freiend request does not exists"
+            })
+
+        return Response({"Message": "Request revoked"})
 class GetAllFriends(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         token = Token.objects.get(key=request.data['token']).user_id
@@ -86,7 +130,7 @@ class GetAllFriends(ObtainAuthToken):
         for account in obj.friends.all():
             account_json = AccountSerializer(account).data
             queryset[account_json['key']] = account_json
-            queryset[account_json['key']]['is_friend'] = True
+            queryset[account_json['key']]['is_friend'] = "True"
 
 
         return Response(queryset)
@@ -138,3 +182,20 @@ class AcceptFriendRequest(ObtainAuthToken):
             return Response({
                 "Message": "Err"
             })
+
+class RemoveFriend(ObtainAuthToken):
+    def delete(self, request, *args, **kwargs):
+        token = Token.objects.get(key=request.data['token']).user_id
+        current_user = User.objects.all().filter(id=token)[0].account
+        account = Account.objects.get(key=request.data['key'])
+
+        list = Friends.objects.get(account=current_user)
+        list.friends.remove(account)
+
+        list.save()
+
+        FFU_list = Friends.objects.get(account=account)
+        FFU_list.friends.remove(current_user)
+        FFU_list.save()
+        
+        return Response({"Message": "Successfully removed"})

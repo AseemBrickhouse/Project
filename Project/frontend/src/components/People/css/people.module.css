@@ -165,4 +165,16 @@ td {
 	font-size: 12px;
 	cursor: pointer;
 	transition: all 0.3s ease;
+    background-color: #A04848;
+    border-color: #A04848;
+    border-radius: 5px;
+}
+.newb:hover{
+    background-color: #A04848;
+    border-color: #A04848;
+    border-radius: 5px;
+}
+.newb::after{
+    background-color: #A04848;
+    border-color: #A04848;
 }

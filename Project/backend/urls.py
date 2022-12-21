@@ -88,4 +88,8 @@ urlpatterns = [
     path('SendFriendRequest/', SendFriendRequest.as_view()),
     path('GetAllFriends/', GetAllFriends.as_view()),
     path('AcceptFriendRequest/', AcceptFriendRequest.as_view()),
+    path('GetAllRequestOut/', GetAllRequestOut.as_view()),
+    path('GetAllRequestIn/', GetAllRequestIn.as_view()),
+    path('DeclineFriendRequest/', DeclineFriendRequest.as_view()),
+    path('RemoveFriend/', RemoveFriend.as_view()),
 ]

@@ -33,6 +33,9 @@ urlpatterns = [
     url(r'StudyGroupHome/(?P<key>[a-zA-Z0-9]+.*)/Announcements', index),
     url(r'StudyGroupHome/(?P<key>[a-zA-Z0-9]+.*)/ChatRoom', index),
     url(r'StudyGroupHome/(?P<key>[a-zA-Z0-9]+.*)/CreateModule', index),
+    path('SentRequest', index),
+    path('ViewRequest',index),
+    path('ViewFriends', index),
     # url(r'images/(?P<key>[a-zA-Z0-9]+.*)', index),
     path('test', index),
 ]

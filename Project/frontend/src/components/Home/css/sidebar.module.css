@@ -20,7 +20,7 @@ body {
 }
 
 .loginBox {
-	background: #9F8170;
+	/* background: #9F8170; */
 	padding: 50px 50px 50px 50px;
 	display: flex;
 	flex-direction: column;
@@ -65,8 +65,8 @@ body {
 }
 
 .login {
-	width: 100%;
-
+	width: 110%;
+	border-top: 5px solid #242124;
 }
 
 .elements {
@@ -134,10 +134,11 @@ body {
 	cursor: pointer;
 	transition: all 0.3s ease;
 	margin-bottom: 1%;
+	border-radius: 5px;
 }
 .buttonGroup {
 	bottom: 0%;
-	margin-top: 50%;
+	margin-top: 1%;
 	margin-bottom: 5%;
 }
 .smallButton {
@@ -154,6 +155,7 @@ body {
 	cursor: pointer;
 	transition: all 0.3s ease;
 	margin-bottom: 1%;
+	border-radius: 5px;
 }
 .centered-link{
 	display: flex;

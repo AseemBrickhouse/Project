@@ -2,11 +2,12 @@ import React, { Component, useState, useEffect } from 'react';
 import {Link} from 'react-router-dom';
 import styles from "../css/people.module.css";
 import { Image } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 const PersonCard = (props) => {
     const [person, setPerson] = useState(props);
     const [load, setLoad] = useState(false)
     useEffect(() => {
-        if (!load){
+        !load ?
             fetch("/api/GetPerson/",{
                 method: "POST",
                 headers:{
@@ -14,6 +15,7 @@ const PersonCard = (props) => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
+                    token: localStorage.getItem('token'),
                     first_name: props.first_name,
                     last_name: props.last_name,
                     email: props.email,
@@ -26,9 +28,32 @@ const PersonCard = (props) => {
                 setPerson(data)
                 setLoad(true)
             })
-        }
+        : null
     },[load])
     console.log(person)
+    const handleAdd = (person) => {
+        fetch("/api/SendFriendRequest/",{
+            method: "POST",
+            headers:{
+                'Accept':'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                token: localStorage.getItem('token'),
+                key: person.key,
+            })
+        })
+        .then(response => {
+            return response.json();
+        })
+        .then(data=>{
+            setPerson(data)
+            setLoad(false)
+        })
+    }
+    const handleRemove = (person) => {
+
+    }
     return(
     <div className={styles.container}>
         <div className={styles.infoBox}>
@@ -95,7 +120,26 @@ const PersonCard = (props) => {
 			    }}>
 			    <div className={styles.newb} style={{backgroundColor: "#A7916D", marginLeft:"-50%", transform: "translateX(25%)"}}>View Profile</div>
 			    </Link>
-                <div className={styles.newb} style={{backgroundColor: "#A04848"}}>Add Friend</div>
+                {
+                    person.is_friend == "True" ? 
+                    <div style={{backgroundColor: "#A04848", borderRadius: "5px"}}>
+                        <Button className={styles.newb} onClick={()=>handleRemove(person)}>
+                            Remove
+                        </Button>
+                    </div>
+                    : person.is_friend == "Waiting"?
+                    <div style={{backgroundColor: "#A04848", borderRadius: "5px"}}>
+                        <Button className={styles.newb}>
+                            Waiting
+                        </Button>
+                    </div>
+                    :
+                    <div style={{backgroundColor: "#A04848", borderRadius: "5px"}}>
+                        <Button className={styles.newb} onClick={()=>handleAdd(person)}>
+                            Add Friend
+                        </Button>
+                    </div>
+                }
             </div>
         </div>
     </div>

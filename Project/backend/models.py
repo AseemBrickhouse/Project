@@ -123,3 +123,9 @@ class Invite(models.Model):
     expiration_date = models.DateTimeField(blank = True, null=True)
     recipient = models.ForeignKey(Account, on_delete=models.CASCADE, null=True, blank=True, related_name="recipient")
     studygroup_id = models.ForeignKey(StudyGroup, on_delete=models.CASCADE,null=True)
+
+class Scholarship(models.Model):
+    recommendee = models.ForeignKey(Account, on_delete=models.CASCADE, null=True)
+    donor = models.TextField(null=True, default="N/A")
+    description = models.TextField(null=True, default="N/A")
+    link = models.TextField(null=True, blank=True)
